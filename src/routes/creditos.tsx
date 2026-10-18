@@ -28,7 +28,7 @@ function Creditos() {
 
   return (
     <AppShell title="Créditos">
-      <section className="px-5 pt-6">
+      <section className="px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:pt-10">
         <div className="relative overflow-hidden rounded-3xl bg-forest p-6 text-forest-foreground shadow-float">
           <img src={botJoy} alt="" className="absolute -right-3 -bottom-2 h-28 w-auto opacity-95" />
           <p className="text-xs uppercase tracking-wider opacity-70">Seus créditos verdes</p>
@@ -44,7 +44,7 @@ function Creditos() {
         <p className="mt-5 text-sm text-muted-foreground">Ganhe créditos usando a calculadora de carbono (transporte limpo vale mais) e conversando com o EcoBot.</p>
 
         <h2 className="mt-6 text-xl font-semibold">Recompensas</h2>
-        <div className="mt-3 grid gap-3">
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {rewards.map((r) => {
             const ok = credits >= r.goal;
             const Icon = r.id === "cobras" ? BookOpen : Award;
@@ -66,8 +66,8 @@ function Creditos() {
       </section>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/60" onClick={() => setOpen(null)}>
-          <div className="max-h-[85vh] w-full max-w-[440px] overflow-y-auto rounded-t-[2rem] bg-background p-6 animate-rise" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/60 lg:items-center" onClick={() => setOpen(null)}>
+          <div className="max-h-[85vh] w-full max-w-[440px] overflow-y-auto rounded-t-[2rem] bg-background p-6 animate-rise lg:max-w-xl lg:rounded-[2rem]" onClick={(e) => e.stopPropagation()}>
             <button onClick={() => setOpen(null)} className="float-right grid h-9 w-9 place-items-center rounded-full bg-muted" aria-label="Fechar"><X className="h-4 w-4" /></button>
             {open === "cobras" ? <Article /> : <Certificate />}
           </div>

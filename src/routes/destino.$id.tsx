@@ -37,12 +37,12 @@ function Destino() {
   return (
     <AppShell title={d.name}>
       <div className="relative">
-        <img src={d.image} alt={d.name} width={1024} height={768} className="aspect-[5/4] w-full object-cover" />
-        <Link to="/" className="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-card/95 shadow-soft" aria-label="Voltar">
+        <img src={d.image} alt={d.name} width={1024} height={768} className="aspect-[5/4] w-full object-cover lg:mt-6 lg:aspect-[21/8] lg:rounded-3xl" />
+        <Link to="/" className="absolute left-4 top-4 lg:top-10 grid h-10 w-10 place-items-center rounded-full bg-card/95 shadow-soft" aria-label="Voltar">
           <ArrowLeft className="h-5 w-5" />
         </Link>
       </div>
-      <div className="relative -mt-8 rounded-t-[2rem] bg-background px-5 pt-6">
+      <div className="relative -mt-8 rounded-t-[2rem] bg-background px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:px-10">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-primary">{d.region}</span>
           <span className="flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-warning text-warning" /><b>{d.rating}</b></span>
@@ -59,7 +59,7 @@ function Destino() {
           ))}
         </div>
 
-        <ul className="mt-5 grid gap-3">
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {items.map((p) => (
             <li key={p.name} className="rounded-2xl bg-card p-4 shadow-soft animate-rise">
               {p.tag && <span className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground">{p.tag}</span>}
