@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CreditosRouteImport } from './routes/creditos'
+import { Route as EcoRouteImport } from './routes/eco'
+import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as DestinoIdRouteImport } from './routes/destino.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreditosRoute = CreditosRouteImport.update({
+  id: '/creditos',
+  path: '/creditos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EcoRoute = EcoRouteImport.update({
+  id: '/eco',
+  path: '/eco',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapaRoute = MapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestinoIdRoute = DestinoIdRouteImport.update({
+  id: '/destino/$id',
+  path: '/destino/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/creditos': typeof CreditosRoute
+  '/eco': typeof EcoRoute
+  '/mapa': typeof MapaRoute
+  '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/creditos': typeof CreditosRoute
+  '/eco': typeof EcoRoute
+  '/mapa': typeof MapaRoute
+  '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/creditos': typeof CreditosRoute
+  '/eco': typeof EcoRoute
+  '/mapa': typeof MapaRoute
+  '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/creditos' | '/eco' | '/mapa' | '/destino/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/creditos' | '/eco' | '/mapa' | '/destino/$id'
+  id: '__root__' | '/' | '/creditos' | '/eco' | '/mapa' | '/destino/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreditosRoute: typeof CreditosRoute
+  EcoRoute: typeof EcoRoute
+  MapaRoute: typeof MapaRoute
+  DestinoIdRoute: typeof DestinoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/creditos': {
+      id: '/creditos'
+      path: '/creditos'
+      fullPath: '/creditos'
+      preLoaderRoute: typeof CreditosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eco': {
+      id: '/eco'
+      path: '/eco'
+      fullPath: '/eco'
+      preLoaderRoute: typeof EcoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mapa': {
+      id: '/mapa'
+      path: '/mapa'
+      fullPath: '/mapa'
+      preLoaderRoute: typeof MapaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destino/$id': {
+      id: '/destino/$id'
+      path: '/destino/$id'
+      fullPath: '/destino/$id'
+      preLoaderRoute: typeof DestinoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreditosRoute: CreditosRoute,
+  EcoRoute: EcoRoute,
+  MapaRoute: MapaRoute,
+  DestinoIdRoute: DestinoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
