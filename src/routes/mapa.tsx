@@ -5,7 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { destinations, getDestination, circuitTotals, formatMin, carbonKg, type TransportId } from "@/lib/data";
 
 export const Route = createFileRoute("/mapa")({
-  validateSearch: (s: Record<string, unknown>) => ({ d: typeof s.d === "string" ? s.d : undefined }),
+  validateSearch: (s: Record<string, unknown>) => ({ d: typeof s["d"] === "string" ? (s["d"] as string) : undefined }),
   head: () => ({
     meta: [
       { title: "Mapa e circuitos ecológicos — EcoTravel" },

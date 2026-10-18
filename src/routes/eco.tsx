@@ -44,7 +44,7 @@ function Eco() {
 function Calc() {
   const { add } = useCredits();
   const [route, setRoute] = useState("peruibe");
-  const [km, setKm] = useState(String(tripKm.peruibe));
+  const [km, setKm] = useState(String(tripKm["peruibe"]));
   const [t, setT] = useState<TransportId>("onibus");
   const [result, setResult] = useState<null | { kg: number; car: number; t: TransportId }>(null);
 

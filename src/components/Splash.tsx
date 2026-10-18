@@ -32,8 +32,8 @@ export function Splash({ onDone }: { onDone: () => void }) {
             <span className="mt-8 rounded-full bg-leaf px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-foreground">
               Dica {step + 1} de {ecoTips.length}
             </span>
-            <h2 className="mt-4 text-2xl font-semibold">{tip.title}</h2>
-            <p className="mt-2 text-forest-foreground/75">{tip.text}</p>
+            <h2 className="mt-4 text-2xl font-semibold">{tip?.title}</h2>
+            <p className="mt-2 text-forest-foreground/75">{tip?.text}</p>
           </div>
         )}
         <div className="mb-6 flex gap-1.5">

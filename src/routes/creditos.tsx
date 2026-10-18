@@ -24,7 +24,7 @@ function Creditos() {
   const { credits } = useCredits();
   const [open, setOpen] = useState<string | null>(null);
   const next = rewards.find((r) => credits < r.goal);
-  const max = rewards[rewards.length - 1].goal;
+  const max = rewards[rewards.length - 1]?.goal ?? 1;
 
   return (
     <AppShell title="Créditos">
