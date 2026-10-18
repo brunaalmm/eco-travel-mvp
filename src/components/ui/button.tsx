@@ -16,6 +16,9 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        leaf: "h-12 rounded-full bg-leaf text-leaf-foreground font-semibold shadow-soft hover:bg-leaf/90",
+        forest: "h-12 rounded-full bg-forest text-forest-foreground font-semibold shadow-soft hover:bg-forest/90",
+        ghostLight: "h-12 rounded-full text-forest-foreground/80 hover:bg-forest-foreground/10",
       },
       size: {
         default: "h-9 px-4 py-2",
