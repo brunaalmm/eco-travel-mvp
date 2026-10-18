@@ -16,8 +16,8 @@ export function Splash({ onDone }: { onDone: () => void }) {
   const last = step === ecoTips.length - 1;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center bg-sand">
-      <div className="relative flex w-full max-w-[440px] flex-col items-center bg-forest px-8 pb-10 pt-16 text-forest-foreground">
+    <div className="fixed inset-0 z-50 flex justify-center bg-sand lg:items-center">
+      <div className="relative flex w-full max-w-[440px] flex-col items-center bg-forest px-8 pb-10 pt-16 text-forest-foreground lg:h-[760px] lg:max-h-[92vh] lg:rounded-[2.5rem] lg:shadow-float">
         {step === -1 ? (
           <div className="flex flex-1 flex-col items-center justify-center text-center animate-rise">
             <img src={icon} alt="EcoTravel" className="h-32 w-32 rounded-[2rem] shadow-float animate-float" width={256} height={256} />

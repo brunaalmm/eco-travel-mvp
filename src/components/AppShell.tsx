@@ -12,15 +12,33 @@ const nav = [
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background shadow-float">
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between bg-forest px-5 text-forest-foreground">
-        <Link to="/" aria-label="EcoTravel início">
-          <img src={logo} alt="EcoTravel" className="h-11 w-auto" width={600} height={338} />
-        </Link>
-        {title && <span className="font-display text-sm font-medium opacity-80">{title}</span>}
+    <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background shadow-float lg:max-w-none lg:shadow-none">
+      <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
+        <div className="mx-auto flex h-16 w-full items-center justify-between px-5 lg:h-20 lg:max-w-6xl lg:px-8">
+          <Link to="/" aria-label="EcoTravel início">
+            <img src={logo} alt="EcoTravel" className="h-11 w-auto lg:h-14" width={600} height={338} />
+          </Link>
+          {title && <span className="font-display text-sm font-medium opacity-80 lg:hidden">{title}</span>}
+          <nav className="hidden lg:block">
+            <ul className="flex gap-2">
+              {nav.map(({ to, label, icon: Icon }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    activeOptions={{ exact: to === "/" }}
+                    className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-forest-foreground/70 transition-colors hover:text-forest-foreground data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
+                  >
+                    <Icon className="h-4 w-4" strokeWidth={1.8} />
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </header>
-      <main className="flex-1 pb-28">{children}</main>
-      <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float">
+      <main className="mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16">{children}</main>
+      <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
         <ul className="grid grid-cols-4">
           {nav.map(({ to, label, icon: Icon }) => (
             <li key={to}>

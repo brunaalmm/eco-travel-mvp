@@ -44,8 +44,8 @@ function Descobrir() {
     <AppShell>
       {splash && <Splash onDone={close} />}
       <section className="px-5 pt-6">
-        <h1 className="text-[28px] font-semibold leading-tight">Descubra o litoral<br />de forma consciente</h1>
-        <label className="mt-5 flex h-13 items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-soft">
+        <h1 className="text-[28px] font-semibold leading-tight lg:text-5xl">Descubra o litoral<br />de forma consciente</h1>
+        <label className="mt-5 flex h-13 max-w-xl items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-soft">
           <Search className="h-5 w-5 text-muted-foreground" />
           <input
             value={q}
@@ -76,7 +76,7 @@ function Descobrir() {
           <h2 className="text-xl font-semibold">Roteiros Curados</h2>
           <span className="text-xs text-muted-foreground">{list.length} roteiros</span>
         </div>
-        <div className="mt-4 grid gap-5">
+        <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((d, i) => (
             <Link
               key={d.id}

@@ -26,7 +26,7 @@ function Eco() {
   const [tab, setTab] = useState<"calc" | "chat">("calc");
   return (
     <AppShell title="EcoBot">
-      <div className="px-5 pt-5">
+      <div className="px-5 pt-5 lg:mx-auto lg:max-w-2xl lg:pt-8">
         <div className="grid grid-cols-2 rounded-full bg-card p-1 shadow-soft">
           {([["calc", "Calculadora", Calculator], ["chat", "Chat EcoBot", MessageCircle]] as const).map(([k, l, I]) => (
             <button key={k} onClick={() => setTab(k)}
@@ -57,7 +57,7 @@ function Calc() {
   const clean = result && result.t !== "carro";
 
   return (
-    <section className="px-5 pt-6">
+    <section className="px-5 pt-6 lg:mx-auto lg:max-w-2xl">
       <h1 className="text-2xl font-semibold">Pegada de carbono</h1>
       <p className="mt-1 text-sm text-muted-foreground">Selecione um roteiro já realizado e o transporte usado.</p>
 
@@ -161,7 +161,7 @@ function Chat() {
   };
 
   return (
-    <section className="flex flex-col px-5 pt-5">
+    <section className="flex flex-col px-5 pt-5 lg:mx-auto lg:w-full lg:max-w-2xl">
       <div className="flex items-center gap-3 rounded-3xl bg-forest p-4 text-forest-foreground">
         <img src={botJoy} alt="EcoBot" className="h-14 w-auto shrink-0 animate-float" />
         <div><p className="font-display font-semibold">EcoBot</p><p className="text-xs opacity-70">Guia educativo · cada pergunta vale +5 créditos</p></div>
