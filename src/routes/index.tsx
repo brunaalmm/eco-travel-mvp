@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Search, Star, Leaf, MapPin } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { Splash } from "@/components/Splash";
+import { SplashScreen, TipsModal } from "@/components/Splash";
+import { HighlightCarousel } from "@/components/HighlightCarousel";
 import { destinations } from "@/lib/data";
 
 export const Route = createFileRoute("/")({
@@ -12,22 +13,25 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Roteiros curados e sustentáveis em Peruíbe, Guarujá e Bertioga, com dicas do EcoBot." },
       { property: "og:title", content: "EcoTravel — Ecoturismo no litoral paulista" },
       { property: "og:description", content: "Roteiros curados e sustentáveis em Peruíbe, Guarujá e Bertioga." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Descobrir,
 });
 
 function Descobrir() {
-  const [splash, setSplash] = useState(false);
+  const [phase, setPhase] = useState<"splash" | "tips" | null>(null);
   const [q, setQ] = useState("");
   const [where, setWhere] = useState("todos");
 
   useEffect(() => {
-    if (!sessionStorage.getItem("eco-splash")) setSplash(true);
+    if (!sessionStorage.getItem("eco-splash")) setPhase("splash");
   }, []);
+  const toTips = useCallback(() => setPhase("tips"), []);
   const close = () => {
     sessionStorage.setItem("eco-splash", "1");
-    setSplash(false);
+    setPhase(null);
   };
 
   const list = useMemo(
@@ -42,9 +46,13 @@ function Descobrir() {
 
   return (
     <AppShell>
-      {splash && <Splash onDone={close} />}
+      {phase === "splash" && <SplashScreen onDone={toTips} />}
+      {phase === "tips" && <TipsModal onDone={close} />}
       <section className="px-5 pt-6">
-        <h1 className="text-[28px] font-semibold leading-tight lg:text-5xl">Descubra o litoral<br />de forma consciente</h1>
+        <HighlightCarousel />
+        <h1 className="mt-6 max-w-3xl text-lg font-medium leading-snug text-foreground lg:text-2xl">
+          Descubra destinos incríveis com responsabilidade ambiental. Viaje por roteiros que valorizam a cultura local, protegem a biodiversidade e geram impacto positivo nas comunidades.
+        </h1>
         <label className="mt-5 flex h-13 max-w-xl items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-soft">
           <Search className="h-5 w-5 text-muted-foreground" />
           <input
@@ -73,7 +81,7 @@ function Descobrir() {
 
       <section className="px-5 pt-7">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-xl font-semibold">Roteiros Curados</h2>
+          <h2 className="text-xl font-semibold">Roteiros</h2>
           <span className="text-xs text-muted-foreground">{list.length} roteiros</span>
         </div>
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
