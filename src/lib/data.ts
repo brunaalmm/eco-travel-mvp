@@ -156,6 +156,7 @@ export const transports = [
   { id: "pe", label: "Trilha a pé", factor: 0 },
   { id: "bike", label: "Bicicleta", factor: 0 },
   { id: "onibus", label: "Ônibus", factor: 0.089 },
+  { id: "carona", label: "Carona solidária", factor: 0.064 },
   { id: "carro", label: "Carro", factor: 0.192 },
 ] as const;
 export type TransportId = (typeof transports)[number]["id"];
@@ -163,6 +164,15 @@ export type TransportId = (typeof transports)[number]["id"];
 export function carbonKg(km: number, transport: TransportId) {
   const t = transports.find((x) => x.id === transport)!;
   return Math.round(km * t.factor * 100) / 100;
+}
+
+/** Acima desta distância (km), a pé e bicicleta deixam de ser comparações realistas. */
+export const ACTIVE_MAX_KM = 30;
+const ACTIVE: TransportId[] = ["pe", "bike"];
+
+/** Modais viáveis para a distância informada. */
+export function realisticTransports(km: number) {
+  return transports.filter((t) => km <= ACTIVE_MAX_KM || !ACTIVE.includes(t.id));
 }
 
 /** Uma árvore da Mata Atlântica absorve ~ 7 kg de CO₂ por ano no início do crescimento. */
