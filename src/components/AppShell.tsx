@@ -1,14 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { Compass, Map, Leaf, Award } from "lucide-react";
+import { Compass, Map, Leaf, Award, Bot, Info } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
 
 const nav = [
   { to: "/", label: "Descobrir", icon: Compass },
   { to: "/mapa", label: "Mapa", icon: Map },
-  { to: "/eco", label: "EcoBot", icon: Leaf },
+  { to: "/eco", label: "Carbono", icon: Leaf },
+  { to: "/ecobot", label: "EcoBot", icon: Bot },
   { to: "/creditos", label: "Créditos", icon: Award },
 ] as const;
+const desktopNav = [...nav, { to: "/sobre", label: "Sobre", icon: Info }] as const;
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   return (
@@ -18,10 +20,15 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           <Link to="/" aria-label="EcoTravel início">
             <img src={logo} alt="EcoTravel" className="h-11 w-auto lg:h-14" width={600} height={338} />
           </Link>
-          {title && <span className="font-display text-sm font-medium opacity-80 lg:hidden">{title}</span>}
+          <div className="flex items-center gap-3 lg:hidden">
+            {title && <span className="font-display text-sm font-medium opacity-80">{title}</span>}
+            <Link to="/sobre" aria-label="Sobre o EcoTravel" className="grid h-9 w-9 place-items-center rounded-full bg-forest-foreground/10 data-[status=active]:bg-leaf">
+              <Info className="h-4 w-4" />
+            </Link>
+          </div>
           <nav className="hidden lg:block">
-            <ul className="flex gap-2">
-              {nav.map(({ to, label, icon: Icon }) => (
+            <ul className="flex gap-1">
+              {desktopNav.map(({ to, label, icon: Icon }) => (
                 <li key={to}>
                   <Link
                     to={to}
@@ -39,13 +46,13 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
       </header>
       <main className="mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16">{children}</main>
       <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
-        <ul className="grid grid-cols-4">
+        <ul className="grid grid-cols-5">
           {nav.map(({ to, label, icon: Icon }) => (
             <li key={to}>
               <Link
                 to={to}
                 activeOptions={{ exact: to === "/" }}
-                className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[11px] font-medium text-forest-foreground/60 transition-colors data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
+                className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[10px] font-medium text-forest-foreground/60 transition-colors data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} />
                 {label}

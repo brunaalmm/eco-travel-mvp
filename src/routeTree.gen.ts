@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreditosRouteImport } from './routes/creditos'
 import { Route as EcoRouteImport } from './routes/eco'
+import { Route as EcobotRouteImport } from './routes/ecobot'
 import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as DestinoIdRouteImport } from './routes/destino.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -30,9 +32,19 @@ const EcoRoute = EcoRouteImport.update({
   path: '/eco',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EcobotRoute = EcobotRouteImport.update({
+  id: '/ecobot',
+  path: '/ecobot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MapaRoute = MapaRouteImport.update({
   id: '/mapa',
   path: '/mapa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinoIdRoute = DestinoIdRouteImport.update({
@@ -45,14 +57,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/creditos': typeof CreditosRoute
   '/eco': typeof EcoRoute
+  '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/sobre': typeof SobreRoute
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/creditos': typeof CreditosRoute
   '/eco': typeof EcoRoute
+  '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/sobre': typeof SobreRoute
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesById {
@@ -60,22 +76,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/creditos': typeof CreditosRoute
   '/eco': typeof EcoRoute
+  '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/sobre': typeof SobreRoute
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/creditos' | '/eco' | '/mapa' | '/destino/$id'
+  fullPaths:
+    '/' | '/creditos' | '/eco' | '/ecobot' | '/mapa' | '/sobre' | '/destino/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/creditos' | '/eco' | '/mapa' | '/destino/$id'
-  id: '__root__' | '/' | '/creditos' | '/eco' | '/mapa' | '/destino/$id'
+  to:
+    '/' | '/creditos' | '/eco' | '/ecobot' | '/mapa' | '/sobre' | '/destino/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/creditos'
+    | '/eco'
+    | '/ecobot'
+    | '/mapa'
+    | '/sobre'
+    | '/destino/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreditosRoute: typeof CreditosRoute
   EcoRoute: typeof EcoRoute
+  EcobotRoute: typeof EcobotRoute
   MapaRoute: typeof MapaRoute
+  SobreRoute: typeof SobreRoute
   DestinoIdRoute: typeof DestinoIdRoute
 }
 
@@ -102,11 +132,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EcoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ecobot': {
+      id: '/ecobot'
+      path: '/ecobot'
+      fullPath: '/ecobot'
+      preLoaderRoute: typeof EcobotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mapa': {
       id: '/mapa'
       path: '/mapa'
       fullPath: '/mapa'
       preLoaderRoute: typeof MapaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destino/$id': {
@@ -123,7 +167,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreditosRoute: CreditosRoute,
   EcoRoute: EcoRoute,
+  EcobotRoute: EcobotRoute,
   MapaRoute: MapaRoute,
+  SobreRoute: SobreRoute,
   DestinoIdRoute: DestinoIdRoute,
 }
 export const routeTree = rootRouteImport
