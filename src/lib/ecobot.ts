@@ -11,8 +11,9 @@ const faq: { k: string[]; a: string }[] = [
 ];
 
 export function answer(q: string) {
-  const s = q.toLowerCase();
-  return faq.find((f) => f.k.some((k) => s.includes(k)))?.a ??
+  const s = ` ${q.toLowerCase().replace(/[?!.,;:]/g, " ")} `;
+  const hit = (k: string) => (k.length <= 3 ? s.includes(` ${k} `) : s.includes(k));
+  return faq.find((f) => f.k.some(hit))?.a ??
     "Boa pergunta! Ainda estou aprendendo sobre isso. Experimente perguntar sobre trilhas, lixo, fauna, hospedagem, gastronomia ou carbono.";
 }
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TreePine } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { destinations, transports, carbonKg, treesToOffset, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
+import { destinations, carbonKg, treesToOffset, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
 import { useCredits } from "@/lib/credits";
 import botRight from "@/assets/bot-right.png";
 import botWrong from "@/assets/bot-wrong.png";
