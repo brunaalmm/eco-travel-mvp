@@ -30,7 +30,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
 /** Modal de dicas do EcoBot, sobre a tela inicial com fundo desfocado. */
 export function TipsModal({ onDone }: { onDone: () => void }) {
   const [step, setStep] = useState(0);
-  const tip = ecoTips[step];
+  const tip = ecoTips[step] ?? ecoTips[ecoTips.length - 1]!;
   const last = step === ecoTips.length - 1;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-forest/40 p-5 backdrop-blur-md animate-in fade-in" role="dialog" aria-modal="true" aria-label="Dicas do EcoBot">
