@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Compass, Map, Leaf, Award, Bot, Info } from "lucide-react";
+import { Compass, Map, Leaf, Award, Bot, Info, LogOut } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
 
 const nav = [
-  { to: "/", label: "Descobrir", icon: Compass },
+  { to: "/descobrir", label: "Descobrir", icon: Compass },
   { to: "/mapa", label: "Mapa", icon: Map },
   { to: "/eco", label: "Carbono", icon: Leaf },
   { to: "/ecobot", label: "EcoBot", icon: Bot },
@@ -17,10 +17,11 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
     <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background shadow-float lg:max-w-none lg:shadow-none">
       <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
         <div className="mx-auto flex h-16 w-full items-center justify-between px-5 lg:h-20 lg:max-w-6xl lg:px-8">
-          <Link to="/" aria-label="EcoTravel início">
+          <Link to="/descobrir" aria-label="EcoTravel início">
             <img src={logo} alt="EcoTravel" className="h-11 w-auto lg:h-14" width={600} height={338} />
           </Link>
           <div className="flex items-center gap-3 lg:hidden">
+            <Link to="/" aria-label="Voltar à entrada" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><LogOut className="h-4 w-4" /></Link>
             {title && <span className="font-display text-sm font-medium opacity-80">{title}</span>}
             <Link to="/sobre" aria-label="Sobre o EcoTravel" className="grid h-9 w-9 place-items-center rounded-full bg-forest-foreground/10 data-[status=active]:bg-leaf">
               <Info className="h-4 w-4" />
@@ -32,7 +33,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                 <li key={to}>
                   <Link
                     to={to}
-                    activeOptions={{ exact: to === "/" }}
+                    activeOptions={{ exact: to === "/descobrir" }}
                     className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-forest-foreground/70 transition-colors hover:text-forest-foreground data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
                   >
                     <Icon className="h-4 w-4" strokeWidth={1.8} />
@@ -40,6 +41,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                   </Link>
                 </li>
               ))}
+              <li><Link to="/" aria-label="Voltar à entrada" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><LogOut className="h-4 w-4" /></Link></li>
             </ul>
           </nav>
         </div>
@@ -51,7 +53,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             <li key={to}>
               <Link
                 to={to}
-                activeOptions={{ exact: to === "/" }}
+                activeOptions={{ exact: to === "/descobrir" }}
                 className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[10px] font-medium text-forest-foreground/60 transition-colors data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} />

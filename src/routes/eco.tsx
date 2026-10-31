@@ -15,6 +15,8 @@ export const Route = createFileRoute("/eco")({
       { name: "description", content: "Calcule a pegada de carbono da sua viagem e tire dúvidas sobre turismo sustentável com o EcoBot." },
       { property: "og:title", content: "Calculadora de pegada de carbono — EcoTravel" },
       { property: "og:description", content: "Calcule o CO₂ da sua viagem e aprenda com o EcoBot." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Eco,

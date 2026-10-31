@@ -12,6 +12,8 @@ export const Route = createFileRoute("/mapa")({
       { name: "description", content: "Mapa interativo com circuitos ecológicos em Peruíbe, Guarujá e Bertioga." },
       { property: "og:title", content: "Mapa e circuitos — EcoTravel" },
       { property: "og:description", content: "Escolha um roteiro e o transporte e veja o circuito completo." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Mapa,
