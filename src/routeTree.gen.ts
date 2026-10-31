@@ -9,7 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as CreditosRouteImport } from './routes/creditos'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DescobrirRouteImport } from './routes/descobrir'
 import { Route as EcoRouteImport } from './routes/eco'
 import { Route as EcobotRouteImport } from './routes/ecobot'
@@ -17,9 +20,24 @@ import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as DestinoIdRouteImport } from './routes/destino.$id'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CreditosRoute = CreditosRouteImport.update({
   id: '/creditos',
   path: '/creditos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DescobrirRoute = DescobrirRouteImport.update({
@@ -54,7 +72,10 @@ const DestinoIdRoute = DestinoIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/creditos': typeof CreditosRoute
+  '/dashboard': typeof DashboardRoute
   '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
@@ -63,7 +84,10 @@ export interface FileRoutesByFullPath {
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/creditos': typeof CreditosRoute
+  '/dashboard': typeof DashboardRoute
   '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
@@ -73,7 +97,10 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/creditos': typeof CreditosRoute
+  '/dashboard': typeof DashboardRoute
   '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
@@ -84,7 +111,10 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
+    | '/cadastro'
     | '/creditos'
+    | '/dashboard'
     | '/descobrir'
     | '/eco'
     | '/ecobot'
@@ -93,7 +123,10 @@ export interface FileRouteTypes {
     | '/destino/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
+    | '/cadastro'
     | '/creditos'
+    | '/dashboard'
     | '/descobrir'
     | '/eco'
     | '/ecobot'
@@ -102,7 +135,10 @@ export interface FileRouteTypes {
     | '/destino/$id'
   id:
     | '__root__'
+    | '/'
+    | '/cadastro'
     | '/creditos'
+    | '/dashboard'
     | '/descobrir'
     | '/eco'
     | '/ecobot'
@@ -112,7 +148,10 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  CadastroRoute: typeof CadastroRoute
   CreditosRoute: typeof CreditosRoute
+  DashboardRoute: typeof DashboardRoute
   DescobrirRoute: typeof DescobrirRoute
   EcoRoute: typeof EcoRoute
   EcobotRoute: typeof EcobotRoute
@@ -123,11 +162,32 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/creditos': {
       id: '/creditos'
       path: '/creditos'
       fullPath: '/creditos'
       preLoaderRoute: typeof CreditosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/descobrir': {
@@ -176,7 +236,10 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  CadastroRoute: CadastroRoute,
   CreditosRoute: CreditosRoute,
+  DashboardRoute: DashboardRoute,
   DescobrirRoute: DescobrirRoute,
   EcoRoute: EcoRoute,
   EcobotRoute: EcobotRoute,
