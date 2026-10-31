@@ -17,6 +17,8 @@ export const Route = createFileRoute("/destino/$id")({
       { name: "description", content: loaderData?.summary ?? "Destino de ecoturismo." },
       { property: "og:title", content: loaderData ? `${loaderData.name} — EcoTravel` : "EcoTravel" },
       { property: "og:description", content: loaderData?.summary ?? "Destino de ecoturismo." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Destino,
@@ -38,7 +40,7 @@ function Destino() {
     <AppShell title={d.name}>
       <div className="relative">
         <img src={d.image} alt={d.name} width={1024} height={768} className="aspect-[5/4] w-full object-cover lg:mt-6 lg:aspect-[21/8] lg:rounded-3xl" />
-        <Link to="/" className="absolute left-4 top-4 lg:top-10 grid h-10 w-10 place-items-center rounded-full bg-card/95 shadow-soft" aria-label="Voltar">
+        <Link to="/descobrir" className="absolute left-4 top-4 lg:top-10 grid h-10 w-10 place-items-center rounded-full bg-card/95 shadow-soft" aria-label="Voltar">
           <ArrowLeft className="h-5 w-5" />
         </Link>
       </div>

@@ -15,6 +15,8 @@ export const Route = createFileRoute("/creditos")({
       { name: "description", content: "Acumule créditos verdes e desbloqueie artigos e o certificado de apoio a projetos sustentáveis." },
       { property: "og:title", content: "Créditos verdes — EcoTravel" },
       { property: "og:description", content: "Desbloqueie conteúdos educativos exclusivos sobre o litoral paulista." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Creditos,

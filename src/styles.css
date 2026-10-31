@@ -39,6 +39,14 @@
   --color-leaf-foreground: var(--leaf-foreground);
   --color-sand: var(--sand);
   --color-sea: var(--sea);
+  --color-brand-google-blue: #4285f4;
+  --color-brand-google-green: #34a853;
+  --color-brand-google-yellow: #fbbc05;
+  --color-brand-google-red: #ea4335;
+  --color-brand-microsoft-red: #f25022;
+  --color-brand-microsoft-green: #7fba00;
+  --color-brand-microsoft-blue: #00a4ef;
+  --color-brand-microsoft-yellow: #ffb900;
 }
 
 :root {
