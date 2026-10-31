@@ -6,7 +6,7 @@ import { SplashScreen, TipsModal } from "@/components/Splash";
 import { HighlightCarousel } from "@/components/HighlightCarousel";
 import { destinations } from "@/lib/data";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/descobrir")({
   head: () => ({
     meta: [
       { title: "EcoTravel — Ecoturismo no litoral paulista" },

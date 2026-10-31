@@ -9,22 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreditosRouteImport } from './routes/creditos'
+import { Route as DescobrirRouteImport } from './routes/descobrir'
 import { Route as EcoRouteImport } from './routes/eco'
 import { Route as EcobotRouteImport } from './routes/ecobot'
 import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as DestinoIdRouteImport } from './routes/destino.$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CreditosRoute = CreditosRouteImport.update({
   id: '/creditos',
   path: '/creditos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DescobrirRoute = DescobrirRouteImport.update({
+  id: '/descobrir',
+  path: '/descobrir',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EcoRoute = EcoRouteImport.update({
@@ -54,8 +54,8 @@ const DestinoIdRoute = DestinoIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/creditos': typeof CreditosRoute
+  '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
@@ -63,8 +63,8 @@ export interface FileRoutesByFullPath {
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/creditos': typeof CreditosRoute
+  '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
@@ -73,8 +73,8 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/creditos': typeof CreditosRoute
+  '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
@@ -84,14 +84,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/creditos' | '/eco' | '/ecobot' | '/mapa' | '/sobre' | '/destino/$id'
+    | '/creditos'
+    | '/descobrir'
+    | '/eco'
+    | '/ecobot'
+    | '/mapa'
+    | '/sobre'
+    | '/destino/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/creditos' | '/eco' | '/ecobot' | '/mapa' | '/sobre' | '/destino/$id'
+    | '/creditos'
+    | '/descobrir'
+    | '/eco'
+    | '/ecobot'
+    | '/mapa'
+    | '/sobre'
+    | '/destino/$id'
   id:
     | '__root__'
-    | '/'
     | '/creditos'
+    | '/descobrir'
     | '/eco'
     | '/ecobot'
     | '/mapa'
@@ -100,8 +112,8 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   CreditosRoute: typeof CreditosRoute
+  DescobrirRoute: typeof DescobrirRoute
   EcoRoute: typeof EcoRoute
   EcobotRoute: typeof EcobotRoute
   MapaRoute: typeof MapaRoute
@@ -111,18 +123,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/creditos': {
       id: '/creditos'
       path: '/creditos'
       fullPath: '/creditos'
       preLoaderRoute: typeof CreditosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/descobrir': {
+      id: '/descobrir'
+      path: '/descobrir'
+      fullPath: '/descobrir'
+      preLoaderRoute: typeof DescobrirRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/eco': {
@@ -164,8 +176,8 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   CreditosRoute: CreditosRoute,
+  DescobrirRoute: DescobrirRoute,
   EcoRoute: EcoRoute,
   EcobotRoute: EcobotRoute,
   MapaRoute: MapaRoute,
