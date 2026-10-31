@@ -1,0 +1,6 @@
+export function ProviderIcon({ provider }: { provider: "google" | "microsoft" }) {
+  if (provider === "microsoft") {
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><path className="fill-brand-microsoft-red" d="M1 1h10v10H1z" /><path className="fill-brand-microsoft-green" d="M13 1h10v10H13z" /><path className="fill-brand-microsoft-blue" d="M1 13h10v10H1z" /><path className="fill-brand-microsoft-yellow" d="M13 13h10v10H13z" /></svg>;
+  }
+  return <svg viewBox="0 0 48 48" aria-hidden="true"><path className="fill-brand-google-yellow" d="M43.6 20.5H42V20H24v8h11.3A12 12 0 1 1 32.5 14l5.7-5.7A20 20 0 1 0 44 24c0-1.2-.1-2.4-.4-3.5Z" /><path className="fill-brand-google-red" d="m6.3 14.7 6.6 4.8A12 12 0 0 1 32.5 14l5.7-5.7A20 20 0 0 0 6.3 14.7Z" /><path className="fill-brand-google-green" d="M24 44c5.2 0 10-2 13.5-5.3l-6.2-5.2A12 12 0 0 1 12.7 28l-6.6 5A20 20 0 0 0 24 44Z" /><path className="fill-brand-google-blue" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4 5.5l6.2 5.2A20 20 0 0 0 44 24c0-1.2-.1-2.4-.4-3.5Z" /></svg>;
+}
