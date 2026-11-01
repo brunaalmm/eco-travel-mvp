@@ -11,3 +11,4 @@
 
 - The public root is a demo entry screen, the tourist home is `/descobrir`, and `/dashboard` is a public manager preview with demonstration data; navigation selection is not authentication or authorization.
 - Demo credentials and profile data must not be persisted or sent anywhere; real account storage requires a separately approved authentication integration.
+- Manager dashboard snapshots and filtering live in a browser-safe data module; PDF exports use the same filtered snapshot and are prepared before clicking to preserve mobile download activation.
