@@ -17,7 +17,10 @@ import { Route as DescobrirRouteImport } from './routes/descobrir'
 import { Route as EcoRouteImport } from './routes/eco'
 import { Route as EcobotRouteImport } from './routes/ecobot'
 import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as TermosRouteImport } from './routes/termos'
 import { Route as DestinoIdRouteImport } from './routes/destino.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -60,9 +63,24 @@ const MapaRoute = MapaRouteImport.update({
   path: '/mapa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinoIdRoute = DestinoIdRouteImport.update({
@@ -80,7 +98,10 @@ export interface FileRoutesByFullPath {
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/perfil': typeof PerfilRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesByTo {
@@ -92,7 +113,10 @@ export interface FileRoutesByTo {
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/perfil': typeof PerfilRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRoutesById {
@@ -105,7 +129,10 @@ export interface FileRoutesById {
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/perfil': typeof PerfilRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
   '/destino/$id': typeof DestinoIdRoute
 }
 export interface FileRouteTypes {
@@ -119,7 +146,10 @@ export interface FileRouteTypes {
     | '/eco'
     | '/ecobot'
     | '/mapa'
+    | '/perfil'
+    | '/privacidade'
     | '/sobre'
+    | '/termos'
     | '/destino/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -131,7 +161,10 @@ export interface FileRouteTypes {
     | '/eco'
     | '/ecobot'
     | '/mapa'
+    | '/perfil'
+    | '/privacidade'
     | '/sobre'
+    | '/termos'
     | '/destino/$id'
   id:
     | '__root__'
@@ -143,7 +176,10 @@ export interface FileRouteTypes {
     | '/eco'
     | '/ecobot'
     | '/mapa'
+    | '/perfil'
+    | '/privacidade'
     | '/sobre'
+    | '/termos'
     | '/destino/$id'
   fileRoutesById: FileRoutesById
 }
@@ -156,7 +192,10 @@ export interface RootRouteChildren {
   EcoRoute: typeof EcoRoute
   EcobotRoute: typeof EcobotRoute
   MapaRoute: typeof MapaRoute
+  PerfilRoute: typeof PerfilRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
   SobreRoute: typeof SobreRoute
+  TermosRoute: typeof TermosRoute
   DestinoIdRoute: typeof DestinoIdRoute
 }
 
@@ -218,11 +257,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
       fullPath: '/sobre'
       preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destino/$id': {
@@ -244,7 +304,10 @@ const rootRouteChildren: RootRouteChildren = {
   EcoRoute: EcoRoute,
   EcobotRoute: EcobotRoute,
   MapaRoute: MapaRoute,
+  PerfilRoute: PerfilRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
   SobreRoute: SobreRoute,
+  TermosRoute: TermosRoute,
   DestinoIdRoute: DestinoIdRoute,
 }
 export const routeTree = rootRouteImport
