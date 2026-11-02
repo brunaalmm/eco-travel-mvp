@@ -2,7 +2,9 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, Star, Map, Mountain, BedDouble, UtensilsCrossed, Footprints } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { getDestination, type Place } from "@/lib/data";
+import { getDestination, destinationDescription, type Place } from "@/lib/data";
+import { AccessibleContent } from "@/components/AccessibleContent";
+import { Button } from "@/components/ui/button";
 import botWave from "@/assets/bot-wave.png";
 
 export const Route = createFileRoute("/destino/$id")({
@@ -45,19 +47,20 @@ function Destino() {
         </Link>
       </div>
       <div className="relative -mt-8 rounded-t-[2rem] bg-background px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:px-10">
+        <div className="mb-4"><AccessibleContent key={d.id} title={d.name} text={destinationDescription(d)} route /></div>
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-primary">{d.region}</span>
-          <span className="flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-warning text-warning" /><b>{d.rating}</b></span>
+          {d.reviews > 0 && <span className="flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-warning text-warning" /><b>{d.rating}</b></span>}
         </div>
         <h1 className="mt-1 text-3xl font-semibold">{d.name}</h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.summary}</p>
 
         <div className="mt-5 grid grid-cols-4 gap-2">
           {tabs.map(({ key, label, icon: Icon }) => (
-            <button key={key} onClick={() => setTab(key)}
-              className={`flex flex-col items-center gap-1 rounded-2xl py-3 text-[11px] font-medium transition-colors ${tab === key ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>
+            <Button key={key} variant="ghost" aria-pressed={tab === key} onClick={() => setTab(key)}
+              className={`flex h-auto flex-col items-center gap-1 rounded-2xl px-1 py-3 text-[11px] font-medium transition-colors ${tab === key ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>
               <Icon className="h-5 w-5" strokeWidth={1.8} />{label}
-            </button>
+            </Button>
           ))}
         </div>
 

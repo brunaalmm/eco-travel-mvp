@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Compass, Map, Leaf, Award, Bot, Info, LogOut } from "lucide-react";
+import { Compass, Map, Leaf, Award, Bot, Info, LogOut, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
 
@@ -20,9 +20,10 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           <Link to="/descobrir" aria-label="EcoTravel início">
             <img src={logo} alt="EcoTravel" className="h-11 w-auto lg:h-14" width={600} height={338} />
           </Link>
-          <div className="flex items-center gap-3 lg:hidden">
+          <div className="flex items-center gap-1 lg:hidden">
+            <Link to="/perfil" aria-label="Perfil e configurações" title="Perfil e configurações" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><UserRound className="h-4 w-4" /></Link>
             <Link to="/" aria-label="Voltar à entrada" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><LogOut className="h-4 w-4" /></Link>
-            {title && <span className="font-display text-sm font-medium opacity-80">{title}</span>}
+            {title && <span className="hidden font-display text-sm font-medium opacity-80 sm:inline">{title}</span>}
             <Link to="/sobre" aria-label="Sobre o EcoTravel" className="grid h-9 w-9 place-items-center rounded-full bg-forest-foreground/10 data-[status=active]:bg-leaf">
               <Info className="h-4 w-4" />
             </Link>
@@ -34,13 +35,14 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                   <Link
                     to={to}
                     activeOptions={{ exact: to === "/descobrir" }}
-                    className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-forest-foreground/70 transition-colors hover:text-forest-foreground data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
+                    className="flex items-center gap-2 rounded-full px-2 py-2 text-sm font-medium text-forest-foreground/70 transition-colors hover:text-forest-foreground data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
                   >
                     <Icon className="h-4 w-4" strokeWidth={1.8} />
                     {label}
                   </Link>
                 </li>
               ))}
+              <li><Link to="/perfil" aria-label="Perfil e configurações" title="Perfil e configurações" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10 data-[status=active]:bg-leaf"><UserRound className="h-4 w-4" /></Link></li>
               <li><Link to="/" aria-label="Voltar à entrada" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><LogOut className="h-4 w-4" /></Link></li>
             </ul>
           </nav>
