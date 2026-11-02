@@ -4,15 +4,17 @@ import { Search, Star, Leaf, MapPin } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { SplashScreen, TipsModal } from "@/components/Splash";
 import { HighlightCarousel } from "@/components/HighlightCarousel";
-import { destinations } from "@/lib/data";
+import { macroRegions, filterDestinations, type MacroRegion } from "@/lib/data";
+import { Button } from "@/components/ui/button";
+import { DestinationDialog } from "@/components/DestinationDialog";
 
 export const Route = createFileRoute("/descobrir")({
   head: () => ({
     meta: [
-      { title: "EcoTravel — Ecoturismo no litoral paulista" },
-      { name: "description", content: "Roteiros curados e sustentáveis em Peruíbe, Guarujá e Bertioga, com dicas do EcoBot." },
-      { property: "og:title", content: "EcoTravel — Ecoturismo no litoral paulista" },
-      { property: "og:description", content: "Roteiros curados e sustentáveis em Peruíbe, Guarujá e Bertioga." },
+      { title: "Descobrir São Paulo — EcoTravel" },
+      { name: "description", content: "Sete roteiros sustentáveis pelo Litoral, Grande SP e Interior paulista, com recursos de acessibilidade." },
+      { property: "og:title", content: "Descobrir São Paulo — EcoTravel" },
+      { property: "og:description", content: "Ecoturismo pelo Litoral, Grande SP e Interior de São Paulo." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -23,7 +25,8 @@ export const Route = createFileRoute("/descobrir")({
 function Descobrir() {
   const [phase, setPhase] = useState<"splash" | "tips" | null>(null);
   const [q, setQ] = useState("");
-  const [where, setWhere] = useState("todos");
+  const [where, setWhere] = useState<MacroRegion>("Todos");
+  const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
     if (!sessionStorage.getItem("eco-splash")) setPhase("splash");
@@ -35,12 +38,7 @@ function Descobrir() {
   };
 
   const list = useMemo(
-    () =>
-      destinations.filter(
-        (d) =>
-          (where === "todos" || d.id === where) &&
-          (d.name + d.region + d.summary).toLowerCase().includes(q.toLowerCase()),
-      ),
+    () => filterDestinations(where, q),
     [q, where],
   );
 
@@ -59,22 +57,25 @@ function Descobrir() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Aonde vamos?"
+            aria-label="Buscar roteiros"
             className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
         </label>
 
         <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Onde ir</p>
-        <div className="-mx-5 mt-2 flex gap-2 overflow-x-auto px-5 pb-1">
-          {[{ id: "todos", name: "Todos" }, ...destinations].map((d) => (
-            <button
-              key={d.id}
-              onClick={() => setWhere(d.id)}
-              className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                where === d.id ? "bg-forest text-forest-foreground" : "bg-card text-foreground shadow-soft"
+        <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Onde ir">
+          {macroRegions.map((region) => (
+            <Button
+              key={region}
+              onClick={() => setWhere(region)}
+              aria-pressed={where === region}
+              variant="ghost"
+              className={`h-auto min-h-10 max-w-full whitespace-normal rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                where === region ? "bg-forest text-forest-foreground hover:bg-forest/90 hover:text-forest-foreground" : "bg-card text-foreground shadow-soft"
               }`}
             >
-              {d.name}
-            </button>
+              {region}
+            </Button>
           ))}
         </div>
       </section>
@@ -86,11 +87,12 @@ function Descobrir() {
         </div>
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((d, i) => (
-            <Link
+            <Button
               key={d.id}
-              to="/destino/$id"
-              params={{ id: d.id }}
-              className="group overflow-hidden rounded-3xl bg-card shadow-soft animate-rise"
+              onClick={() => setSelected(d.id)}
+              variant="ghost"
+              aria-label={`Ver ${d.circuit.title}`}
+              className="group block h-auto w-full overflow-hidden whitespace-normal rounded-3xl bg-card p-0 text-left shadow-soft animate-rise"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -101,18 +103,19 @@ function Descobrir() {
                 </span>
               </div>
               <div className="p-5">
-                <div className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{d.region}</div>
+                 <div className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{d.region}</div>
                 <h3 className="mt-1 text-lg font-semibold">{d.circuit.title}</h3>
                 <div className="mt-2 flex items-center gap-1 text-sm">
                   <Star className="h-4 w-4 fill-warning text-warning" />
-                  <b>{d.rating}</b><span className="text-muted-foreground">({d.reviews} avaliações)</span>
+                   {d.reviews > 0 ? <><b>{d.rating}</b><span className="text-muted-foreground">({d.reviews} avaliações)</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
                 </div>
               </div>
-            </Link>
+            </Button>
           ))}
           {!list.length && <p className="py-10 text-center text-sm text-muted-foreground">Nenhum roteiro encontrado.</p>}
         </div>
       </section>
+      <DestinationDialog id={selected} onClose={() => setSelected(null)} />
     </AppShell>
   );
 }

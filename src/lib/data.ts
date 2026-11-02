@@ -1,6 +1,13 @@
 import peruibe from "@/assets/peruibe.jpg";
 import guaruja from "@/assets/guaruja.jpg";
 import bertioga from "@/assets/bertioga.jpg";
+import paranapiacaba from "@/assets/paranapiacaba.jpg";
+import saoPaulo from "@/assets/sao-paulo.jpg";
+import jundiai from "@/assets/jundiai.jpg";
+import brotas from "@/assets/brotas.jpg";
+
+export const macroRegions = ["Todos", "Litoral", "Região Metropolitana / Grande SP", "Interior"] as const;
+export type MacroRegion = (typeof macroRegions)[number];
 
 export type Place = { name: string; desc: string; tag?: string };
 export type Stop = { name: string; km: number; min: number; kind: string };
@@ -9,6 +16,7 @@ export type Destination = {
   id: string;
   name: string;
   region: string;
+  macroRegion: Exclude<MacroRegion, "Todos">;
   image: string;
   duration: string;
   rating: number;
@@ -27,6 +35,7 @@ export const destinations: Destination[] = [
     id: "peruibe",
     name: "Peruíbe",
     region: "Litoral Sul · SP",
+    macroRegion: "Litoral",
     image: peruibe,
     duration: "2 DIAS",
     rating: 4.9,
@@ -67,6 +76,7 @@ export const destinations: Destination[] = [
     id: "guaruja",
     name: "Guarujá",
     region: "Baixada Santista · SP",
+    macroRegion: "Litoral",
     image: guaruja,
     duration: "1 DIA",
     rating: 4.7,
@@ -105,6 +115,7 @@ export const destinations: Destination[] = [
     id: "bertioga",
     name: "Bertioga",
     region: "Litoral Norte · SP",
+    macroRegion: "Litoral",
     image: bertioga,
     duration: "2 DIAS",
     rating: 4.8,
@@ -141,6 +152,62 @@ export const destinations: Destination[] = [
   },
 ];
 
+destinations.push(
+  {
+    id: "paranapiacaba", name: "Paranapiacaba", region: "Santo André · SP", macroRegion: "Região Metropolitana / Grande SP",
+    image: paranapiacaba, duration: "1 DIA", rating: 4.8, reviews: 0,
+    summary: "Preservação ferroviária e Mata Atlântica de serra no ABC: arquitetura histórica, memória operária e biodiversidade em Santo André.",
+    map: { x: 51, y: 23 },
+    attractions: [{ name: "Vila ferroviária", desc: "Casas de madeira e patrimônio ligado à São Paulo Railway.", tag: "Patrimônio" }, { name: "Parque Natural Municipal Nascentes de Paranapiacaba", desc: "Mata Atlântica de serra. Consulte regras de acesso e acompanhamento local.", tag: "Conservação" }],
+    lodging: [{ name: "Hospedagem na vila", desc: "Consulte opções locais e práticas ambientais diretamente com os responsáveis." }],
+    food: [{ name: "Culinária local", desc: "Valorize pequenos negócios e produtos da comunidade." }],
+    tours: [{ name: "Memória ferroviária", desc: "Conheça a história da vila com condutores locais.", tag: "Cultura" }],
+    circuit: { title: "Vila Histórica de Paranapiacaba", stops: [{ name: "Vila ferroviária", km: 0, min: 0, kind: "Patrimônio" }, { name: "Museu e entorno da estação", km: 1, min: 25, kind: "História" }, { name: "Entorno do parque natural", km: 2, min: 40, kind: "Mata Atlântica" }] },
+  },
+  {
+    id: "sao-paulo", name: "São Paulo", region: "São Paulo · SP", macroRegion: "Região Metropolitana / Grande SP",
+    image: saoPaulo, duration: "1 DIA", rating: 4.8, reviews: 0,
+    summary: "Mobilidade ativa e áreas verdes urbanas da Capital: duas alternativas de passeio, Parque Ibirapuera e Horto Florestal, para caminhar e contemplar a natureza.",
+    map: { x: 32, y: 16 },
+    attractions: [{ name: "Parque Ibirapuera", desc: "Lagos, caminhos arborizados e espaços culturais.", tag: "Parque urbano" }, { name: "Horto Florestal", desc: "Áreas verdes na zona norte; uma alternativa de visita em outro ponto da cidade.", tag: "Biodiversidade" }],
+    lodging: [{ name: "Hospedagens próximas ao transporte público", desc: "Priorize acesso por transporte coletivo e práticas de baixo impacto." }],
+    food: [{ name: "Feiras e comércio de bairro", desc: "Prefira produtos locais e evite descartáveis." }],
+    tours: [{ name: "Caminhada no parque", desc: "Caminhos urbanos para mobilidade ativa. Consulte as condições de acessibilidade do parque." }],
+    circuit: { title: "Parque Ibirapuera / Horto Florestal", stops: [{ name: "Entrada do Ibirapuera", km: 0, min: 0, kind: "Parque" }, { name: "Lago e caminhos arborizados", km: 2, min: 40, kind: "Caminhada" }, { name: "Espaços culturais", km: 1, min: 20, kind: "Cultura" }] },
+  },
+  {
+    id: "jundiai", name: "Jundiaí", region: "Jundiaí · SP", macroRegion: "Interior",
+    image: jundiai, duration: "2 DIAS", rating: 4.9, reviews: 0,
+    summary: "Conservação e ecoturismo no Interior, com destaque para a Serra do Japi. O Circuito das Águas é uma proposta regional complementar, não uma trilha contínua.",
+    map: { x: 23, y: 36 },
+    attractions: [{ name: "Serra do Japi", desc: "Patrimônio de Mata Atlântica. Visitas dependem de regras e autorização dos responsáveis.", tag: "Conservação" }, { name: "Circuito das Águas", desc: "Paisagens e cultura em municípios do interior paulista.", tag: "Regional" }],
+    lodging: [{ name: "Hospedagens rurais", desc: "Consulte práticas de conservação de água e manejo de resíduos." }],
+    food: [{ name: "Produtores locais", desc: "Alimentos regionais e agricultura familiar." }],
+    tours: [{ name: "Educação ambiental", desc: "Observe a floresta sem retirar plantas ou alimentar animais." }],
+    circuit: { title: "Circuito das Águas / Serra do Japi", stops: [{ name: "Ponto de encontro autorizado", km: 0, min: 0, kind: "Início" }, { name: "Trilha interpretativa", km: 3, min: 70, kind: "Floresta" }, { name: "Observação da paisagem", km: 1, min: 25, kind: "Conservação" }] },
+  },
+  {
+    id: "brotas", name: "Brotas", region: "Brotas · SP", macroRegion: "Interior",
+    image: brotas, duration: "2 DIAS", rating: 4.9, reviews: 0,
+    summary: "Turismo de aventura sustentável e preservação de rios no Interior: corredeiras, mata ciliar e educação ambiental na bacia do rio Jacaré-Pepira.",
+    map: { x: 76, y: 9 },
+    attractions: [{ name: "Rio Jacaré-Pepira", desc: "Corredeiras e mata ciliar: preserve a água e siga as orientações de segurança.", tag: "Rio" }, { name: "Parque dos Saltos", desc: "Paisagem fluvial e patrimônio no centro da cidade.", tag: "Natureza" }],
+    lodging: [{ name: "Hospedagens de baixo impacto", desc: "Consulte medidas de economia de água e proteção das margens." }],
+    food: [{ name: "Cozinha do interior", desc: "Apoie produtores e restaurantes da comunidade." }],
+    tours: [{ name: "Aventura responsável", desc: "Atividades aquáticas exigem equipamentos adequados e orientação profissional.", tag: "Segurança" }],
+    circuit: { title: "Rota Verde de Brotas", stops: [{ name: "Parque dos Saltos", km: 0, min: 0, kind: "Parque" }, { name: "Margens do rio", km: 2, min: 40, kind: "Mata ciliar" }, { name: "Ponto de observação", km: 1, min: 25, kind: "Rio" }] },
+  },
+);
+
+export function filterDestinations(region: MacroRegion, query = "") {
+  const search = query.trim().toLocaleLowerCase("pt-BR");
+  return destinations.filter((d) => (region === "Todos" || d.macroRegion === region) && `${d.name} ${d.region} ${d.summary} ${d.circuit.title}`.toLocaleLowerCase("pt-BR").includes(search));
+}
+
+export function destinationDescription(d: Destination) {
+  return `${d.circuit.title}, em ${d.region}. ${d.summary} Esta é uma paisagem ilustrativa. ${d.attractions.map((p) => `${p.name}: ${p.desc}`).join(" ")} As condições de acessibilidade física não foram verificadas. Confirme terreno, rampas, sanitários acessíveis e apoio com os responsáveis antes de visitar.`;
+}
+
 export const getDestination = (id: string) => destinations.find((d) => d.id === id);
 
 export const circuitTotals = (stops: Stop[]) => ({
@@ -162,8 +229,8 @@ export const transports = [
 export type TransportId = (typeof transports)[number]["id"];
 
 export function carbonKg(km: number, transport: TransportId) {
-  const t = transports.find((x) => x.id === transport)!;
-  return Math.round(km * t.factor * 100) / 100;
+  const t = transports.find((x) => x.id === transport);
+  return Math.round(km * (t?.factor ?? 0) * 100) / 100;
 }
 
 /** Acima desta distância (km), a pé e bicicleta deixam de ser comparações realistas. */
@@ -179,7 +246,7 @@ export function realisticTransports(km: number) {
 export const treesToOffset = (kg: number) => Math.ceil(kg / 7);
 
 /** Distância de ida e volta a partir de São Paulo capital. */
-export const tripKm: Record<string, number> = { peruibe: 280, guaruja: 180, bertioga: 210 };
+export const tripKm: Record<string, number> = { peruibe: 280, guaruja: 180, bertioga: 210, paranapiacaba: 120, "sao-paulo": 20, jundiai: 120, brotas: 500 };
 
 export const ecoTips = [
   { title: "Leve sua garrafinha", text: "Garrafas reutilizáveis evitam centenas de plásticos por ano." },
@@ -191,5 +258,6 @@ export const ecoTips = [
 
 export const rewards = [
   { id: "cobras", goal: 50, title: "Ilha da Queimada Grande", subtitle: "Artigo exclusivo: a Ilha das Cobras" },
+  { id: "paranapiacaba", goal: 50, title: "Vila de Paranapiacaba: O Berço dos Ingleses", subtitle: "Artigo exclusivo: história e Mata Atlântica" },
   { id: "certificado", goal: 120, title: "Certificado Verde", subtitle: "Apoio a projetos sustentáveis locais" },
 ];
