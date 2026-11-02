@@ -100,7 +100,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: 0; }
 }
 
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
@@ -118,4 +118,67 @@
 .dashboard-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
 @media (prefers-reduced-motion: reduce) {
   .dashboard-chart circle { transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+.dark {
+  --background: oklch(0.2 0.025 183);
+  --foreground: oklch(0.96 0.012 145);
+  --card: oklch(0.26 0.03 183);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --muted: oklch(0.3 0.025 183);
+  --muted-foreground: oklch(0.8 0.02 145);
+  --accent: oklch(0.34 0.04 145);
+  --accent-foreground: var(--foreground);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--foreground);
+  --border: oklch(0.45 0.03 183);
+  --input: var(--border);
+  --sand: var(--background);
+  --dashboard-row: var(--card);
+}
+.high-contrast {
+  --background: #fff;
+  --foreground: #000;
+  --card: #fff;
+  --card-foreground: #000;
+  --popover: #fff;
+  --popover-foreground: #000;
+  --muted: #eee;
+  --muted-foreground: #111;
+  --accent: #e3f9e3;
+  --accent-foreground: #000;
+  --secondary: #eee;
+  --secondary-foreground: #000;
+  --primary: #175a27;
+  --primary-foreground: #fff;
+  --leaf: #175a27;
+  --leaf-foreground: #fff;
+  --forest: #000;
+  --forest-foreground: #fff;
+  --border: #000;
+  --input: #000;
+  --sand: var(--background);
+}
+.dark.high-contrast {
+  --background: #000;
+  --foreground: #fff;
+  --card: #111;
+  --card-foreground: #fff;
+  --popover: #111;
+  --popover-foreground: #fff;
+  --muted: #222;
+  --muted-foreground: #fff;
+  --accent: #123319;
+  --accent-foreground: #fff;
+  --secondary: #222;
+  --secondary-foreground: #fff;
+  --border: #fff;
+  --input: #fff;
+}
+html[data-font-level="1"] { font-size: 18px; }
+html[data-font-level="2"] { font-size: 20px; }
+html[data-font-level="3"] { font-size: 22px; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
