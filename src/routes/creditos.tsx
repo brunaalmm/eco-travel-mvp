@@ -7,6 +7,14 @@ import { useCredits } from "@/lib/credits";
 import botJoy from "@/assets/bot-joy.png";
 import botWink from "@/assets/bot-wink.png";
 import icon from "@/assets/app-icon.png";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { AccessibleContent } from "@/components/AccessibleContent";
+import village from "@/assets/paranapiacaba.jpg";
+
+const villageHistory = "Construída no século XIX pela empresa britânica São Paulo Railway, a vila operária de Paranapiacaba, em Santo André, serviu de centro de controle para as locomotivas que subiam a serra com o café rumo ao Porto de Santos. Famosa por sua neblina característica, preserva a arquitetura vitoriana original e uma rica biodiversidade de Mata Atlântica.";
+const villageCuriosity = "Curiosidade: O famoso relógio da estação de Paranapiacaba foi inspirado no estilo do Big Ben em Londres!";
+const islandDescription = "A Ilha da Queimada Grande, perto do litoral de Itanhaém e Peruíbe, abriga a jararaca-ilhoa, serpente exclusiva deste lugar. A ilha tem encostas rochosas e vegetação de Mata Atlântica. A espécie está criticamente ameaçada. O desembarque é restrito a pesquisadores autorizados. Preserve a fauna e apoie a pesquisa científica.";
 
 export const Route = createFileRoute("/creditos")({
   head: () => ({
@@ -49,10 +57,10 @@ function Creditos() {
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {rewards.map((r) => {
             const ok = credits >= r.goal;
-            const Icon = r.id === "cobras" ? BookOpen : Award;
+            const Icon = r.id === "certificado" ? Award : BookOpen;
             return (
-              <button key={r.id} disabled={!ok} onClick={() => setOpen(r.id)}
-                className={`flex items-center gap-4 rounded-3xl p-4 text-left shadow-soft ${ok ? "bg-card" : "bg-muted"}`}>
+              <Button key={r.id} variant="ghost" disabled={!ok} onClick={() => setOpen(r.id)}
+                className={`flex h-auto items-center gap-4 whitespace-normal rounded-3xl p-4 text-left shadow-soft ${ok ? "bg-card" : "bg-muted"}`}>
                 <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${ok ? "bg-leaf text-leaf-foreground" : "bg-card text-muted-foreground"}`}>
                   {ok ? <Icon className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
                 </span>
@@ -61,20 +69,20 @@ function Creditos() {
                   <span className="block text-xs text-muted-foreground">{r.subtitle}</span>
                 </span>
                 <span className="shrink-0 text-xs font-bold">{ok ? "Abrir" : `${r.goal} pts`}</span>
-              </button>
+              </Button>
             );
           })}
         </div>
       </section>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/60 lg:items-center" onClick={() => setOpen(null)}>
-          <div className="max-h-[85vh] w-full max-w-[440px] overflow-y-auto rounded-t-[2rem] bg-background p-6 animate-rise lg:max-w-xl lg:rounded-[2rem]" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setOpen(null)} className="float-right grid h-9 w-9 place-items-center rounded-full bg-muted" aria-label="Fechar"><X className="h-4 w-4" /></button>
-            {open === "cobras" ? <Article /> : <Certificate />}
-          </div>
-        </div>
-      )}
+      <Dialog open={!!open} onOpenChange={(value) => { if (!value) setOpen(null); }}>
+        {open && <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-lg">
+          {open !== "certificado" && <AccessibleContent key={open} title={open === "cobras" ? "Ilha da Queimada Grande" : "Paranapiacaba"} text={open === "cobras" ? islandDescription : `${villageHistory} ${villageCuriosity}`} />}
+          <DialogTitle className="sr-only">{rewards.find((r) => r.id === open)?.title}</DialogTitle>
+          <DialogDescription className="sr-only">Conteúdo exclusivo do EcoTravel</DialogDescription>
+          {open === "cobras" ? <Article /> : open === "paranapiacaba" ? <VillageArticle /> : <Certificate />}
+        </DialogContent>}
+      </Dialog>
     </AppShell>
   );
 }
@@ -98,6 +106,10 @@ function Article() {
   );
 }
 
+function VillageArticle() {
+  return <article><span className="text-xs font-semibold uppercase tracking-wider text-primary">Conteúdo exclusivo</span><h2 className="mt-1 text-2xl font-semibold">Vila de Paranapiacaba: O Berço dos Ingleses</h2><img src={village} alt="Imagem ilustrativa da vila ferroviária de Paranapiacaba" width={1024} height={768} loading="lazy" className="mt-4 aspect-[4/3] w-full rounded-lg object-cover" /><p className="mt-4 text-sm leading-relaxed text-muted-foreground">{villageHistory}</p><div className="mt-5 flex items-start gap-3 rounded-lg bg-accent p-3"><img src={botWink} alt="EcoBot" className="h-14 w-14 shrink-0 object-contain" /><p className="text-sm">{villageCuriosity}</p></div></article>;
+}
+
 function Certificate() {
   return (
     <div className="text-center">
@@ -110,7 +122,7 @@ function Certificate() {
         </p>
         <p className="mt-4 font-display text-sm font-semibold">{new Date().toLocaleDateString("pt-BR")}</p>
       </div>
-      <button onClick={() => window.print()} className="mt-5 h-12 w-full rounded-full bg-leaf font-semibold text-leaf-foreground">Salvar / imprimir</button>
+      <Button variant="leaf" onClick={() => window.print()} className="mt-5 w-full">Salvar / imprimir</Button>
     </div>
   );
 }

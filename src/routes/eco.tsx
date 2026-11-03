@@ -55,10 +55,10 @@ function Calc() {
       <p className="mt-1 text-sm text-muted-foreground">Selecione um roteiro já realizado e o transporte usado.</p>
 
       <label className="mt-5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">Roteiro</label>
-      <div className="mt-2 grid grid-cols-3 gap-2">
+      <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
         {destinations.map((d) => (
-          <button key={d.id} onClick={() => { setRoute(d.id); setKm(String(tripKm[d.id])); }}
-            className={`rounded-2xl py-3 text-sm font-medium ${route === d.id ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>{d.name}</button>
+          <Button key={d.id} variant="ghost" aria-pressed={route === d.id} onClick={() => { setRoute(d.id); setKm(String(tripKm[d.id] ?? 0)); }}
+            className={`h-auto whitespace-normal rounded-2xl py-3 text-sm font-medium ${route === d.id ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>{d.name}</Button>
         ))}
       </div>
 

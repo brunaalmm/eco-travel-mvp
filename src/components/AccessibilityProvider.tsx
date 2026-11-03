@@ -10,7 +10,7 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement;
     root.classList.toggle("dark", dark);
     root.classList.toggle("high-contrast", contrast);
-    root.dataset.fontLevel = String(fontLevel);
+    root.dataset["fontLevel"] = String(fontLevel);
   }, [contrast, dark, fontLevel]);
   return <SettingsContext.Provider value={{ contrast, dark, fontLevel, setContrast, setDark, setFontLevel }}>{children}</SettingsContext.Provider>;
 }
