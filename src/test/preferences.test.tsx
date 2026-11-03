@@ -9,14 +9,14 @@ afterEach(() => { cleanup(); localStorage.clear(); });
 describe('Primeiro acesso', () => {
   it('bloqueia telas e dicas até completar as três respostas', async () => {
     render(<PreferencesProvider><p>Dicas educativas</p></PreferencesProvider>);
-    await screen.findByRole('button', { name: 'Praias', exact: true });
+    await screen.findByRole('button', { name: 'Praias' });
     expect(screen.queryByText('Dicas educativas')).toBeNull();
     const save = screen.getByRole('button', { name: 'Salvar Preferências e Gerar Roteiros com IA' });
     expect(save).toBeDisabled();
-    fireEvent.click(screen.getByRole('button', { name: 'Praias', exact: true }));
-    fireEvent.click(screen.getByRole('button', { name: 'Ônibus', exact: true }));
+    fireEvent.click(screen.getByRole('button', { name: 'Praias' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ônibus' }));
     expect(save).toBeDisabled();
-    fireEvent.click(screen.getByRole('button', { name: 'Apoio local', exact: true }));
+    fireEvent.click(screen.getByRole('button', { name: 'Apoio local' }));
     fireEvent.click(save);
     await screen.findByText('Dicas educativas');
     expect(parsePreferences(localStorage.getItem(preferenceKey))).toEqual({ style: 'Praias', mode: 'Ônibus', impact: 'Apoio local', simulatedLocation: false });
@@ -25,7 +25,7 @@ describe('Primeiro acesso', () => {
     localStorage.setItem(preferenceKey, JSON.stringify(preferences));
     render(<PreferencesProvider><p>Roteiros disponíveis</p></PreferencesProvider>);
     await waitFor(() => expect(screen.getByText('Roteiros disponíveis')).toBeInTheDocument());
-    expect(screen.queryByRole('button', { name: 'Praias', exact: true })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Praias' })).toBeNull();
   });
   it('descarta preferências incompletas ou inválidas', () => {
     expect(parsePreferences('{"style":"Praias"}')).toBeNull();
