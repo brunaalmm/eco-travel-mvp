@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "4effda01-28b2-495c-8562-1d93aeb8836f",
-  "project_id": "db46e759-a832-4a15-a7b0-776b655de7c2",
-  "url": "/__l5e/assets-v1/4effda01-28b2-495c-8562-1d93aeb8836f/libras-demo.mp4",
-  "r2_key": "a/v1/db46e759-a832-4a15-a7b0-776b655de7c2/4effda01-28b2-495c-8562-1d93aeb8836f/libras-demo.mp4",
-  "original_filename": "libras-demo.mp4",
-  "size": 186265,
   "content_type": "video/mp4",
-  "created_at": "2026-11-02T09:15:42Z"
+  "created_at": "2026-11-02T09:15:42Z",
+  "original_filename": "libras-demo.mp4",
+  "project_id": "944544f4-6794-42e9-a4b2-c7e602dbcce7",
+  "r2_key": "a/v1/944544f4-6794-42e9-a4b2-c7e602dbcce7/4effda01-28b2-495c-8562-1d93aeb8836f/libras-demo.mp4",
+  "size": 186265,
+  "url": "/__l5e/assets-v1/4effda01-28b2-495c-8562-1d93aeb8836f/libras-demo.mp4",
+  "version": 1
 }
