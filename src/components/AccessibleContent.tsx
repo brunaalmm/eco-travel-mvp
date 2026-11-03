@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Hand, Pause, Play, Volume2, X } from "lucide-react";
+import { Hand, Pause, Play, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import libras from "@/assets/libras-demo.mp4.asset.json";
+import libras from "@/assets/libras-oi.mp4.asset.json";
 
 export function AccessibleContent({ text, title, route = false }: { text: string; title: string; route?: boolean }) {
   const [audio, setAudio] = useState(false);
@@ -17,9 +17,9 @@ export function AccessibleContent({ text, title, route = false }: { text: string
     <Dialog open={signs} onOpenChange={setSigns}>
       <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg">
         <DialogTitle>Libras · {title}</DialogTitle>
-        <DialogDescription>Vídeo demonstrativo do sinal “cachorro”. Não é uma tradução deste conteúdo.</DialogDescription>
+        <DialogDescription>Demonstração de saudação “Oi” em Libras. Não é uma tradução deste conteúdo.</DialogDescription>
         <SignVideo />
-        <p className="text-xs text-muted-foreground">Fred Maranhão · <a className="underline" href="https://commons.wikimedia.org/wiki/File:Libras-cachorro.ogv" target="_blank" rel="noreferrer">Wikimedia Commons</a> · <a className="underline" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">CC BY-SA 3.0</a></p>
+        <p className="text-xs text-muted-foreground">Animação fornecida para demonstração de saudação.</p>
       </DialogContent>
     </Dialog>
   </>;
@@ -30,7 +30,7 @@ function SignVideo() {
   const [playing, setPlaying] = useState(false);
   const [error, setError] = useState(false);
   return <div>
-    <video ref={ref} src={libras.url} loop playsInline controls preload="auto" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setError(true)} className="aspect-video w-full rounded-lg bg-muted object-contain" aria-label="Pessoa demonstrando o sinal cachorro em Libras" />
+    <video ref={ref} src={libras.url} loop playsInline controls preload="auto" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setError(true)} className="aspect-square max-h-[55dvh] w-full rounded-lg bg-muted object-contain" aria-label="Intérprete animado demonstrando a saudação Oi em Libras" />
     {error ? <p role="alert">O vídeo não está disponível neste navegador.</p> : <Button className="mt-3 w-full" variant="outline" onClick={() => { const video = ref.current; if (!video) return; if (video.paused) void video.play().catch(() => setError(true)); else video.pause(); }}>{playing ? <Pause /> : <Play />}{playing ? "Pausar Libras" : "Reproduzir Libras"}</Button>}
   </div>;
 }
