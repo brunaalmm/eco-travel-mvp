@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Bus, Car, Footprints, Route as RouteIcon, Clock } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { Button } from "@/components/ui/button";
 import { destinations, getDestination, circuitTotals, formatMin, carbonKg, type TransportId } from "@/lib/data";
 
 export const Route = createFileRoute("/mapa")({
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/mapa")({
   head: () => ({
     meta: [
       { title: "Mapa e circuitos ecológicos — EcoTravel" },
-      { name: "description", content: "Mapa interativo com circuitos ecológicos em Peruíbe, Guarujá e Bertioga." },
+      { name: "description", content: "Mapa esquemático com sete circuitos ecológicos pelo Litoral, Grande SP e Interior paulista." },
       { property: "og:title", content: "Mapa e circuitos — EcoTravel" },
       { property: "og:description", content: "Escolha um roteiro e o transporte e veja o circuito completo." },
       { property: "og:type", content: "website" },
@@ -42,25 +43,25 @@ function Mapa() {
           <path d="M22 70 C36 58 46 50 52 45 C64 36 70 32 78 28" className="fill-none stroke-forest" strokeWidth="0.6" strokeDasharray="1.5 1.5" vectorEffect="non-scaling-stroke" />
         </svg>
         {destinations.map((x) => (
-          <button key={x.id} onClick={() => { setSel(x.id); setMode(null); }}
+          <Button key={x.id} variant="ghost" aria-label={`Selecionar ${x.name}`} onClick={() => { setSel(x.id); setMode(null); }}
             style={{ left: `${x.map.x}%`, top: `${x.map.y}%` }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 text-center">
-            <span className={`relative block h-16 w-16 overflow-hidden rounded-full border-4 shadow-float transition-transform ${sel === x.id ? "scale-110 border-leaf" : "border-card"}`}>
+            className="absolute block h-auto -translate-x-1/2 -translate-y-1/2 p-0 text-center">
+            <span className={`relative mx-auto block h-10 w-10 overflow-hidden rounded-full border-2 shadow-float transition-transform lg:h-16 lg:w-16 ${sel === x.id ? "scale-110 border-leaf" : "border-card"}`}>
               <img src={x.image} alt={x.name} className="h-full w-full object-cover" />
             </span>
             <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-forest text-[11px] font-bold text-forest-foreground">{x.circuit.stops.length}</span>
-            <span className="mt-1 block rounded-full bg-card px-2 py-0.5 text-[11px] font-semibold shadow-soft">{x.name}</span>
-          </button>
+            <span className="mt-1 block rounded-full bg-card px-1 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
+          </Button>
         ))}
-        <span className="absolute bottom-3 right-4 text-[10px] font-semibold uppercase tracking-widest text-forest/60">Oceano Atlântico</span>
+        <span className="absolute bottom-8 right-4 text-[10px] font-semibold uppercase text-forest/60">Mapa esquemático · sem navegação</span>
       </div>
 
       <div className="relative -mt-6 rounded-t-[2rem] bg-background px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:px-10">
         <Step n={1} title="Escolha o roteiro" done={!!dest} />
-        <div className="mt-3 grid grid-cols-3 gap-2">
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {destinations.map((x) => (
-            <button key={x.id} onClick={() => { setSel(x.id); setMode(null); }}
-              className={`rounded-2xl py-3 text-sm font-medium ${sel === x.id ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>{x.name}</button>
+            <Button key={x.id} variant="ghost" aria-pressed={sel === x.id} onClick={() => { setSel(x.id); setMode(null); }}
+              className={`h-auto whitespace-normal rounded-2xl py-3 text-sm font-medium ${sel === x.id ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>{x.name}</Button>
           ))}
         </div>
 

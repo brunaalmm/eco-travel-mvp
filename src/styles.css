@@ -177,6 +177,11 @@
   --secondary-foreground: #fff;
   --border: #fff;
   --input: #fff;
+  --primary: #a8f5af;
+  --primary-foreground: #000;
+  --leaf: #a8f5af;
+  --leaf-foreground: #000;
+  --ring: #a8f5af;
 }
 html[data-font-level="1"] { font-size: 18px; }
 html[data-font-level="2"] { font-size: 20px; }
