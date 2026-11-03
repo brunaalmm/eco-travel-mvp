@@ -12,3 +12,4 @@
 - [ ] Abrir detalhes diretamente e substituir Libras pelo GIF Oi.
 - [ ] Explicar carbono e compensação com os fatores existentes.
 - [ ] Remover integrações e verificar navegação, primeiro acesso e cálculos.
+- [ ] Limpar migrações copiadas e preparar um registro vazio para o remix, sem conectar banco.
