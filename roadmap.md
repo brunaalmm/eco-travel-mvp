@@ -8,7 +8,8 @@
 - [x] Adicionar audiodescrição e demonstração de Libras nos detalhes e conteúdos.
 - [x] Adicionar conteúdo de Paranapiacaba e perfil com acessibilidade e controles demonstrativos.
 - [x] Verificar filtros, conteúdos e configurações em telas largas e estreitas.
-- [ ] Priorizar onboarding único e recomendações demonstrativas por preferências.
-- [ ] Abrir detalhes diretamente e substituir Libras pelo GIF Oi.
-- [ ] Explicar carbono e compensação com os fatores existentes.
-- [ ] Remover integrações e verificar navegação, primeiro acesso e cálculos.
+- [x] Priorizar onboarding único e recomendações demonstrativas por preferências.
+- [x] Abrir detalhes diretamente e substituir Libras pelo GIF Oi.
+- [x] Explicar carbono e compensação com os fatores existentes.
+- [x] Remover integrações e verificar navegação, primeiro acesso e cálculos.
+- [x] Limpar migrações copiadas e preparar um registro vazio para o remix, sem conectar banco.
