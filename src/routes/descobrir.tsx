@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search, Star, Leaf, MapPin } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { SplashScreen, TipsModal } from "@/components/Splash";
+import { TipsModal } from "@/components/Splash";
 import { HighlightCarousel } from "@/components/HighlightCarousel";
 import { macroRegions, filterDestinations, type MacroRegion } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { DestinationDialog } from "@/components/DestinationDialog";
+import { usePreferences } from "@/components/PreferencesProvider";
+import { recommendation } from "@/components/preferences-model";
 
 export const Route = createFileRoute("/descobrir")({
   head: () => ({
@@ -23,28 +24,26 @@ export const Route = createFileRoute("/descobrir")({
 });
 
 function Descobrir() {
-  const [phase, setPhase] = useState<"splash" | "tips" | null>(null);
+  const [phase, setPhase] = useState<"tips" | null>(null);
+  const preferences = usePreferences();
   const [q, setQ] = useState("");
   const [where, setWhere] = useState<MacroRegion>("Todos");
-  const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!sessionStorage.getItem("eco-splash")) setPhase("splash");
-  }, []);
-  const toTips = useCallback(() => setPhase("tips"), []);
+    try { if (preferences && !sessionStorage.getItem("eco-splash")) setPhase("tips"); } catch { if (preferences) setPhase("tips"); }
+  }, [preferences]);
   const close = () => {
-    sessionStorage.setItem("eco-splash", "1");
+    try { sessionStorage.setItem("eco-splash", "1"); } catch { /* Session storage unavailable. */ }
     setPhase(null);
   };
 
   const list = useMemo(
-    () => filterDestinations(where, q),
-    [q, where],
+    () => filterDestinations(where, q).sort((a, b) => preferences ? recommendation(b, preferences).score - recommendation(a, preferences).score : 0),
+    [q, where, preferences],
   );
 
   return (
     <AppShell>
-      {phase === "splash" && <SplashScreen onDone={toTips} />}
       {phase === "tips" && <TipsModal onDone={close} />}
       <section className="px-5 pt-6">
         <HighlightCarousel />
@@ -82,15 +81,16 @@ function Descobrir() {
 
       <section className="px-5 pt-7">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-xl font-semibold">Roteiros</h2>
+          <h2 className="text-xl font-semibold">Roteiros para você</h2>
           <span className="text-xs text-muted-foreground">{list.length} roteiros</span>
         </div>
+        <p className="mt-2 text-xs text-muted-foreground">Compatibilidade demonstrativa, sem IA conectada. CO₂ estimado por pessoa, ida e volta desde São Paulo capital; não usa sua posição real.</p>
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((d, i) => (
-            <Button
+            <Link
               key={d.id}
-              onClick={() => setSelected(d.id)}
-              variant="ghost"
+              to="/destino/$id"
+              params={{ id: d.id }}
               aria-label={`Ver ${d.circuit.title}`}
               className="group block h-auto w-full overflow-hidden whitespace-normal rounded-3xl bg-card p-0 text-left shadow-soft animate-rise"
               style={{ animationDelay: `${i * 80}ms` }}
@@ -105,17 +105,17 @@ function Descobrir() {
               <div className="p-5">
                  <div className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{d.region}</div>
                 <h3 className="mt-1 text-lg font-semibold">{d.circuit.title}</h3>
+                {preferences && <div className="mt-3 space-y-2 text-xs"><p className="font-semibold text-primary">{recommendation(d, preferences).score}% de compatibilidade · simulação de IA</p><p className="text-muted-foreground">{recommendation(d, preferences).kg.toLocaleString('pt-BR')} kg CO₂ · {recommendation(d, preferences).km} km · {recommendation(d, preferences).transport === 'pe' ? 'A pé' : recommendation(d, preferences).transport === 'carona' ? 'Carona Solidária' : recommendation(d, preferences).transport === 'carro' ? 'Carro' : 'Ônibus'}</p>{recommendation(d, preferences).adjusted && <p className="text-muted-foreground">Ônibus no deslocamento; caminhada ou trilha apenas no destino.</p>}</div>}
                 <div className="mt-2 flex items-center gap-1 text-sm">
                   <Star className="h-4 w-4 fill-warning text-warning" />
                    {d.reviews > 0 ? <><b>{d.rating}</b><span className="text-muted-foreground">({d.reviews} avaliações)</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
                 </div>
               </div>
-            </Button>
+            </Link>
           ))}
           {!list.length && <p className="py-10 text-center text-sm text-muted-foreground">Nenhum roteiro encontrado.</p>}
         </div>
       </section>
-      <DestinationDialog id={selected} onClose={() => setSelected(null)} />
     </AppShell>
   );
 }

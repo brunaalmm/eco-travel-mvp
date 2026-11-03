@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TreePine } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { destinations, carbonKg, treesToOffset, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
+import { destinations, transports, carbonKg, treesToOffset, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
 import { useCredits } from "@/lib/credits";
 import botRight from "@/assets/bot-right.png";
 import botWrong from "@/assets/bot-wrong.png";
@@ -26,6 +26,19 @@ function Eco() {
   return (
     <AppShell title="Carbono">
       <Calc />
+      <section className="mx-auto mt-8 max-w-2xl px-5">
+        <h2 className="text-xl font-semibold">Como é calculado o carbono?</h2>
+        <details className="mt-4 rounded-lg border border-border bg-card p-5" open>
+          <summary className="cursor-pointer font-semibold">Fórmula e fatores de referência</summary>
+          <p className="mt-4 rounded-lg bg-accent p-4 text-sm font-semibold">Emissão (kg CO₂) = Distância (km) × Fator de Emissão do Transporte</p>
+          <p className="mt-3 text-sm text-muted-foreground">A distância considera ida e volta. Os fatores são médias ilustrativas por passageiro-quilômetro, não medições de uma viagem real.</p>
+          <dl className="mt-4 divide-y divide-border">{transports.map(t => <div key={t.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm"><dt>{t.label}</dt><dd className="font-semibold">{t.factor.toLocaleString('pt-BR', { maximumFractionDigits: 3 })} kg CO₂/passageiro-km</dd></div>)}</dl>
+          <p className="mt-4 text-sm">Exemplo: 100 km de ônibus × {transports.find(t => t.id === 'onibus')?.factor.toLocaleString('pt-BR')} = {carbonKg(100, 'onibus').toLocaleString('pt-BR')} kg CO₂.</p>
+          <h3 className="mt-5 font-semibold">Estimativa de compensação</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Mudas estimadas = emissão ÷ 7, arredondada para cima. O modelo considera aproximadamente 7 kg de CO₂ absorvidos por árvore ao ano no início do crescimento: {carbonKg(100, 'onibus').toLocaleString('pt-BR')} kg correspondem a {treesToOffset(carbonKg(100, 'onibus'))} mudas. A absorção depende da espécie, crescimento, sobrevivência e tempo; plantar não neutraliza imediatamente a emissão nem certifica compensação.</p>
+          <p className="mt-3 text-xs text-muted-foreground">A pé e bicicleta têm emissão operacional zero neste modelo, não impacto total zero. Para mais de {ACTIVE_MAX_KM} km, a comparação prioriza transportes viáveis.</p>
+        </details>
+      </section>
     </AppShell>
   );
 }
