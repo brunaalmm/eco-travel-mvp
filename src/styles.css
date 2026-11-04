@@ -187,3 +187,12 @@ html[data-font-level="1"] { font-size: 18px; }
 html[data-font-level="2"] { font-size: 20px; }
 html[data-font-level="3"] { font-size: 22px; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+/* Login visual: official login forest and paper tones. */
+:root { --login-forest: #0b3b2c; --login-paper: #fbf9f1; --login-overlay: rgb(0 0 0 / 0.35); }
+@theme inline { --color-login-forest: var(--login-forest); --color-login-paper: var(--login-paper); --color-login-overlay: var(--login-overlay); }
+@keyframes pixel-drift { 0% { transform: translate(0, 0) } 50% { transform: translate(6px, -10px) } 100% { transform: translate(0, 0) } }
+@keyframes pixel-sway { 0%,100% { transform: rotate(-4deg) } 50% { transform: rotate(4deg) } }
+@utility animate-pixel-drift { animation: pixel-drift 5s steps(6) infinite; }
+@utility animate-pixel-sway { animation: pixel-sway 3s steps(4) infinite; transform-origin: bottom center; }
+@media (prefers-reduced-motion: reduce) { .animate-pixel-drift, .animate-pixel-sway { animation: none; } }
