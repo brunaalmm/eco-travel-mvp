@@ -23,7 +23,7 @@ export function PixelNature() {
           <Sprite map={leaf} size={5} fill="fill-leaf" className="animate-pixel-drift" />
         </span>
       ))}
-      <div className="absolute inset-x-0 bottom-20 flex items-end justify-between px-3">
+      <div className="absolute inset-x-0 bottom-28 flex items-end justify-between px-3">
         {[7, 10, 6, 9, 8, 11, 7].map((s, i) => (
           <Sprite key={i} map={pine} size={s} fill={i % 2 ? "fill-leaf" : "fill-primary"} className="animate-pixel-sway" />
         ))}

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Search, Star, Leaf, MapPin } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
@@ -6,7 +6,8 @@ import { TipsModal } from "@/components/Splash";
 import { HighlightCarousel } from "@/components/HighlightCarousel";
 import { macroRegions, filterDestinations, type MacroRegion } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { usePreferences } from "@/components/PreferencesProvider";
+import { usePreferenceStore } from "@/components/PreferencesProvider";
+import { WeatherWidget } from "@/components/WeatherWidget";
 import { recommendation } from "@/components/preferences-model";
 
 export const Route = createFileRoute("/descobrir")({
@@ -25,15 +26,18 @@ export const Route = createFileRoute("/descobrir")({
 
 function Descobrir() {
   const [phase, setPhase] = useState<"tips" | null>(null);
-  const preferences = usePreferences();
+  const { preferences, ready } = usePreferenceStore();
+  const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [where, setWhere] = useState<MacroRegion>("Todos");
 
   useEffect(() => {
-    try { if (preferences && !sessionStorage.getItem("eco-splash")) setPhase("tips"); } catch { if (preferences) setPhase("tips"); }
-  }, [preferences]);
+    if (!ready) return;
+    if (!preferences) { void navigate({ to: "/onboarding" }); return; }
+    try { if (!localStorage.getItem("ecotravel-tips-v1")) setPhase("tips"); } catch { setPhase("tips"); }
+  }, [ready, preferences, navigate]);
   const close = () => {
-    try { sessionStorage.setItem("eco-splash", "1"); } catch { /* Session storage unavailable. */ }
+    try { localStorage.setItem("ecotravel-tips-v1", "1"); } catch { /* Storage unavailable. */ }
     setPhase(null);
   };
 
@@ -46,7 +50,8 @@ function Descobrir() {
     <AppShell>
       {phase === "tips" && <TipsModal onDone={close} />}
       <section className="px-5 pt-6">
-        <HighlightCarousel />
+        <WeatherWidget />
+        <div className="mt-5"><HighlightCarousel /></div>
         <h1 className="mt-6 max-w-3xl text-lg font-medium leading-snug text-foreground lg:text-2xl">
           Descubra destinos incríveis com responsabilidade ambiental. Viaje por roteiros que valorizam a cultura local, protegem a biodiversidade e geram impacto positivo nas comunidades.
         </h1>
@@ -105,7 +110,7 @@ function Descobrir() {
               <div className="p-5">
                  <div className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{d.region}</div>
                 <h3 className="mt-1 text-lg font-semibold">{d.circuit.title}</h3>
-                {preferences && <div className="mt-3 space-y-2 text-xs"><p className="font-semibold text-primary">{recommendation(d, preferences).score}% de compatibilidade · simulação de IA</p><p className="text-muted-foreground">{recommendation(d, preferences).kg.toLocaleString('pt-BR')} kg CO₂ · {recommendation(d, preferences).km} km · {recommendation(d, preferences).transport === 'pe' ? 'A pé' : recommendation(d, preferences).transport === 'carona' ? 'Carona Solidária' : recommendation(d, preferences).transport === 'carro' ? 'Carro' : 'Ônibus'}</p>{recommendation(d, preferences).adjusted && <p className="text-muted-foreground">Ônibus no deslocamento; caminhada ou trilha apenas no destino.</p>}</div>}
+                {preferences && <div className="mt-3 space-y-2 text-xs"><p className="font-semibold text-primary">{recommendation(d, preferences).score}% de compatibilidade · simulação de IA</p><p className="text-muted-foreground">{recommendation(d, preferences).kg.toLocaleString('pt-BR')} kg CO₂ · {recommendation(d, preferences).km} km · {recommendation(d, preferences).transport === 'pe' ? 'A pé' : recommendation(d, preferences).transport === 'bike' ? 'Bicicleta' : recommendation(d, preferences).transport === 'carro' ? 'Carro' : 'Ônibus'}</p>{recommendation(d, preferences).adjusted && <p className="text-muted-foreground">Ônibus no deslocamento; caminhada ou trilha apenas no destino.</p>}</div>}
                 <div className="mt-2 flex items-center gap-1 text-sm">
                   <Star className="h-4 w-4 fill-warning text-warning" />
                    {d.reviews > 0 ? <><b>{d.rating}</b><span className="text-muted-foreground">({d.reviews} avaliações)</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
