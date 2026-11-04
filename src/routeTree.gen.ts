@@ -17,6 +17,7 @@ import { Route as DescobrirRouteImport } from './routes/descobrir'
 import { Route as EcoRouteImport } from './routes/eco'
 import { Route as EcobotRouteImport } from './routes/ecobot'
 import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as SobreRouteImport } from './routes/sobre'
@@ -63,6 +64,11 @@ const MapaRoute = MapaRouteImport.update({
   path: '/mapa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
@@ -129,6 +137,7 @@ export interface FileRoutesById {
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
   '/mapa': typeof MapaRoute
+  '/onboarding': typeof OnboardingRoute
   '/perfil': typeof PerfilRoute
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/eco'
     | '/ecobot'
     | '/mapa'
+    | '/onboarding'
     | '/perfil'
     | '/privacidade'
     | '/sobre'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/eco'
     | '/ecobot'
     | '/mapa'
+    | '/onboarding'
     | '/perfil'
     | '/privacidade'
     | '/sobre'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/eco'
     | '/ecobot'
     | '/mapa'
+    | '/onboarding'
     | '/perfil'
     | '/privacidade'
     | '/sobre'
@@ -192,6 +204,7 @@ export interface RootRouteChildren {
   EcoRoute: typeof EcoRoute
   EcobotRoute: typeof EcobotRoute
   MapaRoute: typeof MapaRoute
+  OnboardingRoute: typeof OnboardingRoute
   PerfilRoute: typeof PerfilRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   SobreRoute: typeof SobreRoute
@@ -257,6 +270,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perfil': {
       id: '/perfil'
       path: '/perfil'
@@ -304,6 +324,7 @@ const rootRouteChildren: RootRouteChildren = {
   EcoRoute: EcoRoute,
   EcobotRoute: EcobotRoute,
   MapaRoute: MapaRoute,
+  OnboardingRoute: OnboardingRoute,
   PerfilRoute: PerfilRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   SobreRoute: SobreRoute,

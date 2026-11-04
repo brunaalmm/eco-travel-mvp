@@ -223,7 +223,6 @@ export const transports = [
   { id: "pe", label: "Trilha a pé", factor: 0 },
   { id: "bike", label: "Bicicleta", factor: 0 },
   { id: "onibus", label: "Ônibus", factor: 0.089 },
-  { id: "carona", label: "Carona solidária", factor: 0.064 },
   { id: "carro", label: "Carro", factor: 0.192 },
 ] as const;
 export type TransportId = (typeof transports)[number]["id"];
@@ -242,8 +241,15 @@ export function realisticTransports(km: number) {
   return transports.filter((t) => km <= ACTIVE_MAX_KM || !ACTIVE.includes(t.id));
 }
 
-/** Uma árvore da Mata Atlântica absorve ~ 7 kg de CO₂ por ano no início do crescimento. */
-export const treesToOffset = (kg: number) => Math.ceil(kg / 7);
+/** Compensação prática: ações acessíveis no dia a dia, sem plantio direto de mudas. */
+export function offsetSuggestions(kg: number) {
+  return [
+    `Apoie financeiramente ou como voluntário(a) uma ONG certificada de restauração, como a SOS Mata Atlântica, proporcional aos ${kg.toLocaleString("pt-BR")} kg CO₂ desta viagem.`,
+    "Incentive projetos locais de conservação nas comunidades que você visitar.",
+    "Participe de mutirões de limpeza de parques, praias e trilhas.",
+    "Adote práticas permanentes de redução de resíduos: garrafa, talheres e sacola reutilizáveis.",
+  ];
+}
 
 /** Distância de ida e volta a partir de São Paulo capital. */
 export const tripKm: Record<string, number> = { peruibe: 280, guaruja: 180, bertioga: 210, paranapiacaba: 120, "sao-paulo": 20, jundiai: 120, brotas: 500 };
