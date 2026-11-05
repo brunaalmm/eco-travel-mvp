@@ -47,23 +47,23 @@ function Perfil() {
       <SettingsSection title="Acessibilidade" icon={<Eye />}>
         <SettingRow id="contrast" label="Alto Contraste" description="Cores com maior contraste para leitura." checked={settings.contrast} onChange={settings.setContrast} />
         <SettingRow id="font" label="Aumento de Fonte / Leitores de Tela" description="Texto ampliado com controles identificados para leitores de tela." checked={settings.fontLevel > 0} onChange={(value) => settings.setFontLevel(value ? 1 : 0)} />
-        <div className="flex flex-wrap items-center justify-between gap-3 py-3"><span className="flex items-center gap-2 text-sm"><Type className="h-4 w-4" />Tamanho do texto</span><div role="group" aria-label="Nível de aumento de fonte" className="flex gap-1">{[0, 1, 2, 3].map((level) => <Button key={level} variant={settings.fontLevel === level ? "default" : "outline"} aria-pressed={settings.fontLevel === level} aria-label={level ? `Aumento de fonte nível ${level}` : "Fonte padrão"} onClick={() => settings.setFontLevel(level)}>{level === 0 ? "A" : `A+${level}`}</Button>)}</div></div>
+        <div className="flex flex-wrap items-center justify-between gap-3"><span className="flex items-center gap-2 text-sm"><Type className="h-4 w-4" />Tamanho do texto</span><div role="group" aria-label="Nível de aumento de fonte" className="flex gap-1">{[0, 1, 2, 3].map((level) => <Button key={level} variant={settings.fontLevel === level ? "default" : "outline"} aria-pressed={settings.fontLevel === level} aria-label={level ? `Aumento de fonte nível ${level}` : "Fonte padrão"} onClick={() => settings.setFontLevel(level)}>{level === 0 ? "A" : `A+${level}`}</Button>)}</div></div>
         <SettingRow id="dark" label="Modo Claro / Escuro" description={settings.dark ? "Modo escuro ativado." : "Modo claro ativado."} checked={settings.dark} onChange={settings.setDark} />
       </SettingsSection>
       <SettingsSection title="Notificações e alertas" icon={<Bell />}><SettingRow id="reminders" label="Lembretes de Viagens" description="Demonstração: não agenda viagens nem envia notificações." checked={reminders} onChange={setReminders} /></SettingsSection>
       <SettingsSection title="Privacidade e localização" icon={<Shield />}>
         <SettingRow id="location" label="Rastreamento automático de rotas" description="Simulação apenas. Nenhuma localização é solicitada, rastreada ou armazenada." checked={location} onChange={setLocation} />
-        <p className="flex items-center gap-2 py-3 text-xs text-muted-foreground"><MapPin className="h-4 w-4" />Histórico de geolocalização: vazio</p>
-        <Button variant="outline" className="h-auto whitespace-normal text-destructive" onClick={() => { setConfirmation(""); setConfirm(true); }}><Trash2 />Excluir conta e histórico</Button>
+        <p className="flex items-center gap-2 text-xs text-muted-foreground"><MapPin className="h-4 w-4" />Histórico de geolocalização: vazio</p>
+        <div><Button variant="outline" className="h-auto whitespace-normal text-destructive" onClick={() => { setConfirmation(""); setConfirm(true); }}><Trash2 />Excluir conta e histórico</Button></div>
       </SettingsSection>
       <SettingsSection title="Utilitários e mapas offline" icon={<WifiOff />}>
         <SettingRow id="offline" label="Modo Offline para Trilhas" description="Demonstração do modo offline. Baixe o guia textual; mapas offline não estão disponíveis." checked={offline} onChange={setOffline} />
-        <Button variant="outline" className="mt-3 h-auto whitespace-normal" disabled={!offline} onClick={downloadGuide}><Download />Baixar roteiros para consulta offline</Button>
+        <div><Button variant="outline" className="h-auto whitespace-normal" disabled={!offline} onClick={downloadGuide}><Download />Baixar roteiros para consulta offline</Button></div>
       </SettingsSection>
       <SettingsSection title="Suporte e central de ajuda" icon={<Bot />}>
-        <Button asChild variant="ghost" className="h-12 w-full justify-between"><Link to="/ecobot">Conversar com o EcoBot<ChevronRight /></Link></Button>
-        <Button asChild variant="ghost" className="h-12 w-full justify-between"><Link to="/termos">Termos de Uso<ChevronRight /></Link></Button>
-        <Button asChild variant="ghost" className="h-12 w-full justify-between"><Link to="/privacidade">Política de Privacidade<ChevronRight /></Link></Button>
+        <Button asChild variant="ghost" className="h-auto w-full justify-between rounded-none px-0 hover:bg-transparent"><Link to="/ecobot">Conversar com o EcoBot<ChevronRight /></Link></Button>
+        <Button asChild variant="ghost" className="h-auto w-full justify-between rounded-none px-0 hover:bg-transparent"><Link to="/termos">Termos de Uso<ChevronRight /></Link></Button>
+        <Button asChild variant="ghost" className="h-auto w-full justify-between rounded-none px-0 hover:bg-transparent"><Link to="/privacidade">Política de Privacidade<ChevronRight /></Link></Button>
       </SettingsSection>
       {notice && <p role="status" className="mt-5 rounded-lg bg-accent p-4 text-sm">{notice}</p>}
     </section>
@@ -71,8 +71,8 @@ function Perfil() {
   </AppShell>;
 }
 function SettingsSection({ title, icon, children }: { title: string; icon: ReactNode; children: ReactNode }) {
-  return <section className="mt-8 border-t border-border pt-5"><h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">{icon}{title}</h2>{children}</section>;
+  return <section className="mt-8"><h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">{icon}{title}</h2><div className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card px-4 [&>*]:py-4">{children}</div></section>;
 }
 function SettingRow({ id, label, description, checked, onChange }: { id: string; label: string; description: string; checked: boolean; onChange: (value: boolean) => void }) {
-  return <div className="flex items-center justify-between gap-4 border-b border-border py-4"><label htmlFor={id} className="min-w-0 flex-1 cursor-pointer"><span className="block text-sm font-medium">{label}</span><span id={`${id}-description`} className="mt-1 block text-xs leading-relaxed text-muted-foreground">{description}</span></label><Switch id={id} aria-label={label} checked={checked} onCheckedChange={onChange} aria-describedby={`${id}-description`} className="shrink-0" /></div>;
+  return <div className="flex items-center justify-between gap-4"><label htmlFor={id} className="min-w-0 flex-1 cursor-pointer"><span className="block text-sm font-medium">{label}</span><span id={`${id}-description`} className="mt-1 block text-xs leading-relaxed text-muted-foreground">{description}</span></label><Switch id={id} aria-label={label} checked={checked} onCheckedChange={onChange} aria-describedby={`${id}-description`} className="shrink-0" /></div>;
 }

@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { useCredits } from "@/lib/credits";
-import { answer, suggestions } from "@/lib/ecobot";
+import { answer, suggestions, quiz, quizResult } from "@/lib/ecobot";
+import type { TransportId } from "@/lib/data";
 import botHappy from "@/assets/bot-happy.png";
 import botJoy from "@/assets/bot-joy.png";
 import botLoading from "@/assets/bot-loading.png";
@@ -94,7 +95,35 @@ function EcoBotPage() {
           <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Pergunte ao EcoBot..." className="w-full min-w-0 bg-transparent text-sm outline-none" />
           <button type="submit" disabled={typing} aria-label="Enviar" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground disabled:opacity-50"><Send className="h-4 w-4" /></button>
         </form>
+        <Quiz onAnswer={() => add(5)} />
       </section>
     </AppShell>
+  );
+}
+
+function Quiz({ onAnswer }: { onAnswer: () => void }) {
+  const [step, setStep] = useState(0);
+  const [picked, setPicked] = useState<TransportId | null>(null);
+  const q = quiz[step] ?? quiz[0]!;
+  const result = picked ? quizResult(q.km, picked) : null;
+  return (
+    <section aria-labelledby="quiz-title" className="mt-8 mb-4 rounded-3xl bg-card p-5 shadow-soft">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">Mini-quiz de impacto · {step + 1} de {quiz.length}</p>
+      <h2 id="quiz-title" className="mt-1 font-semibold">{q.question}</h2>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {q.options.map((o) => (
+          <button key={o.t} type="button" aria-pressed={picked === o.t} onClick={() => { if (!picked) onAnswer(); setPicked(o.t); }}
+            className={`rounded-full px-4 py-2 text-sm font-medium ${picked === o.t ? "bg-forest text-forest-foreground" : "border border-border bg-background"}`}>{o.label}</button>
+        ))}
+      </div>
+      {result && (
+        <div role="status" className="mt-4 rounded-2xl bg-accent p-3 text-sm">
+          <b>{result.kg.toLocaleString("pt-BR")} kg CO₂</b> por pessoa.{" "}
+          {result.saved > 0 ? `Você evitou ${result.saved.toLocaleString("pt-BR")} kg em relação ao carro. 🌱` : "Essa é a opção mais poluente — compare com as outras."}
+        </div>
+      )}
+      <button type="button" disabled={!picked} onClick={() => { setPicked(null); setStep((step + 1) % quiz.length); }}
+        className="mt-4 text-sm font-semibold text-primary disabled:opacity-40">{step === quiz.length - 1 ? "Recomeçar quiz" : "Próximo cenário →"}</button>
+    </section>
   );
 }
