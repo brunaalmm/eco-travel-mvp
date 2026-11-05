@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { TreePine } from "lucide-react";
+import { HeartHandshake } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { destinations, transports, carbonKg, treesToOffset, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
+import { destinations, transports, carbonKg, offsetSuggestions, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
 import { useCredits } from "@/lib/credits";
 import botRight from "@/assets/bot-right.png";
 import botWrong from "@/assets/bot-wrong.png";
@@ -35,7 +35,7 @@ function Eco() {
           <dl className="mt-4 divide-y divide-border">{transports.map(t => <div key={t.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm"><dt>{t.label}</dt><dd className="font-semibold">{t.factor.toLocaleString('pt-BR', { maximumFractionDigits: 3 })} kg CO₂/passageiro-km</dd></div>)}</dl>
           <p className="mt-4 text-sm">Exemplo: 100 km de ônibus × {transports.find(t => t.id === 'onibus')?.factor.toLocaleString('pt-BR')} = {carbonKg(100, 'onibus').toLocaleString('pt-BR')} kg CO₂.</p>
           <h3 className="mt-5 font-semibold">Estimativa de compensação</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Mudas estimadas = emissão ÷ 7, arredondada para cima. O modelo considera aproximadamente 7 kg de CO₂ absorvidos por árvore ao ano no início do crescimento: {carbonKg(100, 'onibus').toLocaleString('pt-BR')} kg correspondem a {treesToOffset(carbonKg(100, 'onibus'))} mudas. A absorção depende da espécie, crescimento, sobrevivência e tempo; plantar não neutraliza imediatamente a emissão nem certifica compensação.</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Em vez de sugerir plantio direto de mudas, o EcoTravel recomenda ações práticas: apoiar ONGs certificadas de restauração (como a SOS Mata Atlântica), incentivar projetos locais de conservação, participar de mutirões de limpeza de parques e reduzir resíduos de forma permanente. Essas ações não certificam neutralização de carbono.</p>
           <p className="mt-3 text-xs text-muted-foreground">A pé e bicicleta têm emissão operacional zero neste modelo, não impacto total zero. Para mais de {ACTIVE_MAX_KM} km, a comparação prioriza transportes viáveis.</p>
         </details>
       </section>
@@ -107,7 +107,7 @@ function Calc() {
           <p className={`mt-4 rounded-2xl p-3 text-sm ${clean ? "bg-accent" : "bg-destructive/10 text-destructive"}`}>
             {clean
               ? `Parabéns! Você evitou ${Math.round((result.car - result.kg) * 10) / 10} kg de CO₂ em relação ao carro. +15 créditos verdes 🌱`
-              : "Alerta: o carro é o meio mais poluente para essa viagem. Da próxima vez, tente ônibus ou divida a carona. +5 créditos"}
+              : "Alerta: o carro é o meio mais poluente para essa viagem. Da próxima vez, tente ônibus, trem ou bicicleta nos trechos curtos. +5 créditos"}
           </p>
           <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Comparativo para {result.km} km</p>
           <div className="mt-2 space-y-2">
@@ -116,10 +116,10 @@ function Calc() {
             ))}
           </div>
           {result.kg > 0 && (
-            <p className="mt-4 flex items-start gap-2 text-sm text-muted-foreground">
-              <TreePine className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              Para compensar, plante cerca de {treesToOffset(result.kg)} muda(s) nativa(s) da Mata Atlântica ou apoie projetos de restauração locais.
-            </p>
+            <div className="mt-5 rounded-2xl bg-accent p-4">
+              <p className="flex items-center gap-2 text-sm font-semibold"><HeartHandshake className="h-4 w-4 text-primary" />Como compensar no dia a dia</p>
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">{offsetSuggestions(result.kg).map((tip) => <li key={tip}>{tip}</li>)}</ul>
+            </div>
           )}
         </div>
       )}
