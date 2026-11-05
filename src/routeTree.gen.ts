@@ -22,6 +22,9 @@ import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardRelatoriosRouteImport } from './routes/dashboard.relatorios'
+import { Route as DashboardRoteirosRouteImport } from './routes/dashboard.roteiros'
 import { Route as DestinoIdRouteImport } from './routes/destino.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -89,6 +92,21 @@ const TermosRoute = TermosRouteImport.update({
   path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardRelatoriosRoute = DashboardRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardRoteirosRoute = DashboardRoteirosRouteImport.update({
+  id: '/roteiros',
+  path: '/roteiros',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DestinoIdRoute = DestinoIdRouteImport.update({
   id: '/destino/$id',
   path: '/destino/$id',
@@ -99,7 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/creditos': typeof CreditosRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
@@ -109,13 +127,15 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/dashboard/relatorios': typeof DashboardRelatoriosRoute
+  '/dashboard/roteiros': typeof DashboardRoteirosRoute
   '/destino/$id': typeof DestinoIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/creditos': typeof CreditosRoute
-  '/dashboard': typeof DashboardRoute
   '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
@@ -125,14 +145,17 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/dashboard/relatorios': typeof DashboardRelatoriosRoute
+  '/dashboard/roteiros': typeof DashboardRoteirosRoute
   '/destino/$id': typeof DestinoIdRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/creditos': typeof CreditosRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/descobrir': typeof DescobrirRoute
   '/eco': typeof EcoRoute
   '/ecobot': typeof EcobotRoute
@@ -142,7 +165,10 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/dashboard/relatorios': typeof DashboardRelatoriosRoute
+  '/dashboard/roteiros': typeof DashboardRoteirosRoute
   '/destino/$id': typeof DestinoIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -160,13 +186,15 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/sobre'
     | '/termos'
+    | '/dashboard/relatorios'
+    | '/dashboard/roteiros'
     | '/destino/$id'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/cadastro'
     | '/creditos'
-    | '/dashboard'
     | '/descobrir'
     | '/eco'
     | '/ecobot'
@@ -176,7 +204,10 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/sobre'
     | '/termos'
+    | '/dashboard/relatorios'
+    | '/dashboard/roteiros'
     | '/destino/$id'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
@@ -192,14 +223,17 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/sobre'
     | '/termos'
+    | '/dashboard/relatorios'
+    | '/dashboard/roteiros'
     | '/destino/$id'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CadastroRoute: typeof CadastroRoute
   CreditosRoute: typeof CreditosRoute
-  DashboardRoute: typeof DashboardRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   DescobrirRoute: typeof DescobrirRoute
   EcoRoute: typeof EcoRoute
   EcobotRoute: typeof EcobotRoute
@@ -305,6 +339,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/relatorios': {
+      id: '/dashboard/relatorios'
+      path: '/relatorios'
+      fullPath: '/dashboard/relatorios'
+      preLoaderRoute: typeof DashboardRelatoriosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/roteiros': {
+      id: '/dashboard/roteiros'
+      path: '/roteiros'
+      fullPath: '/dashboard/roteiros'
+      preLoaderRoute: typeof DashboardRoteirosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/destino/$id': {
       id: '/destino/$id'
       path: '/destino/$id'
@@ -315,11 +370,27 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardRelatoriosRoute: typeof DashboardRelatoriosRoute
+  DashboardRoteirosRoute: typeof DashboardRoteirosRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardRelatoriosRoute: DashboardRelatoriosRoute,
+  DashboardRoteirosRoute: DashboardRoteirosRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CadastroRoute: CadastroRoute,
   CreditosRoute: CreditosRoute,
-  DashboardRoute: DashboardRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   DescobrirRoute: DescobrirRoute,
   EcoRoute: EcoRoute,
   EcobotRoute: EcobotRoute,
