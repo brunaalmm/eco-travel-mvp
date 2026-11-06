@@ -50,13 +50,13 @@ function Mapa() {
               <img src={x.image} alt={x.name} className="h-full w-full object-cover" />
             </span>
             <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-forest text-[11px] font-bold text-forest-foreground">{x.circuit.stops.length}</span>
-            <span className="mt-1 block rounded-full bg-card px-1 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
+            <span className="mt-1 block max-w-[5.5rem] truncate rounded-full bg-card px-1.5 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
           </Button>
         ))}
-        <span className="absolute bottom-8 right-4 text-[10px] font-semibold uppercase text-forest/60">Mapa esquemático · sem navegação</span>
+        <span className="absolute bottom-8 right-4 left-4 text-right text-[10px] font-semibold uppercase text-forest/60">Mapa esquemático · sem navegação</span>
       </div>
 
-      <div className="relative -mt-6 rounded-t-[2rem] bg-background px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:px-10">
+      <div className="relative -mt-6 rounded-t-[2rem] bg-background px-5 pt-6 pb-8 lg:mx-auto lg:max-w-3xl lg:px-10">
         <Step n={1} title="Escolha o roteiro" done={!!dest} />
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {destinations.map((x) => (
@@ -71,7 +71,7 @@ function Mapa() {
             <div className="mt-3 grid grid-cols-3 gap-2">
               {modes.map(({ id, label, icon: Icon }) => (
                 <button key={id} onClick={() => setMode(id)}
-                  className={`flex flex-col items-center gap-1 rounded-2xl py-3 text-xs font-medium ${mode === id ? "bg-leaf text-leaf-foreground" : "bg-card shadow-soft"}`}>
+                  className={`flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-3 text-center text-xs leading-tight font-medium ${mode === id ? "bg-leaf text-leaf-foreground" : "bg-card shadow-soft"}`}>
                   <Icon className="h-5 w-5" />{label}
                 </button>
               ))}
@@ -81,7 +81,7 @@ function Mapa() {
 
         {dest && m && totals && (
           <section className="mt-6 animate-rise">
-            <h2 className="text-xl font-semibold">{dest.circuit.title}</h2>
+            <h2 className="break-words text-xl font-semibold">{dest.circuit.title}</h2>
             <div className="mt-3 grid grid-cols-3 gap-2">
               <Summary icon={<RouteIcon className="h-4 w-4" />} label="Total" value={`${totals.km} km`} />
               <Summary icon={<Clock className="h-4 w-4" />} label="Tempo" value={formatMin(Math.round(totals.min * m.speed))} />
@@ -121,9 +121,9 @@ function Step({ n, title, done }: { n: number; title: string; done: boolean }) {
 
 function Summary({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-forest p-3 text-forest-foreground">
-      <div className="flex items-center gap-1 text-[11px] opacity-70">{icon}{label}</div>
-      <p className="mt-1 font-display text-lg font-semibold">{value}</p>
+    <div className="min-w-0 rounded-2xl bg-forest p-2.5 text-forest-foreground sm:p-3">
+      <div className="flex min-w-0 items-center gap-1 truncate text-[11px] opacity-70">{icon}{label}</div>
+      <p className="mt-1 break-words font-display text-sm font-semibold leading-tight sm:text-lg">{value}</p>
     </div>
   );
 }
