@@ -195,4 +195,10 @@ html[data-font-level="3"] { font-size: 22px; }
 @keyframes pixel-sway { 0%,100% { transform: rotate(-4deg) } 50% { transform: rotate(4deg) } }
 @utility animate-pixel-drift { animation: pixel-drift 5s steps(6) infinite; }
 @utility animate-pixel-sway { animation: pixel-sway 3s steps(4) infinite; transform-origin: bottom center; }
-@media (prefers-reduced-motion: reduce) { .animate-pixel-drift, .animate-pixel-sway { animation: none; } }
+:root { --pixel-sky: #134d39; --pixel-far: #1d6448; --pixel-mid: #144a35; --pixel-near: #0b3b2c; --pixel-tree: #2f7d55; --pixel-tree-dark: #1f5e40; --pixel-cloud: #a9d4b4; --pixel-hiker: #6fb383; }
+@theme inline { --color-pixel-sky: var(--pixel-sky); --color-pixel-far: var(--pixel-far); --color-pixel-mid: var(--pixel-mid); --color-pixel-near: var(--pixel-near); --color-pixel-tree: var(--pixel-tree); --color-pixel-tree-dark: var(--pixel-tree-dark); --color-pixel-cloud: var(--pixel-cloud); --color-pixel-hiker: var(--pixel-hiker); }
+@keyframes pixel-cloud { 0%,100% { transform: translateX(0) } 50% { transform: translateX(24px) } }
+@keyframes pixel-walk { 0%,100% { transform: translate(0,0) } 25% { transform: translate(8px,-2px) } 50% { transform: translate(16px,0) } 75% { transform: translate(8px,-2px) } }
+@utility animate-pixel-cloud { animation: pixel-cloud 14s steps(12) infinite; }
+@utility animate-pixel-walk { animation: pixel-walk 4s steps(8) infinite; }
+@media (prefers-reduced-motion: reduce) { .animate-pixel-drift, .animate-pixel-sway, .animate-pixel-cloud, .animate-pixel-walk { animation: none; } }

@@ -55,10 +55,10 @@ function Destino() {
         <h1 className="mt-1 text-3xl font-semibold">{d.name}</h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.summary}</p>
 
-        <div className="mt-5 grid grid-cols-4 gap-2">
+        <div className="mt-5 grid grid-cols-2 gap-2 min-[400px]:grid-cols-4">
           {tabs.map(({ key, label, icon: Icon }) => (
             <Button key={key} variant="ghost" aria-pressed={tab === key} onClick={() => setTab(key)}
-              className={`flex h-auto flex-col items-center gap-1 rounded-2xl px-1 py-3 text-[11px] font-medium transition-colors ${tab === key ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>
+              className={`flex h-auto min-w-0 whitespace-normal break-words flex-col items-center gap-1 rounded-2xl px-1 py-3 text-[11px] font-medium transition-colors ${tab === key ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>
               <Icon className="h-5 w-5" strokeWidth={1.8} />{label}
             </Button>
           ))}

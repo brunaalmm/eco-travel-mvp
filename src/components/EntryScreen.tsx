@@ -27,10 +27,10 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
   }
   return (
     <div className="min-h-screen bg-login-paper">
-      <header className="relative flex h-[46vh] min-h-72 items-start justify-center overflow-hidden bg-login-forest pt-10">
+      <header className="relative flex h-[46vh] min-h-72 items-center justify-center overflow-hidden bg-login-forest pb-24">
         <PixelNature />
         <div className="absolute inset-0 bg-login-overlay" aria-hidden="true" />
-        <Link to="/" aria-label="EcoTravel início" className="relative z-10"><img src={logo} alt="EcoTravel" width={600} height={338} className="h-28 w-auto object-contain drop-shadow-lg sm:h-32" /></Link>
+        <Link to="/" aria-label="EcoTravel início" className="relative z-10"><img src={logo} alt="EcoTravel" width={1592} height={857} className="h-24 w-auto max-w-[80vw] object-contain drop-shadow-lg sm:h-32" /></Link>
       </header>
       <main className="relative z-10 mx-auto -mt-24 w-[calc(100%-2rem)] max-w-[460px] rounded-[2rem] bg-login-paper px-6 pb-8 pt-6 shadow-float sm:px-8">
         <div role="tablist" aria-label="Entrar ou cadastrar" className="grid grid-cols-2 rounded-full bg-muted p-1 text-sm font-medium">
