@@ -46,13 +46,13 @@ function Destino() {
           <ArrowLeft className="h-5 w-5" />
         </Link>
       </div>
-      <div className="relative -mt-8 rounded-t-[2rem] bg-background px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:px-10">
+      <div className="relative -mt-8 rounded-t-[2rem] bg-background px-5 pt-6 pb-8 lg:mx-auto lg:max-w-3xl lg:px-10">
         <div className="mb-4"><AccessibleContent key={d.id} title={d.name} text={destinationDescription(d)} route /></div>
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold uppercase tracking-wider text-primary">{d.region}</span>
+        <div className="flex min-w-0 items-center justify-between gap-3">
+          <span className="text-xs font-semibold uppercase tracking-wider text-primary min-w-0 truncate">{d.region}</span>
           {d.reviews > 0 && <span className="flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-warning text-warning" /><b>{d.rating}</b></span>}
         </div>
-        <h1 className="mt-1 text-3xl font-semibold">{d.name}</h1>
+        <h1 className="mt-1 break-words text-2xl sm:text-3xl font-semibold">{d.name}</h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.summary}</p>
 
         <div className="mt-5 grid grid-cols-2 gap-2 min-[400px]:grid-cols-4">
@@ -66,7 +66,7 @@ function Destino() {
 
         <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {items.map((p) => (
-            <li key={p.name} className="rounded-2xl bg-card p-4 shadow-soft animate-rise">
+            <li key={p.name} className="min-w-0 break-words rounded-2xl bg-card p-4 shadow-soft animate-rise">
               {p.tag && <span className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground">{p.tag}</span>}
               <h3 className="mt-2 font-semibold">{p.name}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
@@ -76,7 +76,7 @@ function Destino() {
 
         <div className="mt-6 flex items-center gap-3 rounded-3xl bg-accent p-4">
           <img src={botWave} alt="EcoBot" className="h-16 w-auto shrink-0" />
-          <p className="text-sm">Lembre-se: aqui só recomendamos. Contrate direto com guias e negócios locais! 🌿</p>
+          <p className="min-w-0 text-sm">Lembre-se: aqui só recomendamos. Contrate direto com guias e negócios locais! 🌿</p>
         </div>
 
         <Link to="/mapa" search={{ d: d.id }} className="mt-5 flex h-12 items-center justify-center gap-2 rounded-full bg-leaf font-semibold text-leaf-foreground shadow-soft">
