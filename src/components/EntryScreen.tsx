@@ -8,7 +8,7 @@ import { ProviderIcon } from "@/components/ProviderIcon";
 import { PixelNature } from "@/components/PixelNature";
 import { usePreferenceStore } from "@/components/PreferencesProvider";
 import { demoDestination, type DemoProfile } from "@/lib/demo-entry";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo-transparent.png";
 
 export function EntryScreen({ registration = false }: { registration?: boolean }) {
   const navigate = useNavigate();

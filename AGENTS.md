@@ -15,6 +15,8 @@
 - Destination macro-region filtering uses the shared browser-safe destination dataset, so discovery, details, calculator presets and the schematic map stay aligned.
 - Accessibility appearance is held in a root React provider and applied to document tokens without persisting personal data; content accessibility uses shared speech and explicitly labeled generic Libras demonstrations.
 - Profile privacy, notifications and tracking switches are demonstration state only; offline export is a textual guide, never a navigation map or a tracking service.
-- A root preferences gate prevents all route screens and educational tips from rendering until anonymous preferences are completed; only preferences persist locally, never credentials or real location.
+- Tourist preferences onboarding is a dedicated route reached only after demo login; /descobrir redirects there until anonymous preferences exist, then shows educational tips once; only preferences persist locally, never credentials or real location.
 - Recommendations use deterministic demonstration scoring and the unchanged shared carbon data, so compatibility must never be presented as real AI output or verified geolocation.
 - Retired Cloud authentication middleware and integration packages must stay removed; the empty Drizzle journal is an inert remix scaffold, not a connected database or runnable backend.
+
+- The manager dashboard is a layout route with separate child pages sharing filters through a React context; its records derive from the shared destination catalog so manager and tourist data stay aligned.
