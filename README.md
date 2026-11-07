@@ -4,7 +4,7 @@ Implement exactly the screenshot and nothing else
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://eco-travel-project.lovable.app
+**Live app**: https://eco-travel-mvp.lovable.app
 
 ## Build with Lovable
 
