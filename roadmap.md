@@ -13,3 +13,5 @@
 - [x] Explicar carbono e compensação com os fatores existentes.
 - [x] Remover integrações e verificar navegação, primeiro acesso e cálculos.
 - [x] Limpar migrações copiadas e preparar um registro vazio para o remix, sem conectar banco.
+- [x] Verificar novamente o registro vazio de migrações neste remix.
+- [x] Verificar nova logo, paisagem verde e ajustes de Mapa/Detalhes em celular e computador.

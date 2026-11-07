@@ -61,7 +61,7 @@ function Mapa() {
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {destinations.map((x) => (
             <Button key={x.id} variant="ghost" aria-pressed={sel === x.id} onClick={() => { setSel(x.id); setMode(null); }}
-              className={`h-auto whitespace-normal rounded-2xl py-3 text-sm font-medium ${sel === x.id ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>{x.name}</Button>
+              className={`h-auto min-w-0 whitespace-normal break-words rounded-2xl px-2 py-3 text-sm font-medium ${sel === x.id ? "bg-forest text-forest-foreground hover:bg-forest/90 hover:text-forest-foreground" : "bg-card shadow-soft"}`}>{x.name}</Button>
           ))}
         </div>
 
@@ -70,10 +70,10 @@ function Mapa() {
             <div className="mt-6"><Step n={2} title="Meio de transporte" done={!!m} /></div>
             <div className="mt-3 grid grid-cols-3 gap-2">
               {modes.map(({ id, label, icon: Icon }) => (
-                <button key={id} onClick={() => setMode(id)}
-                  className={`flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-3 text-center text-xs leading-tight font-medium ${mode === id ? "bg-leaf text-leaf-foreground" : "bg-card shadow-soft"}`}>
+                <Button variant="ghost" key={id} onClick={() => setMode(id)} aria-pressed={mode === id}
+                  className={`flex h-auto min-w-0 flex-col items-center gap-1 whitespace-normal rounded-2xl px-1 py-3 text-center text-xs leading-tight font-medium ${mode === id ? "bg-leaf text-leaf-foreground" : "bg-card shadow-soft"}`}>
                   <Icon className="h-5 w-5" />{label}
-                </button>
+                </Button>
               ))}
             </div>
           </>
@@ -93,8 +93,8 @@ function Mapa() {
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-forest text-xs font-bold text-forest-foreground">{i + 1}</span>
                   <img src={dest.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" style={{ objectPosition: `${(i * 30) % 100}% 50%` }} />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-semibold">{s.name}</p>
-                    <p className="text-xs text-muted-foreground">{s.kind}</p>
+                    <p className="break-words font-semibold">{s.name}</p>
+                    <p className="break-words text-xs text-muted-foreground">{s.kind}</p>
                   </div>
                   <div className="shrink-0 text-right text-xs">
                     <p className="font-semibold">{s.km ? `${s.km} km` : "Início"}</p>
