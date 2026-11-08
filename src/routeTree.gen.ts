@@ -23,6 +23,8 @@ import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardAprovacoesRouteImport } from './routes/dashboard.aprovacoes'
+import { Route as DashboardConfiguracoesRouteImport } from './routes/dashboard.configuracoes'
 import { Route as DashboardRelatoriosRouteImport } from './routes/dashboard.relatorios'
 import { Route as DashboardRoteirosRouteImport } from './routes/dashboard.roteiros'
 import { Route as DestinoIdRouteImport } from './routes/destino.$id'
@@ -97,6 +99,16 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAprovacoesRoute = DashboardAprovacoesRouteImport.update({
+  id: '/aprovacoes',
+  path: '/aprovacoes',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardConfiguracoesRoute = DashboardConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardRelatoriosRoute = DashboardRelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
@@ -127,6 +139,8 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/dashboard/aprovacoes': typeof DashboardAprovacoesRoute
+  '/dashboard/configuracoes': typeof DashboardConfiguracoesRoute
   '/dashboard/relatorios': typeof DashboardRelatoriosRoute
   '/dashboard/roteiros': typeof DashboardRoteirosRoute
   '/destino/$id': typeof DestinoIdRoute
@@ -145,6 +159,8 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/dashboard/aprovacoes': typeof DashboardAprovacoesRoute
+  '/dashboard/configuracoes': typeof DashboardConfiguracoesRoute
   '/dashboard/relatorios': typeof DashboardRelatoriosRoute
   '/dashboard/roteiros': typeof DashboardRoteirosRoute
   '/destino/$id': typeof DestinoIdRoute
@@ -165,6 +181,8 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/dashboard/aprovacoes': typeof DashboardAprovacoesRoute
+  '/dashboard/configuracoes': typeof DashboardConfiguracoesRoute
   '/dashboard/relatorios': typeof DashboardRelatoriosRoute
   '/dashboard/roteiros': typeof DashboardRoteirosRoute
   '/destino/$id': typeof DestinoIdRoute
@@ -186,6 +204,8 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/sobre'
     | '/termos'
+    | '/dashboard/aprovacoes'
+    | '/dashboard/configuracoes'
     | '/dashboard/relatorios'
     | '/dashboard/roteiros'
     | '/destino/$id'
@@ -204,6 +224,8 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/sobre'
     | '/termos'
+    | '/dashboard/aprovacoes'
+    | '/dashboard/configuracoes'
     | '/dashboard/relatorios'
     | '/dashboard/roteiros'
     | '/destino/$id'
@@ -223,6 +245,8 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/sobre'
     | '/termos'
+    | '/dashboard/aprovacoes'
+    | '/dashboard/configuracoes'
     | '/dashboard/relatorios'
     | '/dashboard/roteiros'
     | '/destino/$id'
@@ -346,6 +370,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/aprovacoes': {
+      id: '/dashboard/aprovacoes'
+      path: '/aprovacoes'
+      fullPath: '/dashboard/aprovacoes'
+      preLoaderRoute: typeof DashboardAprovacoesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/configuracoes': {
+      id: '/dashboard/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/dashboard/configuracoes'
+      preLoaderRoute: typeof DashboardConfiguracoesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/relatorios': {
       id: '/dashboard/relatorios'
       path: '/relatorios'
@@ -371,12 +409,16 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteChildren {
+  DashboardAprovacoesRoute: typeof DashboardAprovacoesRoute
+  DashboardConfiguracoesRoute: typeof DashboardConfiguracoesRoute
   DashboardRelatoriosRoute: typeof DashboardRelatoriosRoute
   DashboardRoteirosRoute: typeof DashboardRoteirosRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAprovacoesRoute: DashboardAprovacoesRoute,
+  DashboardConfiguracoesRoute: DashboardConfiguracoesRoute,
   DashboardRelatoriosRoute: DashboardRelatoriosRoute,
   DashboardRoteirosRoute: DashboardRoteirosRoute,
   DashboardIndexRoute: DashboardIndexRoute,

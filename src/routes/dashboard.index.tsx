@@ -4,7 +4,7 @@ import { useDashboard } from "@/components/DashboardContext";
 
 export const Route = createFileRoute("/dashboard/")({
   head: () => ({ meta: [
-    { title: "Resumo ambiental — Painel do Gestor EcoTravel" },
+    { title: "Painel do Gestor" },
     { name: "description", content: "Resumo de CO₂ economizado por modal, meta ambiental e transporte mais utilizado." },
     { property: "og:title", content: "Resumo ambiental — Painel do Gestor EcoTravel" },
     { property: "og:description", content: "Gráfico de rosca e indicadores de carbono demonstrativos." },

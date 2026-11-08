@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Leaf, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePreferenceStore } from '@/components/PreferencesProvider';
-import { impacts, modes, styles, type Preferences } from '@/components/preferences-model';
+import { impacts, modes, styles, type Preferences } from '@/lib/preferences-model';
 import logo from '@/assets/logo.png';
 import botWave from '@/assets/bot-wave.png';
 import botHappy from '@/assets/bot-happy.png';
@@ -52,19 +52,23 @@ function Onboarding() {
           <div className="mb-6 flex gap-1.5" aria-label={`Passo ${step + 1} de ${steps.length}`}>
             {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
           </div>
-          <div key={step} className="flex flex-col items-center text-center animate-rise">
-            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain animate-float" />
-            <span className="mt-4 rounded-full bg-leaf px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-foreground">Passo {step + 1} de {steps.length}</span>
-            <h1 className="mt-4 text-xl font-semibold">{current.title}</h1>
+          <div className="flex flex-col items-center text-center">
+            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain animate-onboarding-float" />
           </div>
-          <div className="mt-6 grid gap-2">
-            {step === 0 ? <>
-              <Button variant={location ? 'leaf' : 'ghostLight'} aria-pressed={location} onClick={() => setLocation(!location)} className="h-auto min-h-12 whitespace-normal border border-forest-foreground/25"><MapPin />{location ? 'Localização simulada ativada' : 'Ativar localização em tempo real'}{location && <Check />}</Button>
-              <p className="text-center text-xs text-forest-foreground/70">Simulação com origem em São Paulo capital. Nenhuma localização real é solicitada ou guardada.</p>
-            </> : 'options' in current && current.options.map((option) => {
-              const selected = current.value === option;
-              return <Button key={option} variant={selected ? 'leaf' : 'ghostLight'} aria-pressed={selected} onClick={() => (current.set as (v: string) => void)(option)} className="h-auto min-h-12 justify-between whitespace-normal border border-forest-foreground/25 px-4 py-3 text-left">{option}{selected && <Check className="shrink-0" />}</Button>;
-            })}
+          <div key={step} className="animate-onboarding-step">
+            <div className="flex flex-col items-center text-center">
+              <span className="mt-4 rounded-full bg-leaf px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-foreground">Passo {step + 1} de {steps.length}</span>
+              <h1 className="mt-4 text-xl font-semibold">{current.title}</h1>
+            </div>
+            <div className="mt-6 grid gap-2">
+              {step === 0 ? <>
+                <Button variant={location ? 'leaf' : 'ghostLight'} aria-pressed={location} onClick={() => setLocation(!location)} className="h-auto min-h-12 whitespace-normal border border-forest-foreground/25"><MapPin />{location ? 'Localização simulada ativada' : 'Ativar localização em tempo real'}{location && <Check />}</Button>
+                <p className="text-center text-xs text-forest-foreground/70">Simulação com origem em São Paulo capital. Nenhuma localização real é solicitada ou guardada.</p>
+              </> : 'options' in current && current.options.map((option) => {
+                const selected = current.value === option;
+                return <Button key={option} variant={selected ? 'leaf' : 'ghostLight'} aria-pressed={selected} onClick={() => (current.set as (v: string) => void)(option)} className="h-auto min-h-12 justify-between whitespace-normal border border-forest-foreground/25 px-4 py-3 text-left">{option}{selected && <Check className="shrink-0" />}</Button>;
+              })}
+            </div>
           </div>
           <div className="mt-7 flex gap-3">
             <Button variant="ghostLight" className="flex-1" disabled={step === 0} onClick={() => setStep(step - 1)}><ArrowLeft />Voltar</Button>

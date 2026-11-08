@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
-import { parsePreferences, preferenceKey, type Preferences } from './preferences-model';
+import { parsePreferences, preferenceKey, type Preferences } from '@/lib/preferences-model';
 
 type Store = { preferences: Preferences | null; ready: boolean; save: (p: Preferences) => void };
 const PreferencesContext = createContext<Store>({ preferences: null, ready: false, save: () => {} });

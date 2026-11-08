@@ -106,18 +106,25 @@
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 @utility shadow-float { box-shadow: var(--shadow-float); }
 
-@keyframes float-y { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
-@utility animate-float { animation: float-y 3.2s ease-in-out infinite; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
-@utility animate-rise { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
-@keyframes splash-bar { from { width: 0 } to { width: 100% } }
-@keyframes typing-dot { 0%,80%,100% { opacity: .25 } 40% { opacity: 1 } }
+@keyframes onboarding-float { 0%,100% { transform: translate3d(0, 0, 0) } 50% { transform: translate3d(0, -4px, 0) } }
+@utility animate-onboarding-float { animation: onboarding-float 4s ease-in-out infinite; will-change: transform; }
+@keyframes onboarding-step-in { from { opacity: 0; transform: translate3d(0, 6px, 0) } to { opacity: 1; transform: translate3d(0, 0, 0) } }
+@utility animate-onboarding-step { animation: onboarding-step-in 300ms ease-out both; }
+@keyframes rise { from { opacity: 0; translate: 0 6px } to { opacity: 1; translate: 0 0 } }
+@utility animate-rise { animation: rise .3s ease-out both; }
 
 .dashboard-chart { transform: rotate(-90deg); }
 .dashboard-chart circle { transition: stroke-dasharray .4s ease, stroke-dashoffset .4s ease; }
 .dashboard-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
+.weather-widget::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 1; }
+.weather-widget[data-weather="sol"]::before { background: radial-gradient(ellipse at 92% 0%, rgb(180 234 133 / .2), transparent 52%); }
+.weather-widget[data-weather="chuva"]::before { background: linear-gradient(135deg, rgb(151 205 171 / .16), transparent 68%); }
+.weather-widget[data-weather="vento"]::before { background: radial-gradient(ellipse at 4% 55%, rgb(160 224 174 / .16), transparent 58%); }
+.weather-widget[data-weather="frio"]::before { background: linear-gradient(135deg, rgb(184 224 194 / .16), transparent 72%); }
+.weather-widget > * { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   .dashboard-chart circle { transition: none; }
+  .animate-onboarding-float, .animate-onboarding-step { animation: none !important; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -186,19 +193,33 @@
 html[data-font-level="1"] { font-size: 18px; }
 html[data-font-level="2"] { font-size: 20px; }
 html[data-font-level="3"] { font-size: 22px; }
+@media (max-width: 639px) {
+  html[data-font-level="1"] { font-size: 17px; }
+  html[data-font-level="2"] { font-size: 18px; }
+  html[data-font-level="3"] { font-size: 19px; }
+}
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 
 /* Login visual: official login forest and paper tones. */
 :root { --login-forest: #0b3b2c; --login-paper: #fbf9f1; --login-overlay: rgb(0 0 0 / 0.35); }
 @theme inline { --color-login-forest: var(--login-forest); --color-login-paper: var(--login-paper); --color-login-overlay: var(--login-overlay); }
-@keyframes pixel-drift { 0% { transform: translate(0, 0) } 50% { transform: translate(6px, -10px) } 100% { transform: translate(0, 0) } }
-@keyframes pixel-sway { 0%,100% { transform: rotate(-4deg) } 50% { transform: rotate(4deg) } }
-@utility animate-pixel-drift { animation: pixel-drift 5s steps(6) infinite; }
-@utility animate-pixel-sway { animation: pixel-sway 3s steps(4) infinite; transform-origin: bottom center; }
 :root { --pixel-sky: #134d39; --pixel-far: #1d6448; --pixel-mid: #144a35; --pixel-near: #0b3b2c; --pixel-tree: #2f7d55; --pixel-tree-dark: #1f5e40; --pixel-cloud: #a9d4b4; --pixel-hiker: #6fb383; }
 @theme inline { --color-pixel-sky: var(--pixel-sky); --color-pixel-far: var(--pixel-far); --color-pixel-mid: var(--pixel-mid); --color-pixel-near: var(--pixel-near); --color-pixel-tree: var(--pixel-tree); --color-pixel-tree-dark: var(--pixel-tree-dark); --color-pixel-cloud: var(--pixel-cloud); --color-pixel-hiker: var(--pixel-hiker); }
-@keyframes pixel-cloud { 0%,100% { transform: translateX(0) } 50% { transform: translateX(24px) } }
-@keyframes pixel-walk { 0%,100% { transform: translate(0,0) } 25% { transform: translate(8px,-2px) } 50% { transform: translate(16px,0) } 75% { transform: translate(8px,-2px) } }
-@utility animate-pixel-cloud { animation: pixel-cloud 14s steps(12) infinite; }
-@utility animate-pixel-walk { animation: pixel-walk 4s steps(8) infinite; }
-@media (prefers-reduced-motion: reduce) { .animate-pixel-drift, .animate-pixel-sway, .animate-pixel-cloud, .animate-pixel-walk { animation: none; } }
+@keyframes pixel-cloud { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+@keyframes pixel-flight { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+@keyframes pixel-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes pixel-wing-a { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes pixel-wing-b { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
+@keyframes chat-message-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pixel-walk {
+  from { transform: translateX(calc(-100% + 32px)); }
+  to { transform: translateX(0); }
+}
+@utility animate-pixel-cloud { animation: pixel-cloud 22s linear infinite; will-change: transform; }
+@utility animate-pixel-flight { animation: pixel-flight 20s linear infinite; will-change: transform; }
+@utility animate-pixel-bob { animation: pixel-bob 1.2s ease-in-out infinite; }
+@utility animate-pixel-wing-a { animation: pixel-wing-a 0.36s steps(1, end) infinite; }
+@utility animate-pixel-wing-b { animation: pixel-wing-b 0.36s steps(1, end) infinite; }
+@utility animate-pixel-walk { animation: pixel-walk 18s linear infinite; }
+@utility animate-chat-message { animation: chat-message-in 300ms ease-out both; }
+@media (prefers-reduced-motion: reduce) { .animate-chat-message, .animate-pixel-bob, .animate-pixel-cloud, .animate-pixel-flight, .animate-pixel-walk, .animate-pixel-wing-a, .animate-pixel-wing-b { animation: none; } }

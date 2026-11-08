@@ -30,7 +30,7 @@ function Sobre() {
       <article className="px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:pt-10">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-3xl bg-forest p-6 text-forest-foreground">
           <h1 className="text-3xl font-semibold lg:text-4xl">Sobre o EcoTravel</h1>
-          <img src={botWave} alt="EcoBot" className="h-20 w-20 shrink-0 object-contain animate-float lg:h-28 lg:w-28" />
+          <img src={botWave} alt="EcoBot" className="h-20 w-20 shrink-0 object-contain lg:h-28 lg:w-28" />
         </div>
         <p className="mt-6 leading-relaxed">
           O EcoTravel é uma solução inteligente de software voltada para o turismo sustentável e consciente. Desenvolvido como parte dos projetos de engenharia e inovação, nosso propósito é transformar a experiência de viajar, conectando o usuário a destinos, roteiros e práticas de baixo impacto socioambiental em todo o país.

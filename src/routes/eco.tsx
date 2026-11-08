@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { HeartHandshake } from "lucide-react";
+import { ChevronDown, HeartHandshake, Info } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { PixelNature } from "@/components/PixelNature";
 import { Button } from "@/components/ui/button";
 import { destinations, transports, carbonKg, offsetSuggestions, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
 import { useCredits } from "@/lib/credits";
@@ -27,16 +28,23 @@ function Eco() {
     <AppShell title="Carbono">
       <Calc />
       <section className="mx-auto mt-8 max-w-2xl px-5">
-        <h2 className="text-xl font-semibold">Como é calculado o carbono?</h2>
-        <details className="mt-4 rounded-lg border border-border bg-card p-5" open>
-          <summary className="cursor-pointer font-semibold">Fórmula e fatores de referência</summary>
-          <p className="mt-4 rounded-lg bg-accent p-4 text-sm font-semibold">Emissão (kg CO₂) = Distância (km) × Fator de Emissão do Transporte</p>
-          <p className="mt-3 text-sm text-muted-foreground">A distância considera ida e volta. Os fatores são médias ilustrativas por passageiro-quilômetro, não medições de uma viagem real.</p>
-          <dl className="mt-4 divide-y divide-border">{transports.map(t => <div key={t.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm"><dt>{t.label}</dt><dd className="font-semibold">{t.factor.toLocaleString('pt-BR', { maximumFractionDigits: 3 })} kg CO₂/passageiro-km</dd></div>)}</dl>
-          <p className="mt-4 text-sm">Exemplo: 100 km de ônibus × {transports.find(t => t.id === 'onibus')?.factor.toLocaleString('pt-BR')} = {carbonKg(100, 'onibus').toLocaleString('pt-BR')} kg CO₂.</p>
-          <h3 className="mt-5 font-semibold">Estimativa de compensação</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Em vez de sugerir plantio direto de mudas, o EcoTravel recomenda ações práticas: apoiar ONGs certificadas de restauração (como a SOS Mata Atlântica), incentivar projetos locais de conservação, participar de mutirões de limpeza de parques e reduzir resíduos de forma permanente. Essas ações não certificam neutralização de carbono.</p>
-          <p className="mt-3 text-xs text-muted-foreground">A pé e bicicleta têm emissão operacional zero neste modelo, não impacto total zero. Para mais de {ACTIVE_MAX_KM} km, a comparação prioriza transportes viáveis.</p>
+        <details className="group rounded-2xl border border-border bg-card p-4 shadow-soft">
+          <summary className="flex cursor-pointer list-none items-center gap-3 font-semibold [&::-webkit-details-marker]:hidden">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-primary"><Info className="h-5 w-5" /></span>
+            <span className="flex-1">Como calculamos a sua pegada</span>
+            <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+          </summary>
+          <div className="mt-4 border-t border-border pt-4">
+            <p className="text-sm leading-relaxed text-muted-foreground">Esta é uma estimativa para ajudar você a comparar opções de transporte e planejar passeios com mais consciência. Multiplicamos a distância de ida e volta pelo fator médio de emissão de cada transporte.</p>
+            <p className="mt-4 rounded-xl bg-accent p-4 text-sm font-semibold">Emissão estimada (kg CO₂) = distância (km) × fator de emissão do transporte</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Os fatores abaixo são referências médias por passageiro-quilômetro, não medições da sua viagem. Por isso, o resultado é educativo e pode variar conforme o veículo, a ocupação e as condições do trajeto.</p>
+            <dl className="mt-4 divide-y divide-border">{transports.map(t => <div key={t.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm"><dt>{t.label}</dt><dd className="font-semibold">{t.factor.toLocaleString('pt-BR', { maximumFractionDigits: 3 })} kg CO₂/passageiro-km</dd></div>)}</dl>
+            <p className="mt-4 text-sm leading-relaxed">Por exemplo: em 100 km de ônibus, usamos o fator de {transports.find(t => t.id === 'onibus')?.factor.toLocaleString('pt-BR')} para estimar {carbonKg(100, 'onibus').toLocaleString('pt-BR')} kg de CO₂.</p>
+            <h3 className="mt-5 font-semibold">Pequenas escolhas também contam</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Caminhar e pedalar não geram emissões operacionais neste cálculo, mas isso não significa impacto total zero. Para distâncias acima de {ACTIVE_MAX_KM} km, mostramos apenas opções de transporte mais viáveis; caminhada e bicicleta fazem mais sentido nos passeios pelo destino.</p>
+            <h3 className="mt-5 font-semibold">Ideias para cuidar do destino</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Você pode apoiar projetos locais de conservação e restauração, participar de mutirões de limpeza ou reduzir resíduos no dia a dia. São atitudes positivas, mas não representam uma compensação certificada nem neutralizam automaticamente as emissões da viagem.</p>
+          </div>
         </details>
       </section>
     </AppShell>
@@ -64,8 +72,11 @@ function Calc() {
 
   return (
     <section className="px-5 pt-6 lg:mx-auto lg:max-w-2xl">
+      <div className="relative mb-5 h-40 overflow-hidden rounded-3xl sm:h-48" aria-hidden="true">
+        <PixelNature />
+      </div>
       <h1 className="text-2xl font-semibold">Pegada de carbono</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Selecione um roteiro já realizado e o transporte usado.</p>
+      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Vamos estimar as emissões do seu passeio? Escolha o roteiro e como você chegou até lá para comparar alternativas.</p>
 
       <label className="mt-5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">Roteiro</label>
       <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">

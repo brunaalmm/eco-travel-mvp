@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
@@ -14,6 +15,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AccessibilityProvider } from "@/components/AccessibilityProvider";
 import { PreferencesProvider } from "@/components/PreferencesProvider";
+import { RouteTransition } from "@/components/RouteTransition";
 
 function NotFoundComponent() {
   return (
@@ -116,11 +118,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <AccessibilityProvider><PreferencesProvider><Outlet /></PreferencesProvider></AccessibilityProvider>
+      <AccessibilityProvider pathname={pathname}>
+        <PreferencesProvider>
+          <RouteTransition><Outlet /></RouteTransition>
+        </PreferencesProvider>
+      </AccessibilityProvider>
     </QueryClientProvider>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowLeft, Star, Map, Mountain, BedDouble, UtensilsCrossed, Footprints } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { getDestination, destinationDescription, type Place } from "@/lib/data";
@@ -36,7 +36,19 @@ const tabs = [
 function Destino() {
   const d = Route.useLoaderData();
   const [tab, setTab] = useState<(typeof tabs)[number]["key"]>("attractions");
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [reviewStatus, setReviewStatus] = useState("");
   const items: Place[] = d[tab];
+
+  function submitReview(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!reviewRating || !reviewText.trim()) {
+      setReviewStatus("Escolha uma nota e escreva sua avaliação.");
+      return;
+    }
+    setReviewStatus("Avaliação registrada nesta demonstração. Ela não foi salva nem publicada.");
+  }
 
   return (
     <AppShell title={d.name}>
@@ -50,7 +62,7 @@ function Destino() {
         <div className="mb-4"><AccessibleContent key={d.id} title={d.name} text={destinationDescription(d)} route /></div>
         <div className="flex min-w-0 items-center justify-between gap-3">
           <span className="text-xs font-semibold uppercase tracking-wider text-primary min-w-0 truncate">{d.region}</span>
-          {d.reviews > 0 && <span className="flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-warning text-warning" /><b>{d.rating}</b></span>}
+          {d.rating > 0 && <span className="flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-warning text-warning" /><b>{d.rating.toFixed(1)}</b><span className="text-[10px] text-muted-foreground">nota demonstrativa</span></span>}
         </div>
         <h1 className="mt-1 break-words text-2xl sm:text-3xl font-semibold">{d.name}</h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.summary}</p>
@@ -82,6 +94,27 @@ function Destino() {
         <Link to="/mapa" search={{ d: d.id }} className="mt-5 flex h-12 items-center justify-center gap-2 rounded-full bg-leaf font-semibold text-leaf-foreground shadow-soft">
           <Map className="h-5 w-5" /> Ver circuito no mapa
         </Link>
+
+        <section aria-labelledby="review-title" className="mt-8 border-t border-border pt-6">
+          <h2 id="review-title" className="text-lg font-semibold">Avalie este roteiro</h2>
+          <p className="mt-1 text-xs text-muted-foreground">Avaliação demonstrativa: seu comentário não será salvo nem publicado.</p>
+          <form onSubmit={submitReview} className="mt-4">
+            <div role="group" aria-label="Sua nota" className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((value) => (
+                <button key={value} type="button" aria-label={`${value} ${value === 1 ? "estrela" : "estrelas"}`} aria-pressed={reviewRating === value} onClick={() => setReviewRating(value)} className="grid h-10 w-10 place-items-center rounded-lg hover:bg-accent">
+                  <Star className={`h-5 w-5 ${reviewRating >= value ? "fill-warning text-warning" : "text-muted-foreground"}`} />
+                </button>
+              ))}
+            </div>
+            <label htmlFor="review-text" className="mt-3 block text-sm font-medium">Sua avaliação</label>
+            <textarea id="review-text" value={reviewText} onChange={(event) => setReviewText(event.target.value)} maxLength={500} rows={4} placeholder="O que você achou deste roteiro?" className="mt-2 w-full resize-y rounded-2xl border border-input bg-card p-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+              <span className="text-xs text-muted-foreground">{reviewText.length}/500 caracteres</span>
+              <Button type="submit" variant="leaf">Registrar avaliação</Button>
+            </div>
+            {reviewStatus && <p role="status" className="mt-3 text-sm text-muted-foreground">{reviewStatus}</p>}
+          </form>
+        </section>
       </div>
     </AppShell>
   );

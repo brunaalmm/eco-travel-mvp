@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { PreferencesProvider } from '@/components/PreferencesProvider';
-import { parsePreferences, recommendation, type Preferences } from '@/components/preferences-model';
+import { parsePreferences, recommendation, type Preferences } from '@/lib/preferences-model';
 import { destinations, carbonKg, offsetSuggestions } from '@/lib/data';
 
 const preferences: Preferences = { style: 'Parques Urbanos', mode: 'Bicicleta', impact: 'Menor pegada de CO₂', simulatedLocation: true };

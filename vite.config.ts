@@ -7,6 +7,17 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  vite: {
+    server: {
+      proxy: {
+        "/__l5e/assets-v1": {
+          target: `https://${process.env.LOVABLE_PREVIEW_HOST || "id-preview--a86dfa30-00ea-46a4-ad78-16b585228093.lovable.app"}`,
+          changeOrigin: true,
+          secure: true,
+        },
+      },
+    },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

@@ -15,7 +15,7 @@ export function AccessibleContent({ text, title, route = false }: { text: string
     </div>
     {audio && <AudioDescription text={text} />}
     <Dialog open={signs} onOpenChange={setSigns}>
-      <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg">
+      <DialogContent className="max-h-[90dvh] w-[calc(100%-1rem)] overflow-y-auto rounded-lg p-4 sm:w-[calc(100%-2rem)] sm:p-6">
         <DialogTitle>Libras · {title}</DialogTitle>
         <DialogDescription>Demonstração de saudação “Oi” em Libras. Não é uma tradução deste conteúdo.</DialogDescription>
         <SignVideo />
@@ -30,8 +30,11 @@ function SignVideo() {
   const [playing, setPlaying] = useState(false);
   const [error, setError] = useState(false);
   return <div>
-    <video ref={ref} src={libras.url} loop playsInline controls preload="auto" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setError(true)} className="aspect-square max-h-[55dvh] w-full rounded-lg bg-muted object-contain" aria-label="Intérprete animado demonstrando a saudação Oi em Libras" />
-    {error ? <p role="alert">O vídeo não está disponível neste navegador.</p> : <Button className="mt-3 w-full" variant="outline" onClick={() => { const video = ref.current; if (!video) return; if (video.paused) void video.play().catch(() => setError(true)); else video.pause(); }}>{playing ? <Pause /> : <Play />}{playing ? "Pausar Libras" : "Reproduzir Libras"}</Button>}
+    <video ref={ref} className="mx-auto block aspect-square max-h-[min(58dvh,32rem)] w-full max-w-[min(100%,32rem)] rounded-lg bg-muted object-contain" aria-label="Intérprete animado demonstrando a saudação Oi em Libras" onPlay={() => { setPlaying(true); setError(false); }} onPause={() => setPlaying(false)} onError={() => { setPlaying(false); setError(true); }}>
+      <source src={libras.url} type="video/mp4" />
+      Seu navegador não oferece suporte à reprodução deste vídeo.
+    </video>
+    {error ? <div role="alert" className="mt-3 space-y-2"><p className="text-sm">Não foi possível carregar o vídeo. Verifique a conexão e tente novamente.</p><Button className="w-full" variant="outline" onClick={() => { const video = ref.current; if (!video) return; setError(false); video.load(); }}>Tentar novamente</Button></div> : <Button className="mt-3 w-full" variant="outline" onClick={() => { const video = ref.current; if (!video) return; if (video.paused) void video.play().catch(() => setError(true)); else video.pause(); }}>{playing ? <Pause /> : <Play />}{playing ? "Pausar Libras" : "Reproduzir Libras"}</Button>}
   </div>;
 }
 

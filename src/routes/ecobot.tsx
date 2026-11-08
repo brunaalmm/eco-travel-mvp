@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { useCredits } from "@/lib/credits";
-import { answer, suggestions, quiz, quizResult } from "@/lib/ecobot";
-import type { TransportId } from "@/lib/data";
+import { answer, suggestions } from "@/lib/ecobot";
 import botHappy from "@/assets/bot-happy.png";
 import botJoy from "@/assets/bot-joy.png";
 import botLoading from "@/assets/bot-loading.png";
@@ -26,19 +25,24 @@ export const Route = createFileRoute("/ecobot")({
 type Msg = { id: number; me: boolean; text: string };
 
 function EcoBotPage() {
-  const { add } = useCredits();
+  const { add, credits } = useCredits();
   const [msgs, setMsgs] = useState<Msg[]>([
     { id: 0, me: false, text: "Olá! Sou o EcoBot 🌱 Me pergunte qualquer coisa sobre turismo sustentável." },
   ]);
   const [text, setText] = useState("");
   const [typing, setTyping] = useState(false);
   const nextId = useRef(1);
+  const replyTimer = useRef<number | null>(null);
   const list = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = list.current;
-    if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: msgs.length > 1 || typing ? "smooth" : "auto" });
   }, [msgs, typing]);
+
+  useEffect(() => () => {
+    if (replyTimer.current !== null) window.clearTimeout(replyTimer.current);
+  }, []);
 
   const send = (q: string) => {
     const query = q.trim();
@@ -46,84 +50,85 @@ function EcoBotPage() {
     setMsgs((m) => [...m, { id: nextId.current++, me: true, text: query }]);
     setText("");
     setTyping(true);
-    window.setTimeout(() => {
+    replyTimer.current = window.setTimeout(() => {
       setMsgs((m) => [...m, { id: nextId.current++, me: false, text: answer(query) }]);
       setTyping(false);
+      replyTimer.current = null;
       add(5);
     }, 650);
   };
 
   return (
     <AppShell title="EcoBot">
-      <section className="flex flex-col px-5 pt-5 lg:mx-auto lg:w-full lg:max-w-2xl lg:pt-8">
-        <div className="flex items-center gap-3 rounded-3xl bg-forest p-4 text-forest-foreground">
-          <img src={botJoy} alt="EcoBot" className="h-14 w-14 shrink-0 object-contain animate-float" />
-          <div className="min-w-0">
-            <h1 className="font-display font-semibold">EcoBot</h1>
-            <p className="text-xs opacity-70">Guia educativo · cada pergunta vale +5 créditos</p>
+      <section className="-mb-28 flex h-[calc(100dvh-4rem)] min-h-[26rem] flex-col overflow-hidden lg:-mb-16 lg:h-[calc(100dvh-5rem)] lg:min-h-[32rem]">
+        <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-5 py-4 lg:px-8">
+          <img src={botJoy} alt="" className="h-11 w-11 shrink-0 object-contain" />
+          <div className="min-w-0 flex-1">
+            <h1 className="font-display text-lg font-semibold">EcoBot</h1>
+            <p className="text-[11px] leading-4 text-muted-foreground">Guia educativo de turismo sustentável</p>
+          </div>
+          <div className="shrink-0 text-right text-[10px] leading-4 text-muted-foreground" aria-label={`Você ganha 5 créditos por pergunta. Saldo: ${credits} créditos.`}>
+            <p className="flex items-center justify-end gap-1 font-semibold text-primary"><Sparkles className="h-3 w-3" />+5 por pergunta</p>
+            <p aria-live="polite">Saldo: {credits} créditos</p>
           </div>
         </div>
 
-        <div ref={list} className="mt-4 h-[calc(100vh-24rem)] min-h-64 space-y-3 overflow-y-auto pr-1 lg:h-[calc(100vh-22rem)]">
+        <div
+          ref={list}
+          role="log"
+          aria-label="Conversa com o EcoBot"
+          aria-live="polite"
+          className="mx-auto min-h-0 w-full max-w-3xl flex-1 space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-5 pb-40 lg:px-8 lg:pb-24"
+        >
           {msgs.map((m) => (
-            <div key={m.id} className={`flex items-end gap-2 animate-rise ${m.me ? "justify-end" : ""}`}>
+            <div key={m.id} className={`animate-chat-message flex items-end gap-2 ${m.me ? "justify-end" : ""}`}>
               {!m.me && <img src={botHappy} alt="" className="h-8 w-8 shrink-0 object-contain" />}
-              <p className={`max-w-[78%] rounded-3xl px-4 py-2.5 text-sm ${m.me ? "rounded-br-md bg-forest text-forest-foreground" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
+              <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-forest text-forest-foreground" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
             </div>
           ))}
           {typing && (
-            <div className="flex items-end gap-2 animate-rise">
+            <div className="animate-chat-message flex items-end gap-2">
               <img src={botLoading} alt="" className="h-8 w-8 shrink-0 object-contain" />
               <p className="flex gap-1 rounded-3xl rounded-bl-md bg-card px-4 py-3.5 shadow-soft" aria-label="EcoBot digitando">
                 {[0, 1, 2].map((d) => (
-                  <span key={d} className="h-1.5 w-1.5 rounded-full bg-muted-foreground" style={{ animation: `typing-dot 1s ${d * 0.15}s infinite` }} />
+                  <span key={d} className="h-1.5 w-1.5 animate-pulse rounded-full bg-muted-foreground" style={{ animationDelay: `${d * 140}ms` }} />
                 ))}
               </p>
             </div>
           )}
+          {msgs.length === 1 && !typing && (
+            <div className="ml-10 flex max-w-2xl flex-wrap gap-2 pt-1" aria-label="Sugestões para começar">
+              {suggestions.map((suggestion) => (
+                <button
+                  key={suggestion}
+                  type="button"
+                  onClick={() => send(suggestion)}
+                  className="rounded-full bg-accent px-3.5 py-2 text-left text-xs font-medium text-primary transition-colors hover:bg-leaf/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {suggestions.map((s) => (
-            <button key={s} type="button" disabled={typing} onClick={() => send(s)}
-              className="rounded-full border border-primary/40 bg-card px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-accent disabled:opacity-50">
-              {s}
+        <div className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] left-1/2 z-30 w-full max-w-[440px] -translate-x-1/2 bg-background/95 px-4 pb-2 pt-2 backdrop-blur lg:bottom-0 lg:max-w-2xl lg:px-0 lg:pb-4">
+          <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-center gap-2 rounded-full border border-border bg-card p-1.5 pl-5 shadow-soft">
+            <input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Pergunte sobre sua viagem..."
+              aria-label="Sua pergunta para o EcoBot"
+              autoComplete="off"
+              enterKeyHint="send"
+              className="h-11 w-full min-w-0 bg-transparent text-sm outline-none"
+            />
+            <button type="submit" disabled={typing || !text.trim()} aria-label="Enviar mensagem" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground transition-opacity disabled:opacity-40">
+              <Send className="h-4 w-4" />
             </button>
-          ))}
+          </form>
         </div>
-        <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="mt-3 flex items-center gap-2 rounded-full bg-card p-1.5 pl-5 shadow-soft">
-          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Pergunte ao EcoBot..." className="w-full min-w-0 bg-transparent text-sm outline-none" />
-          <button type="submit" disabled={typing} aria-label="Enviar" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground disabled:opacity-50"><Send className="h-4 w-4" /></button>
-        </form>
-        <Quiz onAnswer={() => add(5)} />
       </section>
     </AppShell>
-  );
-}
-
-function Quiz({ onAnswer }: { onAnswer: () => void }) {
-  const [step, setStep] = useState(0);
-  const [picked, setPicked] = useState<TransportId | null>(null);
-  const q = quiz[step] ?? quiz[0]!;
-  const result = picked ? quizResult(q.km, picked) : null;
-  return (
-    <section aria-labelledby="quiz-title" className="mt-8 mb-4 rounded-3xl bg-card p-5 shadow-soft">
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">Mini-quiz de impacto · {step + 1} de {quiz.length}</p>
-      <h2 id="quiz-title" className="mt-1 font-semibold">{q.question}</h2>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {q.options.map((o) => (
-          <button key={o.t} type="button" aria-pressed={picked === o.t} onClick={() => { if (!picked) onAnswer(); setPicked(o.t); }}
-            className={`rounded-full px-4 py-2 text-sm font-medium ${picked === o.t ? "bg-forest text-forest-foreground" : "border border-border bg-background"}`}>{o.label}</button>
-        ))}
-      </div>
-      {result && (
-        <div role="status" className="mt-4 rounded-2xl bg-accent p-3 text-sm">
-          <b>{result.kg.toLocaleString("pt-BR")} kg CO₂</b> por pessoa.{" "}
-          {result.saved > 0 ? `Você evitou ${result.saved.toLocaleString("pt-BR")} kg em relação ao carro. 🌱` : "Essa é a opção mais poluente — compare com as outras."}
-        </div>
-      )}
-      <button type="button" disabled={!picked} onClick={() => { setPicked(null); setStep((step + 1) % quiz.length); }}
-        className="mt-4 text-sm font-semibold text-primary disabled:opacity-40">{step === quiz.length - 1 ? "Recomeçar quiz" : "Próximo cenário →"}</button>
-    </section>
   );
 }

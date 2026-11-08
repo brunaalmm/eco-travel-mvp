@@ -8,7 +8,7 @@ import { macroRegions, filterDestinations, type MacroRegion } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { usePreferenceStore } from "@/components/PreferencesProvider";
 import { WeatherWidget } from "@/components/WeatherWidget";
-import { recommendation } from "@/components/preferences-model";
+import { recommendation } from "@/lib/preferences-model";
 
 export const Route = createFileRoute("/descobrir")({
   head: () => ({
@@ -113,7 +113,7 @@ function Descobrir() {
                 {preferences && <div className="mt-3 space-y-2 text-xs"><p className="font-semibold text-primary">{recommendation(d, preferences).score}% de compatibilidade · simulação de IA</p><p className="text-muted-foreground">{recommendation(d, preferences).kg.toLocaleString('pt-BR')} kg CO₂ · {recommendation(d, preferences).km} km · {recommendation(d, preferences).transport === 'pe' ? 'A pé' : recommendation(d, preferences).transport === 'bike' ? 'Bicicleta' : recommendation(d, preferences).transport === 'carro' ? 'Carro' : 'Ônibus'}</p>{recommendation(d, preferences).adjusted && <p className="text-muted-foreground">Ônibus no deslocamento; caminhada ou trilha apenas no destino.</p>}</div>}
                 <div className="mt-2 flex items-center gap-1 text-sm">
                   <Star className="h-4 w-4 fill-warning text-warning" />
-                   {d.reviews > 0 ? <><b>{d.rating}</b><span className="text-muted-foreground">({d.reviews} avaliações)</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
+                   {d.rating > 0 ? <><b>{d.rating.toFixed(1)}</b><span className="text-muted-foreground">{d.reviews > 0 ? `(${d.reviews} avaliações simuladas)` : "Nota demonstrativa"}</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
                 </div>
               </div>
             </Link>

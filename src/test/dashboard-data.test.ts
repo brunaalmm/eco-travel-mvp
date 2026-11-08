@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getDashboardData, regions } from "@/lib/dashboard-data";
+import { dashboardGreeting } from "@/lib/dashboard-greeting";
 import { filterDestinations } from "@/lib/data";
 
 describe("Painel do Gestor", () => {
@@ -22,5 +23,18 @@ describe("Painel do Gestor", () => {
     const peak = getDashboardData("Todas", "Último Mês", true);
     expect(peak.trips).toBeGreaterThan(getDashboardData("Todas", "Último Mês").trips);
     expect(peak.overCapacity.length).toBeGreaterThan(0);
+  });
+});
+
+describe("Saudação do gestor", () => {
+  it.each([
+    [0, "Bom dia, Gestor"],
+    [11, "Bom dia, Gestor"],
+    [12, "Boa tarde, Gestor"],
+    [17, "Boa tarde, Gestor"],
+    [18, "Boa noite, Gestor"],
+    [23, "Boa noite, Gestor"],
+  ])("usa a saudação correta às %i horas", (hour, expected) => {
+    expect(dashboardGreeting(hour)).toBe(expected);
   });
 });

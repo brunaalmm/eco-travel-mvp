@@ -8,7 +8,7 @@ import { createDashboardPdf, downloadDashboardPdf } from "@/lib/dashboard-pdf";
 
 export const Route = createFileRoute("/dashboard/relatorios")({
   head: () => ({ meta: [
-    { title: "Central de Relatórios — Painel do Gestor EcoTravel" },
+    { title: "Painel do Gestor" },
     { name: "description", content: "Exporte relatórios executivos em PDF com os filtros regionais e indicadores do painel." },
     { property: "og:title", content: "Central de Relatórios — Painel do Gestor EcoTravel" },
     { property: "og:description", content: "Relatórios executivos padronizados em PDF." },
