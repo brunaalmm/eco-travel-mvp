@@ -1,26 +1,57 @@
-# EcoTravel-Project
+# EcoTravel
 
-Implement exactly the screenshot and nothing else
+Aplicação demonstrativa para descoberta de turismo sustentável, acessível e inclusivo. O projeto apresenta destinos, estimativas educativas de carbono, recursos de acessibilidade e um painel de gestão com dados de demonstração.
 
-This project was built with [Lovable](https://lovable.dev).
+Aplicação publicada: [eco-travel-mvp.lovable.app](https://eco-travel-mvp.lovable.app)
 
-**Live app**: https://eco-travel-mvp.lovable.app
+## Funcionalidades
 
-## Build with Lovable
+- Descoberta de destinos e visualização de detalhes.
+- Mapa esquemático e calculadora educativa de carbono.
+- Assistente EcoBot com recomendacoes demonstrativas.
+- Recursos de acessibilidade visual, leitura de conteúdo e demonstração de Libras.
+- Painel de gestão, filtros e relatórios demonstrativos.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/db46e759-a832-4a15-a7b0-776b655de7c2).
+## Rotas principais
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+| Rota | Conteudo |
+| --- | --- |
+| `/` | Entrada demonstrativa |
+| `/descobrir` | Descoberta de destinos |
+| `/destino/:id` | Detalhes de um destino |
+| `/mapa` | Mapa esquematico |
+| `/eco` | Calculadora de carbono |
+| `/ecobot` | Assistente demonstrativo |
+| `/dashboard` | Painel publico de gestao |
 
-## Development
+## Tecnologias
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+React, TypeScript, TanStack Start/Router, Vite, Tailwind CSS e Vitest.
+
+## Desenvolvimento local
+
+Requisitos: Node.js compatível com a versão do Vite e npm.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+npm install
 npm run dev
 ```
+
+Verificações e build de produção:
+
+```sh
+npm test
+npm run build
+```
+
+## Escopo da demonstracao
+
+O painel, perfis, credenciais e controles são demonstrativos; não há autenticação, banco de dados ou integração Supabase ativos. Preferências anônimas podem ser salvas localmente, mas credenciais e localização real não são persistidas nem enviadas. Uma integração real de contas requer aprovação e implementação específicas.
+
+## Documentacao
+
+A documentacao do projeto esta em [`documentacao/`](documentacao/README.md), organizada por requisitos, diagramas, arquitetura e prototipos.
+
+## Lovable
+
+O repositório sincroniza com o projeto [EcoTravel no Lovable](https://lovable.dev/projects/db46e759-a832-4a15-a7b0-776b655de7c2). Commits enviados para a branch conectada sincronizam com o editor. Não reescreva histórico já publicado com force push, rebase, amend ou squash.

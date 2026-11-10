@@ -1,21 +1,17 @@
-# Routes
+# Rotas
 
-TanStack Start uses **file-based routing**. Every `.tsx` file in this directory
-defines a route. Do **not** create `src/pages/`, `src/routes/_app/index.tsx`, or
-`app/layout.tsx` — those are Next.js / Remix conventions. The only root layout
-is `src/routes/__root.tsx`.
+O TanStack Start usa roteamento baseado em arquivos. Cada arquivo `.tsx` nesta pasta define uma rota. O layout raiz fica em `src/routes/__root.tsx`; preserve o `<Outlet />` que renderiza a rota ativa.
 
-## Conventions
+Não crie estruturas de páginas ou layouts de Next.js/Remix, como `src/pages/`, `src/routes/_app/index.tsx` ou `app/layout.tsx`.
 
-| File | URL |
+## Convenções
+
+| Arquivo | URL |
 | --- | --- |
 | `index.tsx` | `/` |
-| `about.tsx` | `/about` |
-| `users/index.tsx` | `/users` |
-| `users/$id.tsx` | `/users/:id` (dynamic — bare `$`, no curly braces) |
-| `posts/{-$category}.tsx` | `/posts/:category?` (optional segment) |
-| `files/$.tsx` | `/files/*` (splat — read via `_splat` param, never `*`) |
-| `_layout.tsx` | layout route (renders children via `<Outlet />`) |
-| `__root.tsx` | app shell — wraps every page; preserve `<Outlet />` |
+| `destino.$id.tsx` | `/destino/:id` |
+| `dashboard.tsx` | layout compartilhado do painel |
+| `dashboard.*.tsx` | paginas filhas do painel |
+| `__root.tsx` | estrutura raiz da aplicacao |
 
-`routeTree.gen.ts` is auto-generated. Don't edit it by hand.
+`routeTree.gen.ts` é gerado automaticamente; não o edite manualmente.
