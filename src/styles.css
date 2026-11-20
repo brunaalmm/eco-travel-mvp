@@ -110,6 +110,7 @@
   50% { transform: translate3d(0, -5px, 0); }
 }
 .animate-mascot-float { animation: mascot-float 3.2s ease-in-out infinite; will-change: transform; }
+.animate-float { animation: mascot-float 3.2s ease-in-out infinite; will-change: transform; }
 
 .dashboard-chart { transform: rotate(-90deg); }
 .dashboard-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
@@ -126,7 +127,7 @@
 .high-contrast .weather-widget__scenario[aria-pressed="true"] { background: #fff; color: #000; }
 .high-contrast .weather-widget .weather-icon { color: #fff; }
 @media (prefers-reduced-motion: reduce) {
-  .animate-mascot-float { animation: none; }
+  .animate-mascot-float, .animate-float { animation: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 

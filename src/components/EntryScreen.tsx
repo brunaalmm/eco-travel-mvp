@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight, Compass, Eye, EyeOff, LayoutDashboard, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,14 +8,26 @@ import { ProviderIcon } from "@/components/ProviderIcon";
 import { usePreferenceStore } from "@/components/PreferencesProvider";
 import { demoDestination, type DemoProfile } from "@/lib/demo-entry";
 import logo from "@/assets/logo-transparent.png";
+import icon from "@/assets/app-icon.png";
 
 export function EntryScreen({ registration = false }: { registration?: boolean }) {
   const navigate = useNavigate();
   const { preferences, ready } = usePreferenceStore();
+  const [splash, setSplash] = useState(true);
+  const [splashFading, setSplashFading] = useState(false);
   const [profile, setProfile] = useState<DemoProfile>("turista");
   const [visible, setVisible] = useState(false);
   const [notice, setNotice] = useState("");
   const [opening, setOpening] = useState(false);
+  useEffect(() => {
+    const fadeTimer = window.setTimeout(() => setSplashFading(true), 1700);
+    const hideTimer = window.setTimeout(() => setSplash(false), 2000);
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, []);
+
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (opening) return;
@@ -35,6 +47,12 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
   }
   return (
     <div className="relative flex h-dvh min-h-dvh flex-col overflow-hidden bg-forest lg:h-dvh lg:min-h-0 lg:flex-row lg:overflow-hidden lg:bg-login-paper">
+      {splash && (
+        <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-primary transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
+          <img src={icon} alt="EcoTravel" className="h-32 w-32 animate-float rounded-[2rem] shadow-float" />
+          <p className="font-display text-sm tracking-[0.3em] text-primary-foreground/70">ECOTRAVEL</p>
+        </div>
+      )}
       <aside className="relative flex h-[14.5rem] shrink-0 flex-col items-center justify-center bg-forest px-5 pb-3 pt-5 text-center text-forest-foreground lg:h-dvh lg:w-1/2 lg:justify-center lg:px-12 lg:pb-12 lg:pt-14">
         <div className="relative z-10 flex w-full max-w-xl flex-col items-center">
           <Link to="/" aria-label="EcoTravel início" className="lg:order-none"><img src={logo} alt="EcoTravel" width={1592} height={857} className="h-20 w-auto max-w-[78vw] object-contain drop-shadow-lg lg:h-36" /></Link>
