@@ -12,7 +12,7 @@ import botJoy from '@/assets/bot-joy.png';
 
 export const Route = createFileRoute('/onboarding')({
   head: () => ({ meta: [
-    { title: 'Suas preferências — EcoTravel' },
+    { title: 'Preferências' },
     { name: 'description', content: 'Conte ao EcoTravel seu estilo de ecoturismo, transporte e foco de impacto para personalizar roteiros.' },
     { property: 'og:title', content: 'Suas preferências — EcoTravel' },
     { property: 'og:description', content: 'Personalize seus roteiros sustentáveis em quatro passos.' },

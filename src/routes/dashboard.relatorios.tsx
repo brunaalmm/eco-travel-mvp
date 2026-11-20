@@ -9,7 +9,7 @@ import { environmentalMetricData } from "@/lib/environmental-metrics";
 
 export const Route = createFileRoute("/dashboard/relatorios")({
   head: () => ({ meta: [
-    { title: "Painel do Gestor" },
+    { title: "Relatórios" },
     { name: "description", content: "Exporte relatórios executivos em PDF com os indicadores do painel." },
     { property: "og:title", content: "Central de Relatórios — Painel do Gestor EcoTravel" },
     { property: "og:description", content: "Relatórios executivos padronizados em PDF." },

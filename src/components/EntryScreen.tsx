@@ -48,7 +48,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
   return (
     <div className="relative flex h-dvh min-h-dvh flex-col overflow-hidden bg-forest lg:h-dvh lg:min-h-0 lg:flex-row lg:overflow-hidden lg:bg-login-paper">
       {splash && (
-        <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-primary transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
+        <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-forest transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
           <img src={icon} alt="EcoTravel" className="h-32 w-32 animate-float rounded-[2rem] shadow-float" />
           <p className="font-display text-sm tracking-[0.3em] text-primary-foreground/70">ECOTRAVEL</p>
         </div>

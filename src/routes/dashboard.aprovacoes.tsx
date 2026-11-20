@@ -6,7 +6,7 @@ import { destinations } from "@/lib/data";
 
 export const Route = createFileRoute("/dashboard/aprovacoes")({
   head: () => ({ meta: [
-    { title: "Painel do Gestor" },
+    { title: "Aprovações" },
     { name: "description", content: "Análise demonstrativa de roteiros ecológicos e parceiros do Selo Verde." },
     { property: "og:title", content: "Painel do Gestor" },
     { property: "og:description", content: "Análise demonstrativa de roteiros ecológicos e parceiros do Selo Verde." },

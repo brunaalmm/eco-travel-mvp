@@ -19,7 +19,7 @@ const islandDescription = "A Ilha da Queimada Grande, perto do litoral de Itanha
 export const Route = createFileRoute("/creditos")({
   head: () => ({
     meta: [
-      { title: "Créditos verdes e conteúdos exclusivos — EcoTravel" },
+      { title: "Créditos" },
       { name: "description", content: "Acumule créditos verdes e desbloqueie artigos e o certificado de apoio a projetos sustentáveis." },
       { property: "og:title", content: "Créditos verdes — EcoTravel" },
       { property: "og:description", content: "Desbloqueie conteúdos educativos exclusivos sobre o litoral paulista." },

@@ -15,7 +15,7 @@ export const Route = createFileRoute("/destino/$id")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: loaderData ? `${loaderData.name} sustentável — EcoTravel` : "Destino — EcoTravel" },
+      { title: "Destino" },
       { name: "description", content: loaderData?.summary ?? "Destino de ecoturismo." },
       { property: "og:title", content: loaderData ? `${loaderData.name} — EcoTravel` : "EcoTravel" },
       { property: "og:description", content: loaderData?.summary ?? "Destino de ecoturismo." },

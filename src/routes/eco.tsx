@@ -12,7 +12,7 @@ import botWrong from "@/assets/bot-wrong.png";
 export const Route = createFileRoute("/eco")({
   head: () => ({
     meta: [
-      { title: "Calculadora de pegada de carbono — EcoTravel" },
+      { title: "Carbono" },
       { name: "description", content: "Calcule a pegada de carbono da sua viagem e tire dúvidas sobre turismo sustentável com o EcoBot." },
       { property: "og:title", content: "Calculadora de pegada de carbono — EcoTravel" },
       { property: "og:description", content: "Calcule o CO₂ da sua viagem e aprenda com o EcoBot." },

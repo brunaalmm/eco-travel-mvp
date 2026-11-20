@@ -13,7 +13,7 @@ import avatar from "@/assets/bot-happy.png";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({ meta: [
-    { title: "Perfil — EcoTravel" }, { name: "description", content: "Perfil demonstrativo, acessibilidade e preferências do EcoTravel." },
+    { title: "Perfil" }, { name: "description", content: "Perfil demonstrativo, acessibilidade e preferências do EcoTravel." },
     { property: "og:title", content: "Perfil — EcoTravel" }, { property: "og:description", content: "Perfil demonstrativo e preferências de acessibilidade do EcoTravel." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }), component: Perfil,

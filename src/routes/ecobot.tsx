@@ -11,7 +11,7 @@ import botLoading from "@/assets/bot-loading.png";
 export const Route = createFileRoute("/ecobot")({
   head: () => ({
     meta: [
-      { title: "EcoBot — Assistente de turismo sustentável | EcoTravel" },
+      { title: "EcoBot" },
       { name: "description", content: "Tire dúvidas sobre trilhas, fauna, resíduos e sustentabilidade com o EcoBot." },
       { property: "og:title", content: "EcoBot — Assistente de turismo sustentável" },
       { property: "og:description", content: "Converse com o EcoBot sobre boas práticas ambientais em viagem." },

@@ -6,7 +6,7 @@ import botWave from "@/assets/bot-wave.png";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre o EcoTravel — Turismo sustentável e consciente" },
+      { title: "Sobre" },
       { name: "description", content: "Conheça o EcoTravel, solução inteligente para viajar com baixo impacto socioambiental." },
       { property: "og:title", content: "Sobre o EcoTravel" },
       { property: "og:description", content: "Solução inteligente para o turismo sustentável e consciente em todo o país." },

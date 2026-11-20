@@ -13,7 +13,7 @@ import { recommendation } from "@/lib/preferences-model";
 export const Route = createFileRoute("/descobrir")({
   head: () => ({
     meta: [
-      { title: "Descobrir São Paulo — EcoTravel" },
+      { title: "Descobrir" },
       { name: "description", content: "Sete roteiros sustentáveis pelo Litoral, Grande SP e Interior paulista, com recursos de acessibilidade." },
       { property: "og:title", content: "Descobrir São Paulo — EcoTravel" },
       { property: "og:description", content: "Ecoturismo pelo Litoral, Grande SP e Interior de São Paulo." },

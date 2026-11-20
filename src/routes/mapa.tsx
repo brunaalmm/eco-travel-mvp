@@ -9,7 +9,7 @@ export const Route = createFileRoute("/mapa")({
   validateSearch: (s: Record<string, unknown>) => ({ d: typeof s["d"] === "string" ? (s["d"] as string) : undefined }),
   head: () => ({
     meta: [
-      { title: "Mapa e circuitos ecológicos — EcoTravel" },
+      { title: "Mapa" },
       { name: "description", content: "Mapa esquemático com sete circuitos ecológicos pelo Litoral, Grande SP e Interior paulista." },
       { property: "og:title", content: "Mapa e circuitos — EcoTravel" },
       { property: "og:description", content: "Escolha um roteiro e o transporte e veja o circuito completo." },

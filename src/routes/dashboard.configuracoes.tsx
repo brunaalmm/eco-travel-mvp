@@ -4,7 +4,7 @@ import { AccessibilityControls } from "@/components/AccessibilityControls";
 
 export const Route = createFileRoute("/dashboard/configuracoes")({
   head: () => ({ meta: [
-    { title: "Painel do Gestor" },
+    { title: "Configurações" },
     { name: "description", content: "Configurações de acessibilidade do painel EcoTravel." },
     { property: "og:title", content: "Painel do Gestor" },
     { property: "og:description", content: "Configurações de acessibilidade do painel EcoTravel." },

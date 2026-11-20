@@ -3,7 +3,7 @@ import { EntryScreen } from "@/components/EntryScreen";
 
 export const Route = createFileRoute("/cadastro")({
   head: () => ({ meta: [
-    { title: "Cadastro demonstrativo — EcoTravel" },
+    { title: "Cadastro" },
     { name: "description", content: "Prévia da criação de conta do EcoTravel, sem salvar dados ou criar contas reais." },
     { property: "og:title", content: "Cadastro demonstrativo — EcoTravel" },
     { property: "og:description", content: "Prévia de cadastro para turistas e gestores do EcoTravel." },

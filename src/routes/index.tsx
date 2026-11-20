@@ -3,7 +3,7 @@ import { EntryScreen } from "@/components/EntryScreen";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
-    { title: "Entrar — EcoTravel" },
+    { title: "Entrar" },
     { name: "description", content: "Bem-vindo ao EcoTravel. Escolha o perfil Turista ou Gestor na entrada demonstrativa." },
     { property: "og:title", content: "Entrar — EcoTravel" },
     { property: "og:description", content: "Turismo sustentável inteligente para turistas e gestores." },

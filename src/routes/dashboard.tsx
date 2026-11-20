@@ -8,7 +8,7 @@ import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [
-    { title: "Painel do Gestor" },
+    { title: "Painel" },
     { name: "description", content: "Painel demonstrativo de monitorização de carbono em São Paulo, com resumo, roteiros e central de relatórios." },
     { property: "og:title", content: "Painel do Gestor — EcoTravel" },
     { property: "og:description", content: "Indicadores de carbono e capacidade das trilhas em demonstração." },
