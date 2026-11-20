@@ -60,7 +60,7 @@ function EcoBotPage() {
 
   return (
     <AppShell title="EcoBot">
-      <section className="-mb-28 flex h-[calc(100dvh-4rem)] min-h-[26rem] flex-col overflow-hidden lg:-mb-16 lg:h-[calc(100dvh-5rem)] lg:min-h-[32rem]">
+      <section className="flex h-[calc(100dvh-4rem)] min-h-0 flex-col overflow-hidden lg:h-[calc(100dvh-5rem)]">
         <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-5 py-4 lg:px-8">
           <img src={botJoy} alt="" className="h-11 w-11 shrink-0 object-contain" />
           <div className="min-w-0 flex-1">
@@ -78,7 +78,7 @@ function EcoBotPage() {
           role="log"
           aria-label="Conversa com o EcoBot"
           aria-live="polite"
-          className="mx-auto min-h-0 w-full max-w-3xl flex-1 space-y-4 overflow-y-auto overscroll-contain px-5 pb-40 lg:px-8 lg:pb-24"
+          className="mx-auto min-h-0 w-full max-w-3xl flex-1 touch-pan-y space-y-4 overflow-y-auto overscroll-y-contain px-5 pb-28 lg:px-8 lg:pb-24"
         >
           {msgs.map((m) => (
             <div key={m.id} className={`flex items-end gap-2 ${m.me ? "justify-end" : ""}`}>
@@ -112,7 +112,7 @@ function EcoBotPage() {
           )}
         </div>
 
-        <div className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] left-1/2 z-30 w-full max-w-[440px] -translate-x-1/2 bg-background/95 px-4 pb-2 pt-2 backdrop-blur lg:bottom-0 lg:max-w-2xl lg:px-0 lg:pb-4">
+        <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-[440px] -translate-x-1/2 bg-background/95 px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:max-w-2xl lg:px-0 lg:pb-4">
           <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-center gap-2 rounded-full border border-border bg-card p-1.5 pl-5 shadow-soft">
             <input
               value={text}

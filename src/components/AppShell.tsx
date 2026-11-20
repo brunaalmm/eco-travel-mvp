@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Compass, Map, Leaf, Award, Bot, Info, LogOut, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
@@ -13,8 +13,10 @@ const nav = [
 const desktopNav = [...nav, { to: "/sobre", label: "Sobre", icon: Info }] as const;
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
+  const isEcoBot = useRouterState({ select: (state) => state.location.pathname === "/ecobot" });
+
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background shadow-float lg:max-w-none lg:shadow-none">
+    <div className={`mx-auto flex w-full max-w-[440px] flex-col bg-background shadow-float lg:max-w-none lg:shadow-none ${isEcoBot ? "h-[100dvh] overflow-hidden" : "min-h-screen"}`}>
       <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
         <div className="mx-auto flex h-16 w-full items-center justify-between px-5 lg:h-20 lg:max-w-6xl lg:px-8">
           <Link to="/descobrir" aria-label="EcoTravel início">
@@ -92,8 +94,8 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           </nav>
         </div>
       </header>
-      <main className="mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16">{children}</main>
-      <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
+      <main className={`mx-auto w-full flex-1 lg:max-w-6xl lg:px-3 ${isEcoBot ? "min-h-0" : "pb-28 lg:pb-16"}`}>{children}</main>
+      <nav className={`fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden ${isEcoBot ? "hidden" : ""}`}>
         <ul className="grid grid-cols-5">
           {nav.map(({ to, label, icon: Icon }) => (
             <li key={to}>

@@ -45,36 +45,36 @@ function Onboarding() {
     void navigate({ to: '/descobrir' });
   }
   return (
-    <div className="flex min-h-screen flex-col bg-forest/95">
-      <header className="flex justify-center py-5"><img src={logo} alt="EcoTravel" width={600} height={338} className="h-14 w-auto object-contain" /></header>
-      <main className="flex flex-1 items-center justify-center p-5">
-        <div className="w-full max-w-md rounded-[2rem] bg-forest p-7 text-forest-foreground shadow-float">
-          <div className="mb-6 flex gap-1.5" aria-label={`Passo ${step + 1} de ${steps.length}`}>
+    <div className="flex h-[100dvh] min-h-[100dvh] flex-col overflow-hidden bg-forest/95">
+      <header className="flex h-12 shrink-0 items-center justify-center"><img src={logo} alt="EcoTravel" width={600} height={338} className="h-10 w-auto object-contain" /></header>
+      <main className="flex min-h-0 flex-1 items-center justify-center p-2">
+        <div className="w-full max-w-md rounded-[1.5rem] bg-forest p-4 text-forest-foreground shadow-float sm:p-5">
+          <div className="mb-3 flex gap-1.5" aria-label={`Passo ${step + 1} de ${steps.length}`}>
             {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
           </div>
           <div className="flex flex-col items-center text-center">
-            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain animate-mascot-float" />
+            <img src={current.bot} alt="EcoBot" className="h-16 w-auto object-contain animate-mascot-float" />
           </div>
           <div>
             <div className="flex flex-col items-center text-center">
-              <span className="mt-4 rounded-full bg-leaf px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-foreground">Passo {step + 1} de {steps.length}</span>
-              <h1 className="mt-4 text-xl font-semibold">{current.title}</h1>
+              <span className="mt-2 rounded-full bg-leaf px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-leaf-foreground">Passo {step + 1} de {steps.length}</span>
+              <h1 className="mt-2 text-lg font-semibold leading-tight">{current.title}</h1>
             </div>
-            <div className="mt-6 grid gap-2">
+            <div className="mt-3 grid gap-1.5">
               {step === 0 ? <>
-                <Button variant={location ? 'leaf' : 'ghostLight'} aria-pressed={location} onClick={() => setLocation(!location)} className="h-auto min-h-12 whitespace-normal border border-forest-foreground/25"><MapPin />{location ? 'Localização simulada ativada' : 'Ativar localização em tempo real'}{location && <Check />}</Button>
-                <p className="text-center text-xs text-forest-foreground/70">Simulação com origem em São Paulo capital. Nenhuma localização real é solicitada ou guardada.</p>
+                <Button variant={location ? 'leaf' : 'ghostLight'} aria-pressed={location} onClick={() => setLocation(!location)} className="h-auto min-h-10 whitespace-normal border border-forest-foreground/25"><MapPin />{location ? 'Localização simulada ativada' : 'Ativar localização em tempo real'}{location && <Check />}</Button>
+                <p className="text-center text-[11px] leading-snug text-forest-foreground/70">Simulação com origem em São Paulo capital. Nenhuma localização real é solicitada ou guardada.</p>
               </> : 'options' in current && current.options.map((option) => {
                 const selected = current.value === option;
-                return <Button key={option} variant={selected ? 'leaf' : 'ghostLight'} aria-pressed={selected} onClick={() => (current.set as (v: string) => void)(option)} className="h-auto min-h-12 justify-between whitespace-normal border border-forest-foreground/25 px-4 py-3 text-left">{option}{selected && <Check className="shrink-0" />}</Button>;
+                return <Button key={option} variant={selected ? 'leaf' : 'ghostLight'} aria-pressed={selected} onClick={() => (current.set as (v: string) => void)(option)} className="h-auto min-h-10 justify-between whitespace-normal border border-forest-foreground/25 px-4 py-2 text-left">{option}{selected && <Check className="shrink-0" />}</Button>;
               })}
             </div>
           </div>
-          <div className="mt-7 flex gap-3">
+          <div className="mt-4 flex gap-2">
             <Button variant="ghostLight" className="flex-1" disabled={step === 0} onClick={() => setStep(step - 1)}><ArrowLeft />Voltar</Button>
             <Button variant="leaf" className="flex-[2]" disabled={!current.done} onClick={next}>{last ? <>Salvar preferências<Leaf /></> : <>Próximo<ArrowRight /></>}</Button>
           </div>
-          <p className="mt-5 text-center text-[11px] text-forest-foreground/60">Recomendações demonstrativas por afinidade, sem IA conectada. Preferências anônimas ficam neste navegador.</p>
+          <p className="mt-3 text-center text-[10px] leading-snug text-forest-foreground/60">Recomendações demonstrativas por afinidade, sem IA conectada. Preferências anônimas ficam neste navegador.</p>
         </div>
       </main>
     </div>
