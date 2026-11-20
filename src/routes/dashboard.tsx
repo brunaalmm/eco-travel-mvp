@@ -57,9 +57,6 @@ function Shell() {
           <div><h1 className="font-display text-3xl font-semibold tracking-normal sm:text-4xl">{greeting}</h1><p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">Monitorização da pegada de carbono no Estado de São Paulo</p></div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" />São Paulo, Brasil</div>
         </div>
-        <section aria-label="Filtros" className="my-7 flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="shrink-0"><p className="mb-2 flex items-center gap-2 text-xs font-semibold text-muted-foreground"><CalendarDays className="h-3.5 w-3.5" />PERÍODO</p><div className="flex gap-1" role="group" aria-label="Período">{(["Último Mês", "Ano Atual"] as const).map((item) => <Button key={item} size="sm" variant="ghost" aria-pressed={period === item} onClick={() => setPeriod(item)} className={period === item ? "bg-accent text-accent-foreground" : "text-muted-foreground"}>{item}</Button>)}</div></div>
-        </section>
       </>}
       <Outlet />
     </main>
