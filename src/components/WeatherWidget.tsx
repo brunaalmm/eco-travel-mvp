@@ -36,7 +36,7 @@ const scenarios = [
   },
   {
     id: "frio",
-    emoji: "🌡️",
+    emoji: "❄️",
     label: "Frio",
     temp: 11,
     status: "Serra",
