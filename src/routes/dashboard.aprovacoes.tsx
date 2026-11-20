@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BadgeCheck, Check, Clock3, MapPin, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useDashboard } from "@/components/DashboardContext";
 import { destinations } from "@/lib/data";
 
 export const Route = createFileRoute("/dashboard/aprovacoes")({
@@ -29,11 +28,10 @@ const requests = destinations.slice(0, 3).map((destination) => ({
 }));
 
 function Aprovacoes() {
-  const { region } = useDashboard();
   const [routeDecisions, setRouteDecisions] = useState<Record<string, Decision>>({});
   const [partnerDecisions, setPartnerDecisions] = useState<Record<string, Decision>>({});
   const [notice, setNotice] = useState("");
-  const visibleRequests = requests.filter((request) => region === "Todas" || request.region === region);
+  const visibleRequests = requests;
 
   const decide = (kind: "roteiro" | "parceiro", id: string, decision: Decision) => {
     const update = kind === "roteiro" ? setRouteDecisions : setPartnerDecisions;

@@ -1,9 +1,9 @@
-import type { DashboardData, Period, Region } from "./dashboard-data";
+import type { DashboardData, Period } from "./dashboard-data";
 
 // Standard PDF fonts only support WinAnsi; replace characters they cannot encode.
 const safe = (t: string) => t.replace(/₂/g, "2").replace(/[—–]/g, "-");
 
-export async function createDashboardPdf(data: DashboardData, region: Region, period: Period) {
+export async function createDashboardPdf(data: DashboardData, period: Period) {
   const { PDFDocument, StandardFonts, rgb } = await import("pdf-lib");
   const pdf = await PDFDocument.create();
   const font = await pdf.embedFont(StandardFonts.Helvetica);
@@ -21,7 +21,7 @@ export async function createDashboardPdf(data: DashboardData, region: Region, pe
   page.drawRectangle({ x: 0, y: 0, width: 595, height: 842, color: paper });
   page.drawRectangle({ x: 0, y: 752, width: 595, height: 90, color: forest });
   text("EcoTravel | Relatório Executivo", 40, 800, 22, true, white);
-  text(`Monitorização da pegada de carbono · ${region} · ${period}${data.peak ? " · Simulação de pico" : ""}`, 40, 775, 10, false, white);
+  text(`Monitorização da pegada de carbono · ${period}`, 40, 775, 10, false, white);
 
   const kpis: [string, string][] = [[`${data.total.toFixed(1)} t CO2`, "Economizadas"], [`${data.progress}%`, `Meta de ${data.target} t`], [data.mostUsed?.label ?? "-", "Transporte mais utilizado"]];
   kpis.forEach(([v, l], i) => {
