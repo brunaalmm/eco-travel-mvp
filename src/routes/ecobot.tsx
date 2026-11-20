@@ -62,11 +62,6 @@ function EcoBotPage() {
     <AppShell title="EcoBot">
       <section className="flex h-[calc(100dvh-4rem)] min-h-0 flex-col overflow-hidden lg:h-[calc(100dvh-5rem)]">
         <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-5 py-4 lg:px-8">
-          <img src={botJoy} alt="" className="h-11 w-11 shrink-0 object-contain" />
-          <div className="min-w-0 flex-1">
-            <h1 className="font-display text-lg font-semibold">EcoBot</h1>
-            <p className="text-[11px] leading-4 text-muted-foreground">Guia educativo de turismo sustentável</p>
-          </div>
           <div className="shrink-0 text-right text-[10px] leading-4 text-muted-foreground" aria-label={`Você ganha 5 créditos por pergunta. Saldo: ${credits} créditos.`}>
             <p className="flex items-center justify-end gap-1 font-semibold text-primary"><Sparkles className="h-3 w-3" />+5 por pergunta</p>
             <p aria-live="polite">Saldo: {credits} créditos</p>
