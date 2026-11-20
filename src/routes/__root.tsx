@@ -15,7 +15,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AccessibilityProvider } from "@/components/AccessibilityProvider";
 import { PreferencesProvider } from "@/components/PreferencesProvider";
-import { RouteTransition } from "@/components/RouteTransition";
 
 function NotFoundComponent() {
   return (
@@ -93,7 +92,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -125,7 +127,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <AccessibilityProvider pathname={pathname}>
         <PreferencesProvider>
-          <RouteTransition><Outlet /></RouteTransition>
+          <Outlet />
         </PreferencesProvider>
       </AccessibilityProvider>
     </QueryClientProvider>

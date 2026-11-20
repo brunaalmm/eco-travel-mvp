@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Compass, Map, Leaf, Award, Bot, Info, LogOut, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
@@ -13,18 +13,47 @@ const nav = [
 const desktopNav = [...nav, { to: "/sobre", label: "Sobre", icon: Info }] as const;
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background shadow-float lg:max-w-none lg:shadow-none">
       <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
         <div className="mx-auto flex h-16 w-full items-center justify-between px-5 lg:h-20 lg:max-w-6xl lg:px-8">
           <Link to="/descobrir" aria-label="EcoTravel início">
-            <img src={logo} alt="EcoTravel" className="h-11 w-auto lg:h-14" width={600} height={338} />
+            <img
+              src={logo}
+              alt="EcoTravel"
+              className="h-11 w-auto lg:h-14"
+              width={600}
+              height={338}
+            />
           </Link>
           <div className="flex items-center gap-1 lg:hidden">
-            <Link to="/perfil" aria-label="Perfil e configurações" title="Perfil e configurações" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><UserRound className="h-4 w-4" /></Link>
-            <Link to="/" aria-label="Voltar à entrada" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><LogOut className="h-4 w-4" /></Link>
-            {title && <span className="hidden font-display text-sm font-medium opacity-80 sm:inline">{title}</span>}
-            <Link to="/sobre" aria-label="Sobre o EcoTravel" className="grid h-9 w-9 place-items-center rounded-full bg-forest-foreground/10 data-[status=active]:bg-leaf">
+            <Link
+              to="/perfil"
+              aria-label="Perfil e configurações"
+              title="Perfil e configurações"
+              className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"
+            >
+              <UserRound className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/"
+              aria-label="Voltar à entrada"
+              className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"
+            >
+              <LogOut className="h-4 w-4" />
+            </Link>
+            {title && (
+              <span className="hidden font-display text-sm font-medium opacity-80 sm:inline">
+                {title}
+              </span>
+            )}
+            <Link
+              to="/sobre"
+              aria-label="Sobre o EcoTravel"
+              className="grid h-9 w-9 place-items-center rounded-full bg-forest-foreground/10 data-[status=active]:bg-leaf"
+            >
               <Info className="h-4 w-4" />
             </Link>
           </div>
@@ -42,13 +71,35 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                   </Link>
                 </li>
               ))}
-              <li><Link to="/perfil" aria-label="Perfil e configurações" title="Perfil e configurações" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10 data-[status=active]:bg-leaf"><UserRound className="h-4 w-4" /></Link></li>
-              <li><Link to="/" aria-label="Voltar à entrada" className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"><LogOut className="h-4 w-4" /></Link></li>
+              <li>
+                <Link
+                  to="/perfil"
+                  aria-label="Perfil e configurações"
+                  title="Perfil e configurações"
+                  className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10 data-[status=active]:bg-leaf"
+                >
+                  <UserRound className="h-4 w-4" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  aria-label="Voltar à entrada"
+                  className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
       </header>
-      <main className="mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16">{children}</main>
+      <main
+        key={pathname}
+        className="route-content mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16"
+      >
+        {children}
+      </main>
       <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
         <ul className="grid grid-cols-5">
           {nav.map(({ to, label, icon: Icon }) => (
