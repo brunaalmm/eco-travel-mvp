@@ -57,6 +57,7 @@ function Shell() {
           <div><h1 className="font-display text-3xl font-semibold tracking-normal sm:text-4xl">{greeting}</h1><p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">Monitorização da pegada de carbono no Estado de São Paulo</p></div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" />São Paulo, Brasil</div>
         </div>
+        <br />
       </>}
       <Outlet />
     </main>
