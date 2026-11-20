@@ -1,9 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { answer } from "@/lib/ecobot";
+import { answer, suggestions } from "@/lib/ecobot";
 
 describe("EcoBot sustainable travel guidance", () => {
+  it("shows the requested opening suggestions", () => {
+    expect(suggestions).toEqual([
+      "Como viajar usando transporte público?",
+      "O que levar na mochila de trilha?",
+      "Quais cuidados ter no litoral sustentável?",
+      "Como ganhar e usar créditos verdes?",
+    ]);
+  });
+
   it("answers open-ended questions with practical trail guidance", () => {
-    expect(answer("Como posso fazer uma trilha com menos impacto?")).toContain("caminho sinalizado");
+    expect(answer("Como posso fazer uma trilha com menos impacto?")).toContain(
+      "caminho sinalizado",
+    );
   });
 
   it("keeps coastal questions focused on the beach rather than urban parks", () => {
@@ -35,6 +46,47 @@ describe("EcoBot sustainable travel guidance", () => {
   });
 
   it("responds to unsupported topics with relevant ways to continue", () => {
-    expect(answer("Pode me ajudar a planejar uma viagem?")).toContain("cidade ou região");
+    const response = answer("Pode me ajudar a planejar uma viagem?");
+    expect(response).toContain("transporte público");
+    expect(response).toContain("trilhas");
+    expect(response).toContain("litoral");
+    expect(response).toContain("pegada de carbono");
+    expect(response).toContain("acessibilidade");
+    expect(response).toContain("créditos verdes");
+  });
+
+  it("explains EcoTravel accessibility features despite accents and case", () => {
+    const response = answer("ACESSIBILIDADE: como aumentar a FONTE e usar LIBRAS?");
+    expect(response).toContain("alto contraste");
+    expect(response).toContain("aumentar o tamanho da fonte");
+    expect(response).toContain("audiodescrição");
+    expect(response).toContain("Libras");
+  });
+
+  it("explains carbon estimates without promising certified compensation", () => {
+    const response = answer("Como calcular CO2 e compensar emissões com uma ONG?");
+    expect(response).toContain("aba Carbono");
+    expect(response).toContain("estimativas de CO₂");
+    expect(response).toContain("não é uma compensação certificada");
+    expect(answer("CO₂")).toContain("aba Carbono");
+  });
+
+  it("explains how to earn and use green credits", () => {
+    const response = answer("Como ganhar e usar créditos verdes?");
+    expect(response).toContain("5 créditos ao conversar com o EcoBot");
+    expect(response).toContain("15 créditos");
+    expect(response).toContain("aba Créditos");
+  });
+
+  it("connects transportation advice to the app's discovery and map tabs", () => {
+    const response = answer("Como viajar usando transporte público?");
+    expect(response).toContain("Descobrir");
+    expect(response).toContain("Mapa");
+    expect(response).toContain("aba Carbono");
+  });
+
+  it("recognizes extra coastal and waste keywords", () => {
+    expect(answer("Posso usar protetor solar na praia?")).toContain("restinga");
+    expect(answer("Como descartar uma garrafa de plástico?")).toContain("resíduos");
   });
 });

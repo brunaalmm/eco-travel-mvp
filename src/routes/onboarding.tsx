@@ -33,7 +33,7 @@ function Onboarding() {
   const steps = [
     { bot: botWave, title: 'Localização para roteiros próximos', done: true },
     { bot: botHappy, title: 'Qual o seu estilo principal de ecoturismo?', options: styles, value: style, set: setStyle, done: !!style },
-    { bot: botWink, title: 'Qual o modal de transporte preferido?', options: modes, value: mode, set: setMode, done: !!mode },
+    { bot: botWink, title: 'Qual transporte você costuma usar nas suas viagens?', options: modes, value: mode, set: setMode, done: !!mode },
     { bot: botJoy, title: 'Qual o seu foco de impacto ambiental?', options: impacts, value: impact, set: setImpact, done: !!impact },
   ] as const;
   const current = steps[step] ?? steps[0];

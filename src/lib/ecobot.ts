@@ -5,6 +5,7 @@ const normalize = (value: string) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
+    .replace(/₂/g, "2")
     .replace(/[^a-z0-9\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -15,10 +16,10 @@ const containsAny = (text: string, terms: string[]) => {
 };
 
 export const suggestions = [
-  "Quais cuidados ter no litoral?",
+  "Como viajar usando transporte público?",
   "O que levar na mochila de trilha?",
-  "Como reduzir o lixo na viagem?",
-  "Como chegar de transporte público?",
+  "Quais cuidados ter no litoral sustentável?",
+  "Como ganhar e usar créditos verdes?",
 ];
 
 function destinationContext(destination: (typeof destinations)[number]) {
@@ -32,11 +33,37 @@ function destinationContext(destination: (typeof destinations)[number]) {
 export function answer(question: string) {
   const text = normalize(question);
   const destination = destinations.find((item) => text.includes(normalize(item.name)));
-  const coastal = containsAny(text, ["litoral", "praia", "praias", "orla", "beira mar", "costeiro", "costa", "mar", "areia", "caiçara", "mangue", "manguezal", "restinga", "oceano"]);
-  const trail = containsAny(text, ["trilha", "trilhas", "cachoeira", "caminhada", "montanha", "trekking", "parque natural", "parque estadual", "parque nacional", "unidade de conservacao", "area protegida"]);
+  const coastal = containsAny(text, ["litoral", "praia", "praias", "orla", "beira mar", "costeiro", "costa", "mar", "areia", "caiçara", "mangue", "manguezal", "restinga", "oceano", "protetor"]);
+  const trail = containsAny(text, ["trilha", "trilhas", "cachoeira", "caminhada", "montanha", "trekking", "parque", "parque natural", "parque estadual", "parque nacional", "unidade de conservacao", "area protegida", "calcado"]);
   const gear = containsAny(text, ["mochila", "o que levar", "que levar", "o que preciso levar", "equipamento", "itens essenciais", "kit de trilha"]);
-  const waste = containsAny(text, ["lixo", "lixo zero", "residuo", "residuos", "plastico", "descartavel", "descartaveis", "reciclagem", "descarte"]);
-  const transport = containsAny(text, ["transporte publico", "onibus", "metro", "trem", "deslocamento", "carona", "bicicleta", "bike", "ciclovia", "balsa"]);
+  const waste = containsAny(text, ["lixo", "lixo zero", "residuo", "residuos", "plastico", "garrafa", "descartavel", "descartaveis", "reciclagem", "descarte"]);
+  const transport = containsAny(text, ["transporte", "transportes", "onibus", "metro", "trem", "carro", "chegar", "deslocamento", "carona", "bicicleta", "bike", "ciclovia", "balsa"]);
+  const carbon = containsAny(text, [
+    "carbono",
+    "co2",
+    "emissao",
+    "emissoes",
+    "pegada",
+    "compensar",
+    "compensacao",
+    "ong",
+    "ongs",
+  ]);
+  const accessibility = containsAny(text, [
+    "acessibilidade",
+    "libras",
+    "contraste",
+    "fonte",
+    "letra",
+    "audio",
+    "audiodescricao",
+    "leitura",
+    "cadeirante",
+    "inclusao",
+  ]);
+  const credits =
+    containsAny(text, ["credito", "creditos", "saldo", "recompensa", "recompensas"]) ||
+    (containsAny(text, ["ponto", "pontos"]) && !coastal && !trail && !waste && !transport);
   const localBusiness = containsAny(text, ["comida", "comer", "restaurante", "comprar", "consumo", "comercio", "feira", "artesanato", "produtor local", "economia local"]);
   const fauna = containsAny(text, ["animal", "animais", "fauna", "passaro", "ave", "golfinho", "tartaruga", "coral", "bicho", "bichos"]);
   const itinerary = containsAny(text, ["roteiro", "visitar", "passeio", "o que fazer", "fim de semana", "itinerario", "destino"]);
@@ -44,6 +71,18 @@ export function answer(question: string) {
 
   if (/^(oi|ola|bom dia|boa tarde|boa noite)$/.test(text)) {
     return "Olá! Posso ajudar você a planejar uma viagem pelo Brasil com escolhas mais cuidadosas. Quer conversar sobre transporte, trilhas, consumo local ou um roteiro?";
+  }
+
+  if (accessibility) {
+    return "No Perfil, em Acessibilidade, você pode ativar alto contraste e aumentar o tamanho da fonte. Em conteúdos que oferecem o recurso, use a audiodescrição em voz sintetizada e sua transcrição; há também uma demonstração de saudação em Libras, que não traduz todo o conteúdo.";
+  }
+
+  if (carbon) {
+    return "Na aba Carbono, escolha um roteiro, a distância e o transporte para comparar estimativas de CO₂. A calculadora também sugere formas de apoiar projetos locais; esse apoio não é uma compensação certificada nem neutraliza automaticamente as emissões.";
+  }
+
+  if (credits) {
+    return "Você ganha 5 créditos ao conversar com o EcoBot. Na aba Carbono, o cálculo rende 15 créditos para opções diferentes do carro e 5 se escolher carro. Na aba Créditos, acompanhe seu saldo e desbloqueie recompensas educativas.";
   }
 
   let response: string;
@@ -65,17 +104,17 @@ export function answer(question: string) {
   } else if (coastal && itinerary && destination) {
     response = `Para conhecer ${destination.name}, organize as paradas do circuito ${destination.circuit.title}: ${destination.circuit.stops.slice(0, 4).map((stop) => stop.name).join(", ")}. Agrupe locais próximos, confira condições do mar e do acesso e reserve tempo para experiências conduzidas por negócios locais.`;
   } else if (coastal) {
-    response = "Para aproveitar o litoral com cuidado, prefira praias e áreas naturais com acesso autorizado, consulte as condições do mar e respeite orientações locais. Evite pisar na vegetação de restinga, não alimente animais, reduza descartáveis e apoie pequenos negócios da região. Se disser a cidade ou praia, posso sugerir um roteiro mais específico.";
+    response = "Para aproveitar o litoral com cuidado, prefira praias e áreas naturais com acesso autorizado, consulte as condições do mar e respeite orientações locais. Evite pisar na vegetação de restinga, não alimente animais, reduza descartáveis e apoie pequenos negócios da região. Explore destinos em Descobrir e consulte os circuitos no Mapa esquemático, que não oferece navegação em tempo real.";
   } else if (containsAny(text, ["carona", "carona solidaria", "carona compartilhada"])) {
     response = "Carona solidária pode reduzir o número de carros quando combinada com pessoas de confiança e com o trajeto e os custos acertados antes. Use cinto em todos os assentos, confirme que o veículo e o motorista estão regulares e compartilhe o plano da viagem com alguém. Para destinos atendidos, compare primeiro as opções de ônibus e trem.";
   } else if (urban) {
-    response = "Em cidades e capitais, combine metrô, trem e ônibus para reduzir viagens de carro; confira integrações e horários nos canais oficiais. Para percursos curtos, use calçadas e ciclovias seguras, agrupe atrações próximas e visite parques urbanos sem sair das áreas sinalizadas. Feiras e comércios de bairro também ajudam a valorizar a economia local.";
+    response = "Em cidades e capitais, combine metrô, trem e ônibus para reduzir viagens de carro; confira integrações e horários nos canais oficiais. Para percursos curtos, use calçadas e ciclovias seguras, agrupe atrações próximas e visite parques urbanos sem sair das áreas sinalizadas. Na aba Carbono, compare as emissões estimadas dos transportes disponíveis.";
   } else if (gear) {
     response = "Para uma trilha, leve água em garrafa reutilizável, lanche simples em pote, proteção solar, chapéu, repelente biodegradável e um pequeno kit de primeiros socorros. Use calçado adequado ao terreno e uma sacola para trazer todo o lixo de volta. Confira clima, duração, regras de acesso e necessidade de guia; evite itens descartáveis ou peso desnecessário.";
   } else if (transport) {
-    response = "Para reduzir o impacto dos deslocamentos, veja primeiro se ônibus, trem ou metrô atendem o trajeto e confira linhas e horários nos canais oficiais. No destino, agrupe passeios próximos, caminhe ou pedale em trechos seguros e acessíveis. Quando o transporte coletivo não chegar até o passeio, combine uma carona confiável ou use um operador local regularizado.";
+    response = "Para reduzir o impacto dos deslocamentos, confira se o transporte coletivo — ônibus, trem ou metrô — atende ao trajeto nos canais oficiais. Explore destinos e roteiros em Descobrir; o Mapa mostra circuitos de forma esquemática, sem navegação em tempo real. Na aba Carbono, compare as emissões estimadas dos transportes disponíveis. No destino, agrupe passeios próximos e caminhe ou pedale em trechos seguros e acessíveis.";
   } else if (trail) {
-    response = "Para curtir uma trilha com cuidado, escolha um percurso autorizado e adequado ao seu preparo, confira clima e condições e veja se precisa de guia local. Avise alguém sobre o plano, permaneça no caminho sinalizado, não retire plantas nem alimente animais e traga todo o lixo de volta. Respeite limites de visitação e orientações da equipe local.";
+    response = "Para curtir uma trilha com cuidado, escolha um percurso autorizado e adequado ao seu preparo, confira clima e condições e veja se precisa de guia local. Avise alguém sobre o plano, permaneça no caminho sinalizado, não retire plantas nem alimente animais e traga todo o lixo de volta. Explore opções em Descobrir e consulte os circuitos no Mapa esquemático; respeite limites de visitação e orientações locais.";
   } else if (waste) {
     response = "Para reduzir resíduos durante a viagem, leve garrafa, copo e sacola reutilizáveis, recuse descartáveis quando puder e prefira alimentos com menos embalagem. Separe recicláveis conforme a coleta local e carregue o que produzir até encontrar um descarte adequado. Em áreas naturais, não deixe restos de comida ou lixo para trás.";
   } else if (localBusiness) {
@@ -93,7 +132,7 @@ export function answer(question: string) {
   } else if (destination) {
     response = `Posso ajudar a explorar ${destination.name}. Uma boa base é o circuito ${destination.circuit.title}, com paradas como ${destination.circuit.stops.slice(0, 4).map((stop) => stop.name).join(", ")}. Prefira deslocamentos agrupados e confirme as condições de cada local antes da visita.`;
   } else {
-    response = "Posso ajudar com ideias práticas de turismo sustentável no Brasil: transporte público e caronas, trilhas e áreas protegidas, consumo local, hospedagem ou roteiros. Conte também a cidade ou região que você tem em mente para receber sugestões mais contextualizadas.";
+    response = "Posso ajudar com transporte público, trilhas, litoral, pegada de carbono, acessibilidade e créditos verdes. Pergunte sobre qualquer um desses temas ou conte qual cidade ou região você tem em mente.";
   }
 
   return destination && !itinerary
