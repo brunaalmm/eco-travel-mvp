@@ -50,8 +50,10 @@ function Descobrir() {
     <AppShell>
       {phase === "tips" && <TipsModal onDone={close} />}
       <section className="px-5 pt-6">
-        <WeatherWidget />
-        <div className="mt-5"><HighlightCarousel /></div>
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2">
+          <WeatherWidget />
+          <HighlightCarousel />
+        </div>
         <h1 className="mt-6 max-w-3xl text-lg font-medium leading-snug text-foreground lg:text-2xl">
           Descubra destinos incríveis com responsabilidade ambiental. Viaje por roteiros que valorizam a cultura local, protegem a biodiversidade e geram impacto positivo nas comunidades.
         </h1>
