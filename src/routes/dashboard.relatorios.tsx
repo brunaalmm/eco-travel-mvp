@@ -52,11 +52,50 @@ function Relatorios() {
     </div>
     <div className="rounded-2xl border border-border bg-card p-6" aria-label="Prévia do relatório">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Prévia</p>
-      <div className="mt-3 rounded-xl bg-forest px-4 py-3 text-forest-foreground"><p className="font-semibold">EcoTravel | Relatório Executivo</p><p className="text-xs text-forest-foreground/70">{region} · {period}</p></div>
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        {[[`${data.total.toFixed(1)} t`, "CO₂ economizado"], [`${data.progress}%`, "Meta"], [data.mostUsed?.label ?? "—", "Mais usado"]].map(([v, l]) => <div key={l} className="rounded-xl bg-accent p-3"><p className="font-semibold">{v}</p><p className="text-[10px] text-muted-foreground">{l}</p></div>)}
+      <div className="mt-3 rounded-xl bg-forest px-4 py-3 text-forest-foreground">
+        <p className="font-semibold">EcoTravel | Relatório Executivo</p>
+        <p className="text-xs text-forest-foreground/70">{region} · {period}{peak ? " · Simulação de pico" : " · Cenário regular"}</p>
       </div>
-      <ul className="mt-4 divide-y divide-border text-sm">{data.records.map((r) => <li key={`${r.id}-${r.mode}`} className="flex justify-between gap-3 py-2"><span>{r.route}</span><b>{r.tonnes.toFixed(1)} t</b></li>)}</ul>
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+        {[[`${data.total.toFixed(1)} t`, "CO₂ economizado"], [`${data.progress}%`, `Meta de ${data.target} t`], [data.mostUsed?.label ?? "—", "Transporte mais utilizado"]].map(([v, l]) => <div key={l} className="rounded-xl bg-accent p-3"><p className="font-semibold">{v}</p><p className="text-[10px] text-muted-foreground">{l}</p></div>)}
+      </div>
+      <section className="mt-5" aria-labelledby="preview-distribution-title">
+        <h3 id="preview-distribution-title" className="text-sm font-semibold">Distribuição por modal</h3>
+        <ul className="mt-2 divide-y divide-border text-sm">
+          {data.distribution.map((mode) => (
+            <li key={mode.id} className="flex justify-between gap-3 py-2">
+              <span>{mode.label}</span>
+              <span className="shrink-0 text-muted-foreground">{mode.percent}% · {mode.tonnes.toFixed(1)} t</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section className="mt-5" aria-labelledby="preview-routes-title">
+        <h3 id="preview-routes-title" className="text-sm font-semibold">Roteiros monitorados</h3>
+        <ul className="mt-2 divide-y divide-border text-sm">
+          {data.records.map((record) => {
+            const mode = data.distribution.find((item) => item.id === record.mode);
+            const usage = Math.round((record.trips / record.capacity) * 100);
+            return (
+              <li key={`${record.id}-${record.mode}`} className="flex items-center justify-between gap-3 py-2">
+                <span className="min-w-0">
+                  <span className="block truncate font-medium">{record.route}</span>
+                  <span className="block text-xs text-muted-foreground">{record.region} · {mode?.label ?? "Modal não informado"} · Ocupação: {usage}%</span>
+                </span>
+                <b className="shrink-0">{record.tonnes.toFixed(1)} t</b>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+      <section className="mt-5" aria-labelledby="preview-alerts-title">
+        <h3 id="preview-alerts-title" className="text-sm font-semibold">Alertas de capacidade</h3>
+        {data.overCapacity.length ? (
+          <ul className="mt-2 space-y-1 text-sm text-destructive">
+            {data.overCapacity.map((alert) => <li key={`${alert.route}-${alert.usage}`}>{alert.route}: {alert.usage}% da capacidade de suporte</li>)}
+          </ul>
+        ) : <p className="mt-2 text-sm text-muted-foreground">Nenhum roteiro acima da capacidade de suporte.</p>}
+      </section>
     </div>
     </section>
   </div>;
