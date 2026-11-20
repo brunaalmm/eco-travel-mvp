@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowDownToLine, CheckCircle2, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EnvironmentalMetrics } from "@/components/EnvironmentalMetrics";
 import { useDashboard } from "@/components/DashboardContext";
 import { getDashboardData } from "@/lib/dashboard-data";
 import { createDashboardPdf, downloadDashboardPdf } from "@/lib/dashboard-pdf";
@@ -41,7 +40,6 @@ function Relatorios() {
     window.alert("Relatório PDF gerado com sucesso! O download foi iniciado.");
   }
   return <div className="grid gap-5">
-    <EnvironmentalMetrics />
     <section aria-labelledby="reports-title" className="grid gap-5 lg:grid-cols-[1fr_1.2fr]">
     <div className="rounded-2xl bg-forest p-6 text-forest-foreground">
       <FileText className="h-7 w-7 text-dashboard-chart-1" />
@@ -62,44 +60,18 @@ function Relatorios() {
           <h3 className="text-sm font-semibold">{emissions.title}</h3>
           <p className="mt-2 font-display text-2xl font-semibold">{emissions.total} {emissions.totalUnit}</p>
           <p className="text-xs text-muted-foreground">{emissions.yearLabel}</p>
-          <p className="mt-2 text-[10px] text-muted-foreground">{emissions.description}</p>
-          <ul className="mt-3 space-y-2">
-            {emissions.modes.map((mode) => (
-              <li key={mode.id} className="flex items-start justify-between gap-2 text-xs">
-                <span className="min-w-0">
-                  <span className="block font-medium">{mode.label}</span>
-                  <span className="block text-[10px] text-muted-foreground">{mode.description}</span>
-                </span>
-                <span className="shrink-0 text-right">{mode.percent}%<br />{mode.tonnes} Mt</span>
-              </li>
-            ))}
-          </ul>
         </article>
         <article className="rounded-xl bg-accent p-4">
-          <p className="text-[10px] text-muted-foreground">{reduction.plan}</p>
           <h3 className="mt-2 text-sm font-semibold">{reduction.title}</h3>
           <p className="mt-3 font-display text-2xl font-semibold">{reduction.range}</p>
           <p className="text-xs text-muted-foreground">{reduction.until}</p>
-          <div
-            className="mt-4 h-2 overflow-hidden rounded-full bg-muted"
-            role="progressbar"
-            aria-label={reduction.title}
-            aria-valuenow={reduction.progress}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <div className="h-full rounded-full bg-dashboard-chart-1" style={{ width: `${reduction.progress}%` }} />
-          </div>
-          <p className="mt-3 text-[10px] text-muted-foreground">{reduction.description}</p>
         </article>
         <article className="rounded-xl bg-accent p-4">
-          <p className="text-[10px] text-muted-foreground">{mostUsed.fleet}</p>
           <h3 className="mt-2 text-sm font-semibold">{mostUsed.title}</h3>
           <p className="mt-3 font-display text-2xl font-semibold">{mostUsed.label}</p>
           <p className="mt-2 text-xs text-muted-foreground">{mostUsed.description}</p>
         </article>
       </div>
-      <ul className="mt-4 divide-y divide-border text-sm">{data.records.map((r) => <li key={`${r.id}-${r.mode}`} className="flex justify-between gap-3 py-2"><span>{r.route}</span><b>{r.tonnes.toFixed(1)} t</b></li>)}</ul>
     </div>
     </section>
   </div>;
