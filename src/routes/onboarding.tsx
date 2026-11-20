@@ -53,7 +53,7 @@ function Onboarding() {
             {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
           </div>
           <div className="flex flex-col items-center text-center">
-            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain" />
+            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain animate-mascot-float" />
           </div>
           <div>
             <div className="flex flex-col items-center text-center">

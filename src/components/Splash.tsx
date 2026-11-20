@@ -18,7 +18,9 @@ export function TipsModal({ onDone }: { onDone: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/20 p-4 pb-24 backdrop-blur-sm lg:pb-10" role="dialog" aria-modal="true" aria-label="Dicas do EcoBot">
       <div className="relative flex h-[22rem] w-full max-w-md flex-col rounded-[1.75rem] bg-login-paper px-6 pb-5 pt-14 text-foreground shadow-float">
-        <img src={bots[step]} alt="EcoBot" className="absolute -top-12 left-1/2 h-24 w-24 -translate-x-1/2 object-contain drop-shadow-md" />
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2">
+          <img src={bots[step]} alt="EcoBot" className="h-24 w-24 object-contain drop-shadow-md animate-mascot-float" />
+        </div>
         <button type="button" onClick={onDone} aria-label="Fechar dicas" className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full text-muted-foreground hover:bg-muted"><X className="h-4 w-4" /></button>
         <div className="flex h-36 shrink-0 flex-col justify-center text-center">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">Dica {step + 1} de {ecoTips.length}</p>

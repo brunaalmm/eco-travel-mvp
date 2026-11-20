@@ -105,6 +105,12 @@
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 @utility shadow-float { box-shadow: var(--shadow-float); }
 
+@keyframes mascot-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -5px, 0); }
+}
+.animate-mascot-float { animation: mascot-float 3.2s ease-in-out infinite; will-change: transform; }
+
 .dashboard-chart { transform: rotate(-90deg); }
 .dashboard-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
 .weather-widget::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 1; }
@@ -120,6 +126,7 @@
 .high-contrast .weather-widget__scenario[aria-pressed="true"] { background: #fff; color: #000; }
 .high-contrast .weather-widget .weather-icon { color: #fff; }
 @media (prefers-reduced-motion: reduce) {
+  .animate-mascot-float { animation: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -198,5 +205,3 @@ html[data-font-level="3"] { font-size: 22px; }
 /* Login visual: official login forest and paper tones. */
 :root { --login-forest: #0b3b2c; --login-paper: #fbf9f1; --login-overlay: rgb(0 0 0 / 0.35); }
 @theme inline { --color-login-forest: var(--login-forest); --color-login-paper: var(--login-paper); --color-login-overlay: var(--login-overlay); }
-:root { --pixel-sky: #134d39; --pixel-far: #1d6448; --pixel-mid: #144a35; --pixel-near: #0b3b2c; --pixel-tree: #2f7d55; --pixel-tree-dark: #1f5e40; --pixel-cloud: #a9d4b4; --pixel-hiker: #6fb383; }
-@theme inline { --color-pixel-sky: var(--pixel-sky); --color-pixel-far: var(--pixel-far); --color-pixel-mid: var(--pixel-mid); --color-pixel-near: var(--pixel-near); --color-pixel-tree: var(--pixel-tree); --color-pixel-tree-dark: var(--pixel-tree-dark); --color-pixel-cloud: var(--pixel-cloud); --color-pixel-hiker: var(--pixel-hiker); }

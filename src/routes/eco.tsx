@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown, HeartHandshake, Info } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { PixelNature } from "@/components/PixelNature";
+import { CarbonFootprintIllustration } from "@/components/CarbonFootprintIllustration";
 import { Button } from "@/components/ui/button";
 import { destinations, transports, carbonKg, offsetSuggestions, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
 import { useCredits } from "@/lib/credits";
@@ -72,8 +72,8 @@ function Calc() {
 
   return (
     <section className="px-5 pt-6 lg:mx-auto lg:max-w-2xl">
-      <div className="relative mb-5 h-40 overflow-hidden rounded-3xl sm:h-48" aria-hidden="true">
-        <PixelNature />
+      <div className="mb-5 h-40 overflow-hidden rounded-3xl bg-accent sm:h-48">
+        <CarbonFootprintIllustration />
       </div>
       <h1 className="text-2xl font-semibold">Pegada de carbono</h1>
       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Vamos estimar as emissões do seu passeio? Escolha o roteiro e como você chegou até lá para comparar alternativas.</p>
