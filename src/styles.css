@@ -114,10 +114,10 @@
 .dashboard-chart { transform: rotate(-90deg); }
 .dashboard-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
 .weather-widget::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 1; }
-.weather-widget[data-weather="sol"]::before { background: radial-gradient(ellipse at 92% 0%, rgb(255 255 255 / .2), transparent 52%); }
-.weather-widget[data-weather="chuva"]::before { background: linear-gradient(135deg, rgb(191 219 254 / .2), transparent 68%); }
-.weather-widget[data-weather="vento"]::before { background: radial-gradient(ellipse at 4% 55%, rgb(165 243 252 / .18), transparent 58%); }
-.weather-widget[data-weather="frio"]::before { background: linear-gradient(135deg, rgb(219 234 254 / .2), transparent 72%); }
+.weather-widget[data-weather="sol"]::before { background: radial-gradient(ellipse at 92% 0%, rgb(180 234 133 / .2), transparent 52%); }
+.weather-widget[data-weather="chuva"]::before { background: linear-gradient(135deg, rgb(151 205 171 / .16), transparent 68%); }
+.weather-widget[data-weather="vento"]::before { background: radial-gradient(ellipse at 4% 55%, rgb(160 224 174 / .16), transparent 58%); }
+.weather-widget[data-weather="frio"]::before { background: linear-gradient(135deg, rgb(184 224 194 / .16), transparent 72%); }
 .weather-widget > * { position: relative; z-index: 1; }
 .high-contrast .weather-widget { border: 2px solid #fff; background: #000; color: #fff; }
 .high-contrast .weather-widget::before { display: none; }
