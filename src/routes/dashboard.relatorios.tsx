@@ -2,9 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowDownToLine, CheckCircle2, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EnvironmentalMetrics } from "@/components/EnvironmentalMetrics";
 import { useDashboard } from "@/components/DashboardContext";
 import { getDashboardData } from "@/lib/dashboard-data";
 import { createDashboardPdf, downloadDashboardPdf } from "@/lib/dashboard-pdf";
+import { environmentalMetricData } from "@/lib/environmental-metrics";
 
 export const Route = createFileRoute("/dashboard/relatorios")({
   head: () => ({ meta: [
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/dashboard/relatorios")({
 
 function Relatorios() {
   const { region, period, peak, data } = useDashboard();
+  const { emissions, reduction, mostUsed } = environmentalMetricData;
   const [pdf, setPdf] = useState<{ blob?: Blob; error?: string }>({});
   const [done, setDone] = useState(false);
   useEffect(() => {
@@ -38,6 +41,7 @@ function Relatorios() {
     window.alert("Relatório PDF gerado com sucesso! O download foi iniciado.");
   }
   return <div className="grid gap-5">
+    <EnvironmentalMetrics />
     <section aria-labelledby="reports-title" className="grid gap-5 lg:grid-cols-[1fr_1.2fr]">
     <div className="rounded-2xl bg-forest p-6 text-forest-foreground">
       <FileText className="h-7 w-7 text-dashboard-chart-1" />
@@ -52,50 +56,50 @@ function Relatorios() {
     </div>
     <div className="rounded-2xl border border-border bg-card p-6" aria-label="Prévia do relatório">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Prévia</p>
-      <div className="mt-3 rounded-xl bg-forest px-4 py-3 text-forest-foreground">
-        <p className="font-semibold">EcoTravel | Relatório Executivo</p>
-        <p className="text-xs text-forest-foreground/70">{region} · {period}{peak ? " · Simulação de pico" : " · Cenário regular"}</p>
-      </div>
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        {[[`${data.total.toFixed(1)} t`, "CO₂ economizado"], [`${data.progress}%`, `Meta de ${data.target} t`], [data.mostUsed?.label ?? "—", "Transporte mais utilizado"]].map(([v, l]) => <div key={l} className="rounded-xl bg-accent p-3"><p className="font-semibold">{v}</p><p className="text-[10px] text-muted-foreground">{l}</p></div>)}
-      </div>
-      <section className="mt-5" aria-labelledby="preview-distribution-title">
-        <h3 id="preview-distribution-title" className="text-sm font-semibold">Distribuição por modal</h3>
-        <ul className="mt-2 divide-y divide-border text-sm">
-          {data.distribution.map((mode) => (
-            <li key={mode.id} className="flex justify-between gap-3 py-2">
-              <span>{mode.label}</span>
-              <span className="shrink-0 text-muted-foreground">{mode.percent}% · {mode.tonnes.toFixed(1)} t</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section className="mt-5" aria-labelledby="preview-routes-title">
-        <h3 id="preview-routes-title" className="text-sm font-semibold">Roteiros monitorados</h3>
-        <ul className="mt-2 divide-y divide-border text-sm">
-          {data.records.map((record) => {
-            const mode = data.distribution.find((item) => item.id === record.mode);
-            const usage = Math.round((record.trips / record.capacity) * 100);
-            return (
-              <li key={`${record.id}-${record.mode}`} className="flex items-center justify-between gap-3 py-2">
+      <div className="mt-3 rounded-xl bg-forest px-4 py-3 text-forest-foreground"><p className="font-semibold">EcoTravel | Relatório Executivo</p><p className="text-xs text-forest-foreground/70">{region} · {period}</p></div>
+      <div className="mt-4 grid gap-3 md:grid-cols-3" aria-label="Indicadores ambientais da prévia">
+        <article className="rounded-xl bg-accent p-4">
+          <h3 className="text-sm font-semibold">{emissions.title}</h3>
+          <p className="mt-2 font-display text-2xl font-semibold">{emissions.total} {emissions.totalUnit}</p>
+          <p className="text-xs text-muted-foreground">{emissions.yearLabel}</p>
+          <p className="mt-2 text-[10px] text-muted-foreground">{emissions.description}</p>
+          <ul className="mt-3 space-y-2">
+            {emissions.modes.map((mode) => (
+              <li key={mode.id} className="flex items-start justify-between gap-2 text-xs">
                 <span className="min-w-0">
-                  <span className="block truncate font-medium">{record.route}</span>
-                  <span className="block text-xs text-muted-foreground">{record.region} · {mode?.label ?? "Modal não informado"} · Ocupação: {usage}%</span>
+                  <span className="block font-medium">{mode.label}</span>
+                  <span className="block text-[10px] text-muted-foreground">{mode.description}</span>
                 </span>
-                <b className="shrink-0">{record.tonnes.toFixed(1)} t</b>
+                <span className="shrink-0 text-right">{mode.percent}%<br />{mode.tonnes} Mt</span>
               </li>
-            );
-          })}
-        </ul>
-      </section>
-      <section className="mt-5" aria-labelledby="preview-alerts-title">
-        <h3 id="preview-alerts-title" className="text-sm font-semibold">Alertas de capacidade</h3>
-        {data.overCapacity.length ? (
-          <ul className="mt-2 space-y-1 text-sm text-destructive">
-            {data.overCapacity.map((alert) => <li key={`${alert.route}-${alert.usage}`}>{alert.route}: {alert.usage}% da capacidade de suporte</li>)}
+            ))}
           </ul>
-        ) : <p className="mt-2 text-sm text-muted-foreground">Nenhum roteiro acima da capacidade de suporte.</p>}
-      </section>
+        </article>
+        <article className="rounded-xl bg-accent p-4">
+          <p className="text-[10px] text-muted-foreground">{reduction.plan}</p>
+          <h3 className="mt-2 text-sm font-semibold">{reduction.title}</h3>
+          <p className="mt-3 font-display text-2xl font-semibold">{reduction.range}</p>
+          <p className="text-xs text-muted-foreground">{reduction.until}</p>
+          <div
+            className="mt-4 h-2 overflow-hidden rounded-full bg-muted"
+            role="progressbar"
+            aria-label={reduction.title}
+            aria-valuenow={reduction.progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
+            <div className="h-full rounded-full bg-dashboard-chart-1" style={{ width: `${reduction.progress}%` }} />
+          </div>
+          <p className="mt-3 text-[10px] text-muted-foreground">{reduction.description}</p>
+        </article>
+        <article className="rounded-xl bg-accent p-4">
+          <p className="text-[10px] text-muted-foreground">{mostUsed.fleet}</p>
+          <h3 className="mt-2 text-sm font-semibold">{mostUsed.title}</h3>
+          <p className="mt-3 font-display text-2xl font-semibold">{mostUsed.label}</p>
+          <p className="mt-2 text-xs text-muted-foreground">{mostUsed.description}</p>
+        </article>
+      </div>
+      <ul className="mt-4 divide-y divide-border text-sm">{data.records.map((r) => <li key={`${r.id}-${r.mode}`} className="flex justify-between gap-3 py-2"><span>{r.route}</span><b>{r.tonnes.toFixed(1)} t</b></li>)}</ul>
     </div>
     </section>
   </div>;
