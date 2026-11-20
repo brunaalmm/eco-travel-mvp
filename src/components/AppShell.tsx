@@ -94,8 +94,8 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           </nav>
         </div>
       </header>
-      <main className={`mx-auto w-full flex-1 lg:max-w-6xl lg:px-3 ${isEcoBot ? "min-h-0" : "pb-28 lg:pb-16"}`}>{children}</main>
-      <nav className={`fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden ${isEcoBot ? "hidden" : ""}`}>
+      <main className={`mx-auto w-full flex-1 lg:max-w-6xl lg:px-3 ${isEcoBot ? "min-h-0 pb-20 lg:pb-0" : "pb-28 lg:pb-16"}`}>{children}</main>
+      <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
         <ul className="grid grid-cols-5">
           {nav.map(({ to, label, icon: Icon }) => (
             <li key={to}>
