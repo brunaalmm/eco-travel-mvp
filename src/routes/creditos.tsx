@@ -47,7 +47,7 @@ function Creditos() {
             {next ? `Faltam ${next.goal - credits} para desbloquear “${next.title}”.` : "Você desbloqueou tudo! 🎉"}
           </p>
           <div className="mt-4 h-2 max-w-[65%] rounded-full bg-forest-foreground/20">
-            <div className="h-full rounded-full bg-leaf transition-all" style={{ width: `${Math.min(100, (credits / max) * 100)}%` }} />
+            <div className="h-full rounded-full bg-leaf" style={{ width: `${Math.min(100, (credits / max) * 100)}%` }} />
           </div>
         </div>
 

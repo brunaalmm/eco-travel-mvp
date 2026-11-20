@@ -76,7 +76,7 @@ function Descobrir() {
               onClick={() => setWhere(region)}
               aria-pressed={where === region}
               variant="ghost"
-              className={`h-auto min-h-10 max-w-full whitespace-normal rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              className={`h-auto min-h-10 max-w-full whitespace-normal rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150 ${
                 where === region ? "bg-forest text-forest-foreground hover:bg-forest/90 hover:text-forest-foreground" : "bg-card text-foreground shadow-soft"
               }`}
             >
@@ -99,11 +99,11 @@ function Descobrir() {
               to="/destino/$id"
               params={{ id: d.id }}
               aria-label={`Ver ${d.circuit.title}`}
-              className="group block h-auto w-full overflow-hidden whitespace-normal rounded-3xl bg-card p-0 text-left shadow-soft animate-rise"
+              className="group block h-auto w-full overflow-hidden whitespace-normal rounded-3xl bg-card p-0 text-left shadow-soft"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="relative aspect-[4/3] overflow-hidden">
-                <img src={d.image} alt={d.name} width={1024} height={768} loading={i ? "lazy" : undefined} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src={d.image} alt={d.name} width={1024} height={768} loading={i ? "lazy" : undefined} className="h-full w-full object-cover transition-transform duration-150 group-hover:scale-105" />
                 <span className="absolute left-4 top-4 rounded-full bg-card/95 px-3 py-1 text-[11px] font-bold tracking-wider">{d.duration}</span>
                 <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-leaf px-3 py-1 text-[11px] font-semibold text-leaf-foreground">
                   <Leaf className="h-3 w-3" /> Selo verde

@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Compass, Map, Leaf, Award, Bot, Info, LogOut, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
@@ -13,8 +13,6 @@ const nav = [
 const desktopNav = [...nav, { to: "/sobre", label: "Sobre", icon: Info }] as const;
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
-  const pathname = useRouterState({ select: (state) => state.location.pathname });
-
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background shadow-float lg:max-w-none lg:shadow-none">
       <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
@@ -64,7 +62,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                   <Link
                     to={to}
                     activeOptions={{ exact: to === "/descobrir" }}
-                    className="flex items-center gap-2 rounded-full px-2 py-2 text-sm font-medium text-forest-foreground/70 transition-colors hover:text-forest-foreground data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
+                    className="flex items-center gap-2 rounded-full px-2 py-2 text-sm font-medium text-forest-foreground/70 transition-colors duration-150 hover:text-forest-foreground data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
                   >
                     <Icon className="h-4 w-4" strokeWidth={1.8} />
                     {label}
@@ -94,12 +92,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           </nav>
         </div>
       </header>
-      <main
-        key={pathname}
-        className="route-content mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16"
-      >
-        {children}
-      </main>
+      <main className="mx-auto w-full flex-1 pb-28 lg:max-w-6xl lg:px-3 lg:pb-16">{children}</main>
       <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
         <ul className="grid grid-cols-5">
           {nav.map(({ to, label, icon: Icon }) => (
@@ -107,7 +100,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               <Link
                 to={to}
                 activeOptions={{ exact: to === "/descobrir" }}
-                className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[10px] font-medium text-forest-foreground/60 transition-colors data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
+                className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[10px] font-medium text-forest-foreground/60 transition-colors duration-150 data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} />
                 {label}

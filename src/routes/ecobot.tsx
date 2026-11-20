@@ -78,20 +78,20 @@ function EcoBotPage() {
           role="log"
           aria-label="Conversa com o EcoBot"
           aria-live="polite"
-          className="mx-auto min-h-0 w-full max-w-3xl flex-1 space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-5 pb-40 lg:px-8 lg:pb-24"
+          className="mx-auto min-h-0 w-full max-w-3xl flex-1 space-y-4 overflow-y-auto overscroll-contain px-5 pb-40 lg:px-8 lg:pb-24"
         >
           {msgs.map((m) => (
-            <div key={m.id} className={`animate-chat-message flex items-end gap-2 ${m.me ? "justify-end" : ""}`}>
+            <div key={m.id} className={`flex items-end gap-2 ${m.me ? "justify-end" : ""}`}>
               {!m.me && <img src={botHappy} alt="" className="h-8 w-8 shrink-0 object-contain" />}
               <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-forest text-forest-foreground" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
             </div>
           ))}
           {typing && (
-            <div className="animate-chat-message flex items-end gap-2">
+            <div className="flex items-end gap-2">
               <img src={botLoading} alt="" className="h-8 w-8 shrink-0 object-contain" />
               <p className="flex gap-1 rounded-3xl rounded-bl-md bg-card px-4 py-3.5 shadow-soft" aria-label="EcoBot digitando">
-                {[0, 1, 2].map((d) => (
-                  <span key={d} className="h-1.5 w-1.5 animate-pulse rounded-full bg-muted-foreground" style={{ animationDelay: `${d * 140}ms` }} />
+                {[0, 1, 2].map((dot) => (
+                  <span key={dot} className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
                 ))}
               </p>
             </div>
@@ -103,7 +103,7 @@ function EcoBotPage() {
                   key={suggestion}
                   type="button"
                   onClick={() => send(suggestion)}
-                  className="rounded-full bg-accent px-3.5 py-2 text-left text-xs font-medium text-primary transition-colors hover:bg-leaf/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                  className="rounded-full bg-accent px-3.5 py-2 text-left text-xs font-medium text-primary transition-colors duration-150 hover:bg-leaf/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
                 >
                   {suggestion}
                 </button>
@@ -123,7 +123,7 @@ function EcoBotPage() {
               enterKeyHint="send"
               className="h-11 w-full min-w-0 bg-transparent text-sm outline-none"
             />
-            <button type="submit" disabled={typing || !text.trim()} aria-label="Enviar mensagem" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground transition-opacity disabled:opacity-40">
+            <button type="submit" disabled={typing || !text.trim()} aria-label="Enviar mensagem" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground transition-opacity duration-150 disabled:opacity-40">
               <Send className="h-4 w-4" />
             </button>
           </form>

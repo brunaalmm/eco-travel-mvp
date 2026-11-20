@@ -23,7 +23,7 @@ export function HighlightCarousel() {
   return (
     <div className="relative h-full" onMouseEnter={() => (paused.current = true)} onMouseLeave={() => (paused.current = false)}>
       <div className="h-full overflow-hidden rounded-3xl shadow-soft">
-        <div className="flex h-full transition-transform duration-500 ease-out" style={{ transform: `translateX(-${i * 100}%)` }}>
+        <div className="flex h-full transition-transform duration-150 ease-out" style={{ transform: `translateX(-${i * 100}%)` }}>
           {banners.map((b, k) => (
             <div key={b.title} aria-hidden={k !== i} className={`grid h-full min-w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-5 pb-14 lg:p-8 lg:pb-16 ${b.tone}`}>
               <div className="min-w-0">
@@ -40,7 +40,7 @@ export function HighlightCarousel() {
       <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-nowrap items-center justify-center gap-3 rounded-full bg-background/90 px-3 py-1.5 shadow-soft">
         <button aria-label="Anterior" onClick={() => go(-1)} className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-card shadow-soft"><ChevronLeft className="h-4 w-4" /></button>
         {banners.map((b, k) => (
-          <button key={b.title} aria-label={b.title} onClick={() => setI(k)} className={`h-1.5 shrink-0 rounded-full transition-all ${k === i ? "w-6 bg-forest" : "w-1.5 bg-muted-foreground/30"}`} />
+          <button key={b.title} aria-label={b.title} onClick={() => setI(k)} className={`h-1.5 shrink-0 rounded-full transition-colors duration-150 ${k === i ? "w-6 bg-forest" : "w-1.5 bg-muted-foreground/30"}`} />
         ))}
         <button aria-label="Próximo" onClick={() => go(1)} className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-card shadow-soft"><ChevronRight className="h-4 w-4" /></button>
       </div>

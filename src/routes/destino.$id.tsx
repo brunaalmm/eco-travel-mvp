@@ -70,7 +70,7 @@ function Destino() {
         <div className="mt-5 grid grid-cols-2 gap-2 min-[400px]:grid-cols-4">
           {tabs.map(({ key, label, icon: Icon }) => (
             <Button key={key} variant="ghost" aria-pressed={tab === key} onClick={() => setTab(key)}
-              className={`flex h-auto min-w-0 whitespace-normal break-words flex-col items-center gap-1 rounded-2xl px-1 py-3 text-[11px] font-medium transition-colors ${tab === key ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>
+              className={`flex h-auto min-w-0 whitespace-normal break-words flex-col items-center gap-1 rounded-2xl px-1 py-3 text-[11px] font-medium transition-colors duration-150 ${tab === key ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>
               <Icon className="h-5 w-5" strokeWidth={1.8} />{label}
             </Button>
           ))}
@@ -78,7 +78,7 @@ function Destino() {
 
         <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {items.map((p) => (
-            <li key={p.name} className="min-w-0 break-words rounded-2xl bg-card p-4 shadow-soft animate-rise">
+            <li key={p.name} className="min-w-0 break-words rounded-2xl bg-card p-4 shadow-soft">
               {p.tag && <span className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground">{p.tag}</span>}
               <h3 className="mt-2 font-semibold">{p.name}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>

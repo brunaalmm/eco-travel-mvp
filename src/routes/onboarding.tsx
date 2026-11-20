@@ -50,12 +50,12 @@ function Onboarding() {
       <main className="flex flex-1 items-center justify-center p-5">
         <div className="w-full max-w-md rounded-[2rem] bg-forest p-7 text-forest-foreground shadow-float">
           <div className="mb-6 flex gap-1.5" aria-label={`Passo ${step + 1} de ${steps.length}`}>
-            {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
+            {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
           </div>
           <div className="flex flex-col items-center text-center">
-            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain animate-onboarding-float" />
+            <img src={current.bot} alt="EcoBot" className="h-28 w-auto object-contain" />
           </div>
-          <div key={step} className="animate-onboarding-step">
+          <div>
             <div className="flex flex-col items-center text-center">
               <span className="mt-4 rounded-full bg-leaf px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-foreground">Passo {step + 1} de {steps.length}</span>
               <h1 className="mt-4 text-xl font-semibold">{current.title}</h1>

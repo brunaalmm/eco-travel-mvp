@@ -16,11 +16,11 @@ export function TipsModal({ onDone }: { onDone: () => void }) {
   const tip = ecoTips[step] ?? ecoTips[ecoTips.length - 1]!;
   const last = step === ecoTips.length - 1;
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/20 p-4 pb-24 backdrop-blur-sm animate-in fade-in lg:pb-10" role="dialog" aria-modal="true" aria-label="Dicas do EcoBot">
-      <div className="relative flex h-[22rem] w-full max-w-md flex-col rounded-[1.75rem] bg-login-paper px-6 pb-5 pt-14 text-foreground shadow-float animate-rise">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/20 p-4 pb-24 backdrop-blur-sm lg:pb-10" role="dialog" aria-modal="true" aria-label="Dicas do EcoBot">
+      <div className="relative flex h-[22rem] w-full max-w-md flex-col rounded-[1.75rem] bg-login-paper px-6 pb-5 pt-14 text-foreground shadow-float">
         <img src={bots[step]} alt="EcoBot" className="absolute -top-12 left-1/2 h-24 w-24 -translate-x-1/2 object-contain drop-shadow-md" />
         <button type="button" onClick={onDone} aria-label="Fechar dicas" className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full text-muted-foreground hover:bg-muted"><X className="h-4 w-4" /></button>
-        <div key={step} className="flex h-36 shrink-0 flex-col justify-center text-center animate-rise">
+        <div className="flex h-36 shrink-0 flex-col justify-center text-center">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">Dica {step + 1} de {ecoTips.length}</p>
           <h2 className="mt-1 text-lg font-semibold">{tip.title}</h2>
           <p className="mt-1.5 text-sm text-muted-foreground">{tip.text}</p>
@@ -28,7 +28,7 @@ export function TipsModal({ onDone }: { onDone: () => void }) {
         <div className="my-4 flex shrink-0 justify-center gap-1.5">
           {ecoTips.map((_, i) => (
             <button key={i} aria-label={`Dica ${i + 1}`} onClick={() => setStep(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === step ? "w-6 bg-leaf" : "w-1.5 bg-border"}`} />
+              className={`h-1.5 rounded-full transition-colors duration-150 ${i === step ? "w-6 bg-leaf" : "w-1.5 bg-border"}`} />
           ))}
         </div>
         <div className="flex shrink-0 items-center gap-3">

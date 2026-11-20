@@ -46,7 +46,7 @@ function Mapa() {
           <Button key={x.id} variant="ghost" aria-label={`Selecionar ${x.name}`} onClick={() => { setSel(x.id); setMode(null); }}
             style={{ left: `${x.map.x}%`, top: `${x.map.y}%` }}
             className="absolute block h-auto -translate-x-1/2 -translate-y-1/2 p-0 text-center">
-            <span className={`relative mx-auto block h-10 w-10 overflow-hidden rounded-full border-2 shadow-float transition-transform lg:h-16 lg:w-16 ${sel === x.id ? "scale-110 border-leaf" : "border-card"}`}>
+            <span className={`relative mx-auto block h-10 w-10 overflow-hidden rounded-full border-2 shadow-float transition-transform duration-150 lg:h-16 lg:w-16 ${sel === x.id ? "scale-110 border-leaf" : "border-card"}`}>
               <img src={x.image} alt={x.name} className="h-full w-full object-cover" />
             </span>
             <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-forest text-[11px] font-bold text-forest-foreground">{x.circuit.stops.length}</span>
@@ -80,7 +80,7 @@ function Mapa() {
         )}
 
         {dest && m && totals && (
-          <section className="mt-6 animate-rise">
+          <section className="mt-6">
             <h2 className="break-words text-xl font-semibold">{dest.circuit.title}</h2>
             <div className="mt-3 grid grid-cols-3 gap-2">
               <Summary icon={<RouteIcon className="h-4 w-4" />} label="Total" value={`${totals.km} km`} />

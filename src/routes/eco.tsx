@@ -32,7 +32,7 @@ function Eco() {
           <summary className="flex cursor-pointer list-none items-center gap-3 font-semibold [&::-webkit-details-marker]:hidden">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-primary"><Info className="h-5 w-5" /></span>
             <span className="flex-1">Como calculamos a sua pegada</span>
-            <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+            <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-150 group-open:rotate-180" />
           </summary>
           <div className="mt-4 border-t border-border pt-4">
             <p className="text-sm leading-relaxed text-muted-foreground">Esta é uma estimativa para ajudar você a comparar opções de transporte e planejar passeios com mais consciência. Multiplicamos a distância de ida e volta pelo fator médio de emissão de cada transporte.</p>
@@ -107,7 +107,7 @@ function Calc() {
       <Button variant="forest" className="mt-6 w-full" onClick={calc}>Calcular CO₂</Button>
 
       {result && (
-        <div className="mt-6 animate-rise rounded-3xl bg-card p-5 shadow-soft">
+        <div className="mt-6 rounded-3xl bg-card p-5 shadow-soft">
           <div className="flex items-center gap-4">
             <img src={clean ? botRight : botWrong} alt="EcoBot" className="h-20 w-auto shrink-0" />
             <div>

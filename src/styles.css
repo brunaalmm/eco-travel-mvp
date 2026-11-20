@@ -1,6 +1,5 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -106,20 +105,7 @@
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 @utility shadow-float { box-shadow: var(--shadow-float); }
 
-@keyframes onboarding-float { 0%,100% { transform: translate3d(0, 0, 0) } 50% { transform: translate3d(0, -4px, 0) } }
-@utility animate-onboarding-float { animation: onboarding-float 4s ease-in-out infinite; will-change: transform; }
-@keyframes onboarding-step-in { from { opacity: 0; transform: translate3d(0, 6px, 0) } to { opacity: 1; transform: translate3d(0, 0, 0) } }
-@utility animate-onboarding-step { animation: onboarding-step-in 300ms ease-out both; }
-@keyframes rise { from { opacity: 0; translate: 0 6px } to { opacity: 1; translate: 0 0 } }
-@utility animate-rise { animation: rise .3s ease-out both; }
-@keyframes route-content-in {
-  from { opacity: 0.4; transform: translate3d(0, 8px, 0); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-.route-content { animation: route-content-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-
 .dashboard-chart { transform: rotate(-90deg); }
-.dashboard-chart circle { transition: stroke-dasharray .4s ease, stroke-dashoffset .4s ease; }
 .dashboard-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
 .weather-widget::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 1; }
 .weather-widget[data-weather="sol"]::before { background: radial-gradient(ellipse at 92% 0%, rgb(255 255 255 / .2), transparent 52%); }
@@ -134,9 +120,6 @@
 .high-contrast .weather-widget__scenario[aria-pressed="true"] { background: #fff; color: #000; }
 .high-contrast .weather-widget .weather-icon { color: #fff; }
 @media (prefers-reduced-motion: reduce) {
-  .dashboard-chart circle { transition: none; }
-  .animate-onboarding-float, .animate-onboarding-step { animation: none !important; }
-  .route-content { animation: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -217,21 +200,3 @@ html[data-font-level="3"] { font-size: 22px; }
 @theme inline { --color-login-forest: var(--login-forest); --color-login-paper: var(--login-paper); --color-login-overlay: var(--login-overlay); }
 :root { --pixel-sky: #134d39; --pixel-far: #1d6448; --pixel-mid: #144a35; --pixel-near: #0b3b2c; --pixel-tree: #2f7d55; --pixel-tree-dark: #1f5e40; --pixel-cloud: #a9d4b4; --pixel-hiker: #6fb383; }
 @theme inline { --color-pixel-sky: var(--pixel-sky); --color-pixel-far: var(--pixel-far); --color-pixel-mid: var(--pixel-mid); --color-pixel-near: var(--pixel-near); --color-pixel-tree: var(--pixel-tree); --color-pixel-tree-dark: var(--pixel-tree-dark); --color-pixel-cloud: var(--pixel-cloud); --color-pixel-hiker: var(--pixel-hiker); }
-@keyframes pixel-cloud { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-@keyframes pixel-flight { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-@keyframes pixel-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-@keyframes pixel-wing-a { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-@keyframes pixel-wing-b { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
-@keyframes chat-message-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pixel-walk {
-  from { transform: translateX(calc(-100% + 32px)); }
-  to { transform: translateX(0); }
-}
-@utility animate-pixel-cloud { animation: pixel-cloud 22s linear infinite; will-change: transform; }
-@utility animate-pixel-flight { animation: pixel-flight 20s linear infinite; will-change: transform; }
-@utility animate-pixel-bob { animation: pixel-bob 1.2s ease-in-out infinite; }
-@utility animate-pixel-wing-a { animation: pixel-wing-a 0.36s steps(1, end) infinite; }
-@utility animate-pixel-wing-b { animation: pixel-wing-b 0.36s steps(1, end) infinite; }
-@utility animate-pixel-walk { animation: pixel-walk 18s linear infinite; }
-@utility animate-chat-message { animation: chat-message-in 300ms ease-out both; }
-@media (prefers-reduced-motion: reduce) { .animate-chat-message, .animate-pixel-bob, .animate-pixel-cloud, .animate-pixel-flight, .animate-pixel-walk, .animate-pixel-wing-a, .animate-pixel-wing-b { animation: none; } }
