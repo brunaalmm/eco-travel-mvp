@@ -35,22 +35,18 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
   }
   return (
     <div className="relative flex min-h-dvh flex-col overflow-x-hidden bg-forest lg:h-dvh lg:min-h-0 lg:flex-row lg:overflow-hidden lg:bg-login-paper">
-      <aside className="relative flex shrink-0 flex-col items-center bg-forest px-6 pb-52 pt-8 text-center text-forest-foreground lg:w-1/2 lg:justify-center lg:pb-12 lg:pt-12">
+      <aside className="relative flex h-[14.5rem] shrink-0 flex-col items-center bg-forest px-6 pt-5 text-center text-forest-foreground sm:h-[15.5rem] lg:h-dvh lg:w-1/2 lg:justify-start lg:px-12 lg:pt-14">
         <div className="relative z-10 flex w-full max-w-xl flex-col items-center">
-          <h2 className="max-w-md font-display text-xl font-semibold leading-tight lg:hidden">Bem-vindo ao EcoTravel</h2>
-          <p className="mt-2 max-w-md px-2 text-xs leading-relaxed text-forest-foreground/75 sm:text-sm lg:hidden">Conecte-se com a natureza. Viaje com propósito. Escolha uma opção para continuar:</p>
-          <Link to="/" aria-label="EcoTravel início" className="mt-5 lg:hidden"><img src={logo} alt="EcoTravel" width={1592} height={857} className="h-14 w-auto max-w-[70vw] object-contain drop-shadow-lg" /></Link>
-          <Link to="/" aria-label="EcoTravel início" className="hidden lg:block"><img src={logo} alt="EcoTravel" width={1592} height={857} className="h-32 w-auto max-w-[80vw] object-contain drop-shadow-lg" /></Link>
+          <Link to="/" aria-label="EcoTravel início" className="lg:order-none"><img src={logo} alt="EcoTravel" width={1592} height={857} className="h-20 w-auto max-w-[78vw] object-contain drop-shadow-lg sm:h-24 lg:h-36" /></Link>
+          <h2 className="mt-2 max-w-md font-display text-xl font-semibold leading-tight lg:mt-8 lg:text-3xl">Bem-vindo ao EcoTravel</h2>
+          <p className="mt-2 hidden max-w-md px-2 font-display text-lg font-semibold leading-relaxed lg:mt-3 lg:block">Um jeito mais consciente de viajar</p>
+          <p className="mt-1 hidden max-w-md text-base text-forest-foreground/75 lg:block">Conecte-se com a natureza. Viaje com um propósito.</p>
+          <p className="mt-1 max-w-md px-2 text-[11px] leading-relaxed text-forest-foreground/75 sm:text-xs lg:hidden">Conecte-se com a natureza. Viaje com propósito. Escolha uma opção para continuar:</p>
         </div>
       </aside>
-      <main className="absolute inset-x-4 bottom-5 z-10 mx-auto max-h-[calc(100dvh-13rem)] min-h-0 overflow-y-auto rounded-[1.5rem] bg-login-paper px-5 pb-4 pt-4 shadow-float sm:inset-x-8 sm:px-7 lg:relative lg:inset-auto lg:bottom-auto lg:flex lg:h-dvh lg:max-h-none lg:w-1/2 lg:max-w-none lg:items-center lg:justify-center lg:overflow-hidden lg:rounded-none lg:px-10 lg:py-6 lg:shadow-none">
+      <main className="relative z-10 -mt-4 flex flex-1 flex-col rounded-t-[1.75rem] bg-login-paper px-5 pb-5 pt-4 shadow-float sm:px-7 lg:m-0 lg:h-dvh lg:w-1/2 lg:flex-none lg:items-center lg:justify-center lg:rounded-none lg:px-10 lg:py-6 lg:shadow-none">
         <div className="mx-auto w-full max-w-[440px]">
-        <div className="hidden text-center lg:block">
-          <h2 className="font-display text-3xl font-semibold leading-tight">Bem-vindo ao EcoTravel</h2>
-          <p className="mt-2 font-display text-lg font-semibold">Um jeito mais consciente de viajar</p>
-          <p className="mt-1 text-base text-muted-foreground">Conecte-se com a natureza. Viaje com propósito.</p>
-        </div>
-        <h1 className="mt-3 text-center text-lg font-semibold leading-tight tracking-normal lg:hidden">{registration ? "Crie sua conta EcoTravel" : "Bem-vindo ao turismo sustentável inteligente!"}</h1>
+        {registration && <h1 className="mb-2 text-center text-lg font-semibold leading-tight tracking-normal lg:hidden">Crie sua conta EcoTravel</h1>}
         <p className="mt-1 flex items-center justify-center gap-1 text-[11px] text-muted-foreground lg:text-xs"><LockKeyhole className="h-3 w-3" /> Demonstração · sem autenticação real</p>
         <Tabs value={profile} onValueChange={(value) => { if (value === "turista" || value === "gestor") setProfile(value); }} className="mt-3 lg:mt-4">
           <TabsList aria-label="Escolha seu perfil" className="grid h-9 w-full grid-cols-2 rounded-full bg-muted p-1 lg:h-12">
