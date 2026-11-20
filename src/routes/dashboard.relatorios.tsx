@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowDownToLine, CheckCircle2, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EnvironmentalMetrics } from "@/components/EnvironmentalMetrics";
 import { useDashboard } from "@/components/DashboardContext";
 import { getDashboardData } from "@/lib/dashboard-data";
 import { createDashboardPdf, downloadDashboardPdf } from "@/lib/dashboard-pdf";
@@ -37,7 +38,9 @@ function Relatorios() {
     setDone(true);
     window.alert("Relatório PDF gerado com sucesso! O download foi iniciado.");
   }
-  return <section aria-labelledby="reports-title" className="grid gap-5 lg:grid-cols-[1fr_1.2fr]">
+  return <div className="grid gap-5">
+    <EnvironmentalMetrics />
+    <section aria-labelledby="reports-title" className="grid gap-5 lg:grid-cols-[1fr_1.2fr]">
     <div className="rounded-2xl bg-forest p-6 text-forest-foreground">
       <FileText className="h-7 w-7 text-dashboard-chart-1" />
       <h2 id="reports-title" className="mt-4 text-xl font-semibold">Central de Relatórios</h2>
@@ -57,5 +60,6 @@ function Relatorios() {
       </div>
       <ul className="mt-4 divide-y divide-border text-sm">{data.records.map((r) => <li key={`${r.id}-${r.mode}`} className="flex justify-between gap-3 py-2"><span>{r.route}</span><b>{r.tonnes.toFixed(1)} t</b></li>)}</ul>
     </div>
-  </section>;
+    </section>
+  </div>;
 }
