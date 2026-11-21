@@ -27,7 +27,7 @@ function Eco() {
   return (
     <AppShell title="Carbono">
       <Calc />
-      <section className="mx-auto mt-8 max-w-2xl px-5">
+      <section className="mx-auto mt-8 px-5 md:max-w-5xl md:px-0">
         <details className="group rounded-2xl border border-border bg-card p-4 shadow-soft">
           <summary className="flex cursor-pointer list-none items-center gap-3 font-semibold [&::-webkit-details-marker]:hidden">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-primary"><Info className="h-5 w-5" /></span>
@@ -71,7 +71,7 @@ function Calc() {
   const clean = result && result.t !== "carro";
 
   return (
-    <section className="px-5 pt-6 lg:mx-auto lg:max-w-2xl">
+    <section className="px-5 pt-6 md:mx-auto md:max-w-5xl md:px-0">
       <div className="mb-5 h-40 overflow-hidden rounded-3xl bg-accent sm:h-48">
         <img
           src={footprintBanner}

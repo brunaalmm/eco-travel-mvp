@@ -35,7 +35,7 @@ function Creditos() {
 
   return (
     <AppShell title="Créditos">
-      <section className="px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:pt-10">
+      <section className="px-5 pt-6 md:mx-auto md:max-w-5xl md:px-0 md:pt-10">
         <div className="relative overflow-hidden rounded-3xl bg-forest p-6 text-forest-foreground shadow-float">
           <img
             src={botJoy}
@@ -59,7 +59,7 @@ function Creditos() {
         <p className="mt-5 text-sm text-muted-foreground">Ganhe créditos usando a calculadora de carbono (transporte limpo vale mais) e conversando com o EcoBot.</p>
 
         <h2 className="mt-6 text-xl font-semibold">Recompensas</h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {rewards.map((r) => {
             const ok = credits >= r.goal;
             const Icon = r.id === "certificado" ? Award : BookOpen;

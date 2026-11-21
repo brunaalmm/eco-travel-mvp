@@ -49,7 +49,7 @@ function Descobrir() {
   return (
     <AppShell>
       {phase === "tips" && <TipsModal onDone={close} />}
-      <section className="px-5 pt-6">
+      <section className="px-5 pt-6 md:px-0">
         <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2">
           <WeatherWidget />
           <HighlightCarousel />
@@ -86,7 +86,7 @@ function Descobrir() {
         </div>
       </section>
 
-      <section className="px-5 pt-7">
+      <section className="px-5 pt-7 md:px-0">
         <div className="flex items-baseline justify-between">
           <h2 className="text-xl font-semibold">Roteiros para você</h2>
           <span className="text-xs text-muted-foreground">{list.length} roteiros</span>
