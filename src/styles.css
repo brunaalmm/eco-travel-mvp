@@ -101,7 +101,7 @@
     min-height: 100%;
   }
   body {
-    min-height: 100vh;
+    min-height: 100dvh;
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
