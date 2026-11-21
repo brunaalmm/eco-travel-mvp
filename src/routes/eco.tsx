@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown, HeartHandshake, Info } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { DestinationSelect } from "@/components/DestinationSelect";
 import { Button } from "@/components/ui/button";
-import { destinations, transports, carbonKg, offsetSuggestions, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
+import { transports, carbonKg, offsetSuggestions, tripKm, realisticTransports, ACTIVE_MAX_KM, type TransportId } from "@/lib/data";
 import { useCredits } from "@/lib/credits";
 import footprintBanner from "@/assets/carbon-footprint-banner.png";
 import botRight from "@/assets/bot-right.png";
@@ -88,11 +89,15 @@ function Calc() {
       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Vamos estimar as emissões do seu passeio? Escolha o roteiro e como você chegou até lá para comparar alternativas.</p>
 
       <label className="mt-5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">Roteiro</label>
-      <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {destinations.map((d) => (
-          <Button key={d.id} variant="ghost" aria-pressed={route === d.id} onClick={() => { setRoute(d.id); setKm(String(tripKm[d.id] ?? 0)); }}
-            className={`h-auto whitespace-normal rounded-2xl py-3 text-sm font-medium ${route === d.id ? "bg-forest text-forest-foreground" : "bg-card shadow-soft"}`}>{d.name}</Button>
-        ))}
+      <div className="mt-2">
+        <DestinationSelect
+          selectedId={route}
+          onSelect={(id) => {
+            setRoute(id);
+            setKm(String(tripKm[id] ?? 0));
+          }}
+          ariaLabel="Selecionar roteiro"
+        />
       </div>
 
       <label className="mt-5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground" htmlFor="km">Distância (ida e volta)</label>

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Bus, Car, Footprints, Route as RouteIcon, Clock } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { DestinationSelect } from "@/components/DestinationSelect";
 import { Button } from "@/components/ui/button";
 import { destinations, getDestination, circuitTotals, formatMin, carbonKg, type TransportId } from "@/lib/data";
 
@@ -66,11 +67,15 @@ function Mapa() {
 
       <div className="relative -mt-6 rounded-t-[2rem] bg-background px-5 pt-6 pb-8 md:mx-auto md:max-w-none md:px-8 lg:px-10">
         <Step n={1} title="Escolha o roteiro" done={!!dest} />
-        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-          {destinations.map((x) => (
-            <Button key={x.id} variant="ghost" aria-pressed={sel === x.id} onClick={() => { setSel(x.id); setMode(null); }}
-              className={`h-auto min-w-0 whitespace-normal break-words rounded-2xl px-2 py-3 text-sm font-medium ${sel === x.id ? "bg-forest text-forest-foreground hover:bg-forest/90 hover:text-forest-foreground" : "bg-card shadow-soft"}`}>{x.name}</Button>
-          ))}
+        <div className="mt-3">
+          <DestinationSelect
+            selectedId={sel}
+            onSelect={(id) => {
+              setSel(id);
+              setMode(null);
+            }}
+            ariaLabel="Selecionar roteiro"
+          />
         </div>
 
         {dest && (
