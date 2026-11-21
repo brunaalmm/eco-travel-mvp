@@ -22,7 +22,7 @@ describe("perguntas rápidas do EcoBot", () => {
     expect(answer("Sustentabilidade urbana na Capital")).toMatch(/ciclovias/);
     expect(answer("Orientações sobre carona solidária")).toMatch(/Carona solidária/);
   });
-  it("carona solidária não é modal de transporte", () => {
+  it("carona solidária não é uma opção de transporte", () => {
     expect(transports.map((t) => t.id)).not.toContain("carona");
     expect(transports.map((t) => t.id)).toContain("bike");
   });

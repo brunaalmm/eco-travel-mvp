@@ -294,7 +294,7 @@ export function carbonKg(km: number, transport: TransportId) {
 export const ACTIVE_MAX_KM = 30;
 const ACTIVE: TransportId[] = ["pe", "bike"];
 
-/** Modais viáveis para a distância informada. */
+/** Transportes viáveis para a distância informada. */
 export function realisticTransports(km: number) {
   return transports.filter((t) => km <= ACTIVE_MAX_KM || !ACTIVE.includes(t.id));
 }

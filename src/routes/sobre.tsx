@@ -19,7 +19,7 @@ export const Route = createFileRoute("/sobre")({
 
 const pillars = [
   { icon: Compass, title: "Planejamento Consciente", text: "Acesso a roteiros detalhados e curados com foco na preservação da biodiversidade, valorização da cultura local e apoio às comunidades." },
-  { icon: Calculator, title: "Calculadora de Pegada de Carbono", text: "Ferramenta interativa que estima o impacto do deslocamento, compara modais de transporte em busca de alternativas limpas e sugere formas reais de compensação ecológica." },
+  { icon: Calculator, title: "Calculadora de Pegada de Carbono", text: "Ferramenta interativa que estima o impacto do deslocamento, compara transportes em busca de alternativas limpas e sugere formas reais de compensação ecológica." },
   { icon: Bot, title: "EcoBot (Assistente Virtual)", text: "Um guia inteligente baseado em boas práticas ambientais, pronto para tirar dúvidas sobre comportamento em trilhas, conservação e sustentabilidade em tempo real." },
   { icon: Award, title: "Sistema de Créditos Verdes (Gamificação)", text: "Recompensas e desbloqueio de conteúdos educativos exclusivos." },
 ];

@@ -87,7 +87,7 @@ export function EnvironmentalMetrics({ showSources = false }: { showSources?: bo
               })}
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="mb-2 text-xs text-forest-foreground/65">Total (modais)</span>
+              <span className="mb-2 text-xs text-forest-foreground/65">Total (transportes)</span>
               <span className="font-display text-4xl font-semibold tracking-normal">
                 {emissions.total}{" "}
                 <span className="text-xl font-normal text-dashboard-chart-1">

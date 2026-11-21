@@ -44,7 +44,7 @@ function Relatorios() {
     <div className="rounded-2xl bg-forest p-6 text-forest-foreground">
       <FileText className="h-7 w-7 text-dashboard-chart-1" />
       <h2 id="reports-title" className="mt-4 text-xl font-semibold">Central de Relatórios</h2>
-      <p className="mt-2 text-sm text-forest-foreground/70">Relatório executivo padronizado com cabeçalho, indicadores, distribuição por modal e roteiros monitorados.</p>
+      <p className="mt-2 text-sm text-forest-foreground/70">Relatório executivo padronizado com cabeçalho, indicadores, distribuição por transportes e roteiros monitorados.</p>
       <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
         {[["Período", period], ["Roteiros", String(data.records.length)]].map(([k, v]) => <div key={k} className="rounded-xl bg-forest-foreground/10 p-3"><dt className="text-xs text-forest-foreground/60">{k}</dt><dd className="mt-1 font-semibold">{v}</dd></div>)}
       </dl>

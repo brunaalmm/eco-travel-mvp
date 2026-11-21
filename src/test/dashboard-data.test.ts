@@ -16,7 +16,7 @@ describe("Painel do Gestor", () => {
     const names = getDashboardData("Litoral", "Último Mês").records.map((r) => r.route).sort();
     expect(names).toEqual(filterDestinations("Litoral", "").map((d) => d.circuit.title).sort());
   });
-  it("não tem carona solidária entre os modais", () => {
+  it("não tem carona solidária entre os transportes", () => {
     expect(getDashboardData("Todas", "Último Mês").distribution.map((m) => m.id)).not.toContain("carona");
   });
   it("pico de feriado aumenta o fluxo e alerta capacidade", () => {

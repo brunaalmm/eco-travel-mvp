@@ -2,11 +2,11 @@ import { Bike, Bus, Car, Footprints, Mountain } from "lucide-react";
 
 export const environmentalMetricData = {
   emissions: {
-    title: "Emissões de CO₂ por modal",
-    description: "CO₂ emitido por modal (Ano-Base 2024) · Todas",
+    title: "Emissões de CO₂ por transporte",
+    description: "CO₂ emitido por transportes (Ano-Base 2024) · Todas",
     total: 135,
     totalUnit: "Mt CO₂",
-    yearLabel: "emitidas em 2024",
+    yearLabel: "Emitidas em 2024 (transportes)",
     modes: [
       {
         id: "carro",
@@ -62,6 +62,6 @@ export const environmentalMetricData = {
     title: "Transporte Mais Utilizado",
     label: "Carro",
     fleet: "Frota nacional: +71 mi",
-    description: "~45 milhões de automóveis (63% da frota)",
+    description: "~45 mi de veículos (63% da frota)",
   },
 } as const;

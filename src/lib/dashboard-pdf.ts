@@ -1,4 +1,5 @@
 import type { DashboardData, Period } from "./dashboard-data";
+import { environmentalMetricData } from "./environmental-metrics";
 
 // Standard PDF fonts only support WinAnsi; replace characters they cannot encode.
 const safe = (t: string) => t.replace(/₂/g, "2").replace(/[—–]/g, "-");
@@ -23,7 +24,12 @@ export async function createDashboardPdf(data: DashboardData, period: Period) {
   text("EcoTravel | Relatório Executivo", 40, 800, 22, true, white);
   text(`Monitorização da pegada de carbono · ${period}`, 40, 775, 10, false, white);
 
-  const kpis: [string, string][] = [[`${data.total.toFixed(1)} t CO2`, "Economizadas"], [`${data.progress}%`, `Meta de ${data.target} t`], [data.mostUsed?.label ?? "-", "Transporte mais utilizado"]];
+  const { emissions, reduction, mostUsed } = environmentalMetricData;
+  const kpis: [string, string][] = [
+    [`${emissions.total} ${emissions.totalUnit}`, emissions.yearLabel],
+    [reduction.range, `Meta ambiental ${reduction.until}`],
+    [mostUsed.label, mostUsed.description],
+  ];
   kpis.forEach(([v, l], i) => {
     const x = 40 + i * 175;
     page.drawRectangle({ x, y: 670, width: 165, height: 62, color: light });
@@ -31,14 +37,17 @@ export async function createDashboardPdf(data: DashboardData, period: Period) {
     text(l, x + 12, 682, 9);
   });
 
-  text("Distribuição por modal", 40, 640, 13, true);
-  data.distribution.forEach((m, i) => {
-    const y = 615 - i * 22;
-    text(m.label, 40, y, 10);
-    page.drawRectangle({ x: 130, y: y - 2, width: 300, height: 10, color: light });
-    page.drawRectangle({ x: 130, y: y - 2, width: Math.max(1, 3 * m.percent), height: 10, color: leaf });
-    text(`${m.percent}% · ${m.tonnes.toFixed(1)} t`, 445, y, 10, true);
-  });
+  text("Distribuição por transportes", 40, 640, 13, true);
+  const modeOrder = ["carro", "onibus", "bike", "trilha", "pe"];
+  [...emissions.modes]
+    .sort((a, b) => modeOrder.indexOf(a.id) - modeOrder.indexOf(b.id))
+    .forEach((m, i) => {
+      const y = 615 - i * 22;
+      text(m.label, 40, y, 10);
+      page.drawRectangle({ x: 130, y: y - 2, width: 300, height: 10, color: light });
+      page.drawRectangle({ x: 130, y: y - 2, width: 3 * m.percent, height: 10, color: leaf });
+      text(`${m.percent}% - ${m.tonnes} Mt`, 445, y, 10, true);
+    });
 
   text("Roteiros monitorados", 40, 490, 13, true);
   page.drawRectangle({ x: 40, y: 462, width: 515, height: 20, color: forest });
