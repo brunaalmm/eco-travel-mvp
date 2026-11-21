@@ -89,7 +89,11 @@ function EcoBotPage() {
                   />
                 </div>
               )}
-              <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-[#06402B] text-white" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
+              <p
+                className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-[#557A5E] text-white" : "rounded-bl-md bg-card shadow-soft"}`}
+              >
+                {m.text}
+              </p>
             </div>
           ))}
           {typing && (
@@ -117,7 +121,7 @@ function EcoBotPage() {
                   key={suggestion}
                   type="button"
                   onClick={() => send(suggestion)}
-                  className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-left text-xs font-medium text-primary transition-colors duration-150 hover:bg-leaf/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                  className="shrink-0 rounded-full border border-stone-200/80 bg-[#F5F2EB] px-3.5 py-2 text-left text-xs font-medium text-stone-800 transition-colors duration-150 hover:bg-stone-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
                 >
                   {suggestion}
                 </button>
