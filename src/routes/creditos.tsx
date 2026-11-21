@@ -40,7 +40,15 @@ function Creditos() {
     <AppShell title="Créditos">
       <section className="px-5 pt-6 lg:mx-auto lg:max-w-3xl lg:pt-10">
         <div className="relative overflow-hidden rounded-3xl bg-forest p-6 text-forest-foreground shadow-float">
-          <img src={botJoy} alt="" className="absolute -right-3 -bottom-2 h-28 w-auto opacity-95" />
+          <img
+            src={botJoy}
+            alt=""
+            width={144}
+            height={144}
+            loading="eager"
+            decoding="async"
+            className="absolute -right-3 -bottom-2 h-28 w-auto opacity-95"
+          />
           <p className="text-xs uppercase tracking-wider opacity-70">Seus créditos verdes</p>
           <p className="mt-1 font-display text-5xl font-semibold">{credits}</p>
           <p className="mt-2 max-w-[60%] text-sm opacity-80">
@@ -99,7 +107,15 @@ function Article() {
         <p>Como ajudar: não compre animais silvestres, apoie a pesquisa científica e espalhe informação correta, sem sensacionalismo.</p>
       </div>
       <div className="mt-5 flex items-center gap-3 rounded-2xl bg-accent p-3">
-        <img src={botWink} alt="EcoBot" className="h-12 w-auto shrink-0" />
+        <img
+          src={botWink}
+          alt="EcoBot"
+          width={56}
+          height={56}
+          loading="eager"
+          decoding="async"
+          className="h-12 w-auto shrink-0"
+        />
         <p className="text-sm">Curiosidade: é um dos lugares com maior densidade de serpentes do planeta!</p>
       </div>
     </article>

@@ -32,7 +32,16 @@ export function HighlightCarousel() {
                 <p className="mt-1 text-sm opacity-80 lg:text-base">{b.text}</p>
                 <Link to={b.to} tabIndex={k === i ? 0 : -1} className="mt-3 inline-block rounded-full bg-background/90 px-4 py-1.5 text-xs font-semibold text-foreground">{b.cta}</Link>
               </div>
-              <img src={b.img} alt="" className="h-24 w-24 shrink-0 object-contain lg:h-36 lg:w-36" />
+              <img
+                src={b.img}
+                alt=""
+                width={144}
+                height={144}
+                loading="eager"
+                decoding="async"
+                fetchPriority={k === 0 ? "high" : "auto"}
+                className="h-24 w-24 shrink-0 object-contain lg:h-36 lg:w-36"
+              />
             </div>
           ))}
         </div>

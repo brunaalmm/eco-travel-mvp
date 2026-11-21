@@ -77,13 +77,32 @@ function EcoBotPage() {
         >
           {msgs.map((m) => (
             <div key={m.id} className={`flex items-end gap-2 ${m.me ? "justify-end" : ""}`}>
-              {!m.me && <img src={botHappy} alt="" className="h-8 w-8 shrink-0 object-contain" />}
+              {!m.me && (
+                <img
+                  src={botHappy}
+                  alt=""
+                  width={32}
+                  height={32}
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
+                  className="h-8 w-8 shrink-0 object-contain"
+                />
+              )}
               <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-forest text-forest-foreground" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
             </div>
           ))}
           {typing && (
             <div className="flex items-end gap-2">
-              <img src={botLoading} alt="" className="h-8 w-8 shrink-0 object-contain" />
+              <img
+                src={botLoading}
+                alt=""
+                width={32}
+                height={32}
+                loading="eager"
+                decoding="async"
+                className="h-8 w-8 shrink-0 object-contain"
+              />
               <p className="flex gap-1 rounded-3xl rounded-bl-md bg-card px-4 py-3.5 shadow-soft" aria-label="EcoBot digitando">
                 {[0, 1, 2].map((dot) => (
                   <span key={dot} className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />

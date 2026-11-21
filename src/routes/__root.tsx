@@ -15,6 +15,18 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AccessibilityProvider } from "@/components/AccessibilityProvider";
 import { PreferencesProvider } from "@/components/PreferencesProvider";
+import logo from "@/assets/logo.png";
+import entryLogo from "@/assets/logo-transparent.png";
+import appIcon from "@/assets/app-icon.png";
+import botHappy from "@/assets/bot-happy.png";
+import botJoy from "@/assets/bot-joy.png";
+import botJump from "@/assets/bot-jump.png";
+import botLoading from "@/assets/bot-loading.png";
+import botRight from "@/assets/bot-right.png";
+import botWave from "@/assets/bot-wave.png";
+import botWink from "@/assets/bot-wink.png";
+import botWrong from "@/assets/bot-wrong.png";
+import { destinations } from "@/lib/data";
 
 function NotFoundComponent() {
   return (
@@ -90,6 +102,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      ...[
+        logo,
+        entryLogo,
+        appIcon,
+        botHappy,
+        botJoy,
+        botJump,
+        botLoading,
+        botRight,
+        botWave,
+        botWink,
+        botWrong,
+        ...destinations.map((destination) => destination.image),
+      ].map((href) => ({
+        rel: "preload",
+        as: "image",
+        href,
+      })),
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

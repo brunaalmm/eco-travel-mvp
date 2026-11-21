@@ -47,7 +47,15 @@ function Mapa() {
             style={{ left: `${x.map.x}%`, top: `${x.map.y}%` }}
             className="absolute block h-auto -translate-x-1/2 -translate-y-1/2 p-0 text-center">
             <span className={`relative mx-auto block h-10 w-10 overflow-hidden rounded-full border-2 shadow-float transition-transform duration-150 lg:h-16 lg:w-16 ${sel === x.id ? "scale-110 border-leaf" : "border-card"}`}>
-              <img src={x.image} alt={x.name} className="h-full w-full object-cover" />
+              <img
+                src={x.image}
+                alt={x.name}
+                width={1024}
+                height={768}
+                loading="eager"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </span>
             <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-forest text-[11px] font-bold text-forest-foreground">{x.circuit.stops.length}</span>
             <span className="mt-1 block max-w-[5.5rem] truncate rounded-full bg-card px-1.5 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
@@ -91,7 +99,16 @@ function Mapa() {
               {dest.circuit.stops.map((s, i) => (
                 <li key={s.name} className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft">
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-forest text-xs font-bold text-forest-foreground">{i + 1}</span>
-                  <img src={dest.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" style={{ objectPosition: `${(i * 30) % 100}% 50%` }} />
+                  <img
+                    src={dest.image}
+                    alt=""
+                    width={1024}
+                    height={768}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-12 w-12 shrink-0 rounded-xl object-cover"
+                    style={{ objectPosition: `${(i * 30) % 100}% 50%` }}
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="break-words font-semibold">{s.name}</p>
                     <p className="break-words text-xs text-muted-foreground">{s.kind}</p>

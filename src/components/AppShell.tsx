@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import { memo, type ReactNode } from "react";
 import { Compass, Map, Leaf, Award, Bot, Info, LogOut, UserRound } from "lucide-react";
-import type { ReactNode } from "react";
 import logo from "@/assets/logo.png";
 
 const nav = [
@@ -11,6 +11,27 @@ const nav = [
   { to: "/creditos", label: "Créditos", icon: Award },
 ] as const;
 const desktopNav = [...nav, { to: "/sobre", label: "Sobre", icon: Info }] as const;
+
+const BottomNavbar = memo(function BottomNavbar() {
+  return (
+    <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
+      <ul className="grid grid-cols-5">
+        {nav.map(({ to, label, icon: Icon }) => (
+          <li key={to}>
+            <Link
+              to={to}
+              activeOptions={{ exact: to === "/descobrir" }}
+              className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[10px] font-medium text-forest-foreground/60 transition-colors duration-150 data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
+            >
+              <Icon className="h-5 w-5" strokeWidth={1.8} />
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+});
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const isEcoBot = useRouterState({ select: (state) => state.location.pathname === "/ecobot" });
@@ -26,6 +47,9 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               className="h-11 w-auto lg:h-14"
               width={600}
               height={338}
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
             />
           </Link>
           <div className="flex items-center gap-1 lg:hidden">
@@ -95,22 +119,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         </div>
       </header>
       <main className={`mx-auto w-full flex-1 lg:max-w-6xl lg:px-3 ${isEcoBot ? "min-h-0 pb-20 lg:pb-0" : "pb-28 lg:pb-16"}`}>{children}</main>
-      <nav className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-[400px] -translate-x-1/2 rounded-full bg-forest p-1.5 shadow-float lg:hidden">
-        <ul className="grid grid-cols-5">
-          {nav.map(({ to, label, icon: Icon }) => (
-            <li key={to}>
-              <Link
-                to={to}
-                activeOptions={{ exact: to === "/descobrir" }}
-                className="flex flex-col items-center gap-0.5 rounded-full py-2 text-[10px] font-medium text-forest-foreground/60 transition-colors duration-150 data-[status=active]:bg-leaf data-[status=active]:text-leaf-foreground"
-              >
-                <Icon className="h-5 w-5" strokeWidth={1.8} />
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <BottomNavbar />
     </div>
   );
 }

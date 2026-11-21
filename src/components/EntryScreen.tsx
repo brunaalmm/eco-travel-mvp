@@ -49,13 +49,33 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
     <div className="relative flex min-h-dvh flex-col justify-between overflow-y-auto bg-forest [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:h-auto md:min-h-screen md:flex-row md:justify-start md:overflow-visible md:bg-login-paper">
       {splash && (
         <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-forest transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
-          <img src={icon} alt="EcoTravel" className="h-32 w-32 animate-float rounded-[2rem] shadow-float" />
+          <img
+            src={icon}
+            alt="EcoTravel"
+            width={256}
+            height={256}
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            className="h-32 w-32 animate-float rounded-[2rem] shadow-float"
+          />
           <p className="font-display text-sm tracking-[0.3em] text-primary-foreground/70">ECOTRAVEL</p>
         </div>
       )}
       <aside className="relative flex h-[14.5rem] shrink-0 flex-col items-center justify-center bg-forest px-5 pb-3 pt-5 text-center text-forest-foreground md:h-auto md:min-h-screen md:w-1/2 md:justify-center md:px-12 md:pb-12 md:pt-14">
         <div className="relative z-10 flex w-full max-w-xl flex-col items-center">
-          <Link to="/" aria-label="EcoTravel início" className="md:order-none"><img src={logo} alt="EcoTravel" width={1592} height={857} className="h-20 w-auto max-w-[78vw] object-contain drop-shadow-lg md:h-36" /></Link>
+          <Link to="/" aria-label="EcoTravel início" className="md:order-none">
+            <img
+              src={logo}
+              alt="EcoTravel"
+              width={1592}
+              height={857}
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+              className="h-20 w-auto max-w-[78vw] object-contain drop-shadow-lg md:h-36"
+            />
+          </Link>
           <h2 className="mt-2 max-w-md text-center font-display text-2xl font-semibold leading-tight md:mt-8 md:text-3xl">Bem-vindo ao EcoTravel</h2>
           <p className="mt-2 hidden max-w-md px-2 text-center font-display text-lg font-semibold leading-relaxed md:mt-3 md:block">Um jeito mais consciente de viajar</p>
           <p className="mt-1 hidden max-w-md text-center text-base text-forest-foreground/75 md:block">Conecte-se com a natureza. Viaje com um propósito.</p>

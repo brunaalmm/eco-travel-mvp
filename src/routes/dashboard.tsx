@@ -44,7 +44,16 @@ function Shell() {
   return <div className="min-h-screen bg-background">
     <header className="bg-forest text-forest-foreground">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
-        <img src={logo} alt="EcoTravel" width={600} height={338} className="h-14 w-auto object-contain" />
+        <img
+          src={logo}
+          alt="EcoTravel"
+          width={600}
+          height={338}
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+          className="h-14 w-auto object-contain"
+        />
         <nav aria-label="Seções do painel" className="hidden gap-1 lg:flex">
           {nav.map(({ to, label, icon: Icon, exact }) => <Link key={to} to={to} activeOptions={{ exact }} className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-forest-foreground/70 hover:text-forest-foreground data-[status=active]:bg-forest-foreground/10 data-[status=active]:text-dashboard-chart-1"><Icon className="h-4 w-4" />{label}</Link>)}
         </nav>

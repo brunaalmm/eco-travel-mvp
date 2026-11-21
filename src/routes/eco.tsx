@@ -76,6 +76,11 @@ function Calc() {
         <img
           src={footprintBanner}
           alt="Pegada ecológica em meio a uma floresta vista de cima"
+          width={1152}
+          height={768}
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
           className="h-full w-full object-cover object-center"
         />
       </div>

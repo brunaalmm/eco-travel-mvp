@@ -53,7 +53,16 @@ function Destino() {
   return (
     <AppShell title={d.name}>
       <div className="relative">
-        <img src={d.image} alt={d.name} width={1024} height={768} className="aspect-[5/4] w-full object-cover lg:mt-6 lg:aspect-[21/8] lg:rounded-3xl" />
+        <img
+          src={d.image}
+          alt={d.name}
+          width={1024}
+          height={768}
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+          className="aspect-[5/4] w-full object-cover lg:mt-6 lg:aspect-[21/8] lg:rounded-3xl"
+        />
         <Link to="/descobrir" className="absolute left-4 top-4 lg:top-10 grid h-10 w-10 place-items-center rounded-full bg-card/95 shadow-soft" aria-label="Voltar">
           <ArrowLeft className="h-5 w-5" />
         </Link>
