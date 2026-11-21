@@ -44,9 +44,9 @@ function Onboarding() {
     void navigate({ to: '/descobrir' });
   }
   return (
-    <div className="flex min-h-dvh w-full items-center justify-center bg-forest/95 p-4 sm:p-6">
-      <main className="flex w-full items-center justify-center">
-        <div className="flex w-full max-w-[400px] max-h-[85dvh] min-h-[min(85dvh,620px)] flex-col justify-between gap-6 rounded-[2rem] bg-forest px-6 py-8 text-forest-foreground shadow-float md:max-h-none md:min-h-0 md:max-w-[460px] md:px-8 md:py-10">
+    <div className="flex min-h-dvh w-full flex-col bg-forest p-4 sm:p-6">
+      <main className="flex w-full flex-1 items-stretch justify-center md:items-center">
+        <div className="flex w-full max-w-[400px] flex-1 flex-col justify-between gap-6 rounded-[2rem] bg-forest px-6 py-8 text-forest-foreground shadow-float md:max-w-[460px] md:flex-none md:px-8 md:py-10">
           <div className="flex shrink-0 gap-1.5" aria-label={`Passo ${step + 1} de ${steps.length}`}>
             {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
           </div>

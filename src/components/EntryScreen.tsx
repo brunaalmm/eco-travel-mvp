@@ -46,7 +46,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
     }
   }
   return (
-    <div className="relative flex min-h-dvh flex-col justify-between overflow-y-auto bg-forest [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:h-auto md:min-h-screen md:flex-row md:justify-start md:overflow-visible md:bg-login-paper">
+    <div className="relative flex min-h-dvh w-full flex-col justify-between overflow-y-auto bg-forest [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:h-auto md:min-h-screen md:flex-row md:justify-start md:overflow-visible md:bg-login-paper">
       {splash && (
         <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-forest transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
           <img
@@ -62,7 +62,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
           <p className="font-display text-sm tracking-[0.3em] text-primary-foreground/70">ECOTRAVEL</p>
         </div>
       )}
-      <aside className="relative flex h-[14.5rem] shrink-0 flex-col items-center justify-center bg-forest px-5 pb-3 pt-5 text-center text-forest-foreground md:h-auto md:min-h-screen md:w-1/2 md:justify-center md:px-12 md:pb-12 md:pt-14">
+      <aside className="relative flex shrink-0 flex-col items-center justify-center bg-forest px-5 pb-8 pt-10 text-center text-forest-foreground md:h-auto md:min-h-screen md:w-1/2 md:justify-center md:px-12 md:pb-12 md:pt-14">
         <div className="relative z-10 flex w-full max-w-xl flex-col items-center">
           <Link to="/" aria-label="EcoTravel início" className="md:order-none">
             <img
@@ -83,7 +83,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
         </div>
       </aside>
       <main className="relative z-10 mx-4 mb-4 flex flex-1 flex-col rounded-3xl bg-login-paper p-5 shadow-float md:m-0 md:min-h-screen md:w-1/2 md:flex md:flex-none md:flex-col md:items-center md:justify-center md:overflow-y-auto md:rounded-none md:px-10 md:py-8 md:shadow-none">
-        <div className="mx-auto flex h-full w-full max-w-[440px] flex-col justify-between md:my-auto md:h-auto md:w-full md:max-w-[460px] md:justify-center md:space-y-4">
+        <div className="mx-auto my-auto flex w-full max-w-[440px] flex-col md:w-full md:max-w-[460px] md:justify-center md:space-y-4">
         {registration && <h1 className="mb-2 text-center text-xl font-semibold leading-tight tracking-normal md:hidden">Crie sua conta EcoTravel</h1>}
         <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground md:mt-0 lg:text-xs"><LockKeyhole className="h-3 w-3" /> Demonstração · sem autenticação real</p>
         <Tabs value={profile} onValueChange={(value) => { if (value === "turista" || value === "gestor") setProfile(value); }} className="mt-3 md:mt-0">
