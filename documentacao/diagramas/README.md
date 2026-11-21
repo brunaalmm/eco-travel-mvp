@@ -1,4 +1,4 @@
-## Arquitetura
+# Diagrama
 
 Atualmente, o **EcoTravel** opera com foco na interface responsiva e *mobile-first* (construída em **React, TypeScript e Tailwind CSS** via Lovable). Para a evolução da plataforma em produto completo e aplicativo, a arquitetura alvo integra persistência de dados, APIs e inteligência artificial generativa:
 
