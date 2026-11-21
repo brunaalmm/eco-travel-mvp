@@ -46,7 +46,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
     }
   }
   return (
-    <div className="relative flex h-dvh min-h-dvh flex-col overflow-hidden bg-forest md:h-auto md:min-h-screen md:flex-row md:overflow-visible md:bg-login-paper">
+    <div className="relative flex min-h-dvh flex-col justify-between overflow-y-auto bg-forest [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:h-auto md:min-h-screen md:flex-row md:justify-start md:overflow-visible md:bg-login-paper">
       {splash && (
         <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-forest transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
           <img src={icon} alt="EcoTravel" className="h-32 w-32 animate-float rounded-[2rem] shadow-float" />
@@ -62,7 +62,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
           <p className="mt-1 max-w-md px-2 text-center text-sm leading-relaxed text-forest-foreground/75 md:hidden">Conecte-se com a natureza. Viaje com propósito. Escolha uma opção para continuar:</p>
         </div>
       </aside>
-      <main className="relative z-10 mx-4 mb-4 flex flex-1 flex-col overflow-hidden rounded-3xl bg-login-paper p-5 shadow-float md:m-0 md:min-h-screen md:w-1/2 md:flex md:flex-none md:flex-col md:items-center md:justify-center md:overflow-y-auto md:rounded-none md:px-10 md:py-8 md:shadow-none">
+      <main className="relative z-10 mx-4 mb-4 flex flex-1 flex-col rounded-3xl bg-login-paper p-5 shadow-float md:m-0 md:min-h-screen md:w-1/2 md:flex md:flex-none md:flex-col md:items-center md:justify-center md:overflow-y-auto md:rounded-none md:px-10 md:py-8 md:shadow-none">
         <div className="mx-auto flex h-full w-full max-w-[440px] flex-col justify-between md:my-auto md:h-auto md:w-full md:max-w-[460px] md:justify-center md:space-y-4">
         {registration && <h1 className="mb-2 text-center text-xl font-semibold leading-tight tracking-normal md:hidden">Crie sua conta EcoTravel</h1>}
         <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground md:mt-0 lg:text-xs"><LockKeyhole className="h-3 w-3" /> Demonstração · sem autenticação real</p>
