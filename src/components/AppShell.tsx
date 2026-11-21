@@ -36,7 +36,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
   return (
     <div
-      className={`app-shell flex min-h-dvh w-full flex-col bg-[#fff9f3] shadow-float dark:bg-background md:shadow-none ${isEcoBot ? "justify-between overflow-hidden" : ""}`}
+      className={`app-shell flex w-full flex-col bg-[#fff9f3] shadow-float dark:bg-background md:shadow-none ${isEcoBot ? "h-[100dvh] overflow-hidden md:min-h-screen" : "min-h-screen"}`}
     >
       <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
         <div className="mx-auto flex h-16 w-full items-center justify-between px-5 md:h-20 md:max-w-5xl md:px-6 lg:max-w-7xl lg:px-10">
@@ -126,7 +126,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         </div>
       </header>
       <main
-        className={`mx-auto w-full flex-1 md:max-w-5xl md:px-6 lg:max-w-7xl lg:px-10 ${isEcoBot ? "flex min-h-0 flex-col pb-20 md:pb-0" : "pb-28 md:pb-0"}`}
+        className={`mx-auto w-full flex-1 md:max-w-5xl md:px-6 lg:max-w-7xl lg:px-10 ${isEcoBot ? "min-h-0 pb-20 md:pb-0" : "pb-28 md:pb-0"}`}
       >
         {children}
       </main>

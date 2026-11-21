@@ -58,7 +58,7 @@ function EcoBotPage() {
 
   return (
     <AppShell title="EcoBot">
-      <section className="flex min-h-0 flex-1 flex-col justify-between overflow-hidden">
+      <section className="flex h-full min-h-0 flex-col overflow-hidden lg:h-[calc(100dvh-5rem)]">
         <div className="mx-auto flex w-full max-w-5xl items-center gap-3 px-5 py-4 md:px-0">
           <div className="shrink-0 text-right text-[10px] leading-4 text-muted-foreground" aria-label={`Você ganha 5 créditos por pergunta. Saldo: ${credits} créditos.`}>
             <p className="flex items-center justify-end gap-1 font-semibold text-primary"><Sparkles className="h-3 w-3" />+5 por pergunta</p>
