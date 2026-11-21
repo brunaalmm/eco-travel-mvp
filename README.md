@@ -35,6 +35,10 @@ O **EcoTravel** reúne, em uma única interface, ferramentas para o turista e pa
 
 O catálogo demonstrativo inclui sete destinos. Em cada página de destino, o visitante encontra resumo, região, atrativos, hospedagem, gastronomia e passeios, além do acesso ao circuito no mapa esquemático.
 
+## Documentação
+
+Consulte o [README da documentação](documentacao/README.md), que reúne os materiais do projeto.
+
 ## Funcionalidades — Requisitos Funcionais
 
 | ID | Nome | Descrição | Prioridade | Envolve IA? |
@@ -121,10 +125,6 @@ eco-travel-mvp/
 ├── vite.config.ts       # Configuração do Vite e TanStack Start
 └── vitest.config.ts     # Configuração do Vitest
 ```
-
-## Documentação
-
-Consulte o [README da documentação](documentacao/README.md), que reúne os materiais do projeto.
 
 ## Rodando o projeto localmente
 
