@@ -37,7 +37,7 @@ function Mapa() {
 
   return (
     <AppShell title="Mapa">
-      <div className="relative h-[340px] w-full overflow-hidden bg-sea md:-mx-6 md:mt-6 md:h-[460px] md:w-auto md:max-w-5xl md:rounded-3xl lg:-mx-10 lg:max-w-7xl">
+      <div className="relative h-[340px] w-full overflow-hidden bg-sea md:mt-6 md:h-[460px] md:rounded-3xl">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
           <path d="M0 0 H100 V8 C88 14 84 22 76 30 C66 38 58 40 52 48 C44 56 34 62 24 70 C16 76 8 86 0 92 Z" className="fill-sand" />
           <path d="M0 0 H100 V3 C86 8 80 18 72 24 C62 32 50 36 44 44 C38 50 26 56 16 64 C10 70 4 76 0 80 Z" className="fill-accent" />
@@ -65,7 +65,7 @@ function Mapa() {
         <span className="absolute bottom-8 right-4 left-4 text-right text-[10px] font-semibold uppercase text-forest/60">Mapa esquemático · sem navegação</span>
       </div>
 
-      <div className="relative -mt-6 rounded-t-[2rem] bg-background px-5 pt-6 pb-8 md:-mx-6 md:max-w-5xl md:px-14 lg:-mx-10 lg:max-w-7xl lg:px-20">
+      <div className="relative px-5 pt-6 pb-8 md:mx-auto md:max-w-3xl md:px-0">
         <Step n={1} title="Escolha o roteiro" done={!!dest} />
         <div className="mt-3">
           <DestinationSelect
