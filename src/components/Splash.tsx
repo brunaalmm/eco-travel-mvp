@@ -15,7 +15,6 @@ export function TipsModal({ onDone }: { onDone: () => void }) {
   const [step, setStep] = useState(0);
   const tip = ecoTips[step] ?? ecoTips[ecoTips.length - 1]!;
   const last = step === ecoTips.length - 1;
-  const mossBackground = step % 2 === 0;
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-forest/20 px-3 pt-16 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] backdrop-blur-sm"
@@ -25,9 +24,7 @@ export function TipsModal({ onDone }: { onDone: () => void }) {
     >
       <div className="relative w-full max-w-md">
         <div
-          className={`flex max-h-[calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-1rem)] w-full flex-col overflow-y-auto rounded-[1.75rem] px-5 pb-4 pt-16 shadow-float ${
-            mossBackground ? "bg-accent text-accent-foreground" : "bg-login-paper text-foreground"
-          }`}
+          className="flex max-h-[calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-1rem)] w-full flex-col overflow-y-auto rounded-[1.75rem] bg-[#F5F2EB] px-5 pb-4 pt-16 text-foreground shadow-float"
         >
           <button
             type="button"
@@ -57,7 +54,7 @@ export function TipsModal({ onDone }: { onDone: () => void }) {
               Pular
             </Button>
             <Button
-              variant={mossBackground ? "forest" : "leaf"}
+              variant="leaf"
               className="flex-[2]"
               onClick={() => (last ? onDone() : setStep(step + 1))}
             >
