@@ -44,13 +44,13 @@ function Onboarding() {
     void navigate({ to: '/descobrir' });
   }
   return (
-    <div className="flex h-dvh min-h-dvh flex-col items-center justify-center bg-forest/95 p-4 md:p-8">
-      <main className="flex w-full flex-1 items-center justify-center">
-        <div className="flex w-full max-w-md max-h-[85dvh] flex-1 flex-col justify-between rounded-3xl bg-forest p-6 text-forest-foreground shadow-float md:max-h-[680px] md:max-w-lg md:p-8">
+    <div className="flex min-h-dvh w-full items-center justify-center bg-forest/95 p-4 sm:p-6">
+      <main className="flex w-full items-center justify-center">
+        <div className="flex w-full max-w-[400px] max-h-[85dvh] min-h-[min(85dvh,620px)] flex-col justify-between gap-6 rounded-[2rem] bg-forest px-6 py-8 text-forest-foreground shadow-float md:max-h-none md:min-h-0 md:max-w-[460px] md:px-8 md:py-10">
           <div className="flex shrink-0 gap-1.5" aria-label={`Passo ${step + 1} de ${steps.length}`}>
             {steps.map((_, i) => <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${i <= step ? 'bg-leaf' : 'bg-forest-foreground/20'}`} />)}
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto py-3">
+          <div className="min-h-0 flex-1 touch-pan-y overscroll-y-contain overflow-y-auto py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-none md:overflow-visible md:overscroll-auto">
             <div className="flex flex-col items-center text-center">
               <img src={current.bot} alt="EcoBot" className="h-16 w-auto object-contain animate-mascot-float" />
             </div>
@@ -64,16 +64,16 @@ function Onboarding() {
                 <p className="text-center text-[11px] leading-snug text-forest-foreground/70">Simulação com origem em São Paulo capital. Nenhuma localização real é solicitada ou guardada.</p>
               </> : 'options' in current && current.options.map((option) => {
                 const selected = current.value === option;
-                return <Button key={option} variant={selected ? 'leaf' : 'ghostLight'} aria-pressed={selected} onClick={() => (current.set as (v: string) => void)(option)} className="h-auto min-h-10 justify-between whitespace-normal border border-forest-foreground/25 px-4 py-2 text-left">{option}{selected && <Check className="shrink-0" />}</Button>;
+                return <Button key={option} variant={selected ? 'leaf' : 'ghostLight'} aria-pressed={selected} onClick={() => (current.set as (v: string) => void)(option)} className="h-auto min-h-10 justify-between whitespace-normal border border-forest-foreground/25 px-4 py-2.5 text-left">{option}{selected && <Check className="shrink-0" />}</Button>;
               })}
             </div>
           </div>
-          <div className="shrink-0 pt-3">
+          <div className="shrink-0">
           <div className="flex gap-2">
             <Button variant="ghostLight" className="flex-1" disabled={step === 0} onClick={() => setStep(step - 1)}><ArrowLeft />Voltar</Button>
             <Button variant="leaf" className="flex-[2]" disabled={!current.done} onClick={next}>{last ? <>Salvar preferências<Leaf /></> : <>Próximo<ArrowRight /></>}</Button>
           </div>
-          <p className="mt-3 text-center text-[10px] leading-snug text-forest-foreground/60">Recomendações demonstrativas por afinidade, sem IA conectada. Preferências anônimas ficam neste navegador.</p>
+          <p className="mt-2 text-center text-[10px] leading-snug text-forest-foreground/60">Recomendações demonstrativas por afinidade, sem IA conectada. Preferências anônimas ficam neste navegador.</p>
           </div>
         </div>
       </main>
