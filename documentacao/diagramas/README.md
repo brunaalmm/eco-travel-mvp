@@ -4,7 +4,7 @@ Atualmente, o **EcoTravel** opera com foco na interface responsiva e *mobile-fir
 
 ### Diagrama de Arquitetura Preliminar
 
-![Diagrama de Arquitetura Preliminar](docomentacao/diagramas/diagrama-visual.png)
+![Diagrama de Arquitetura Preliminar](diagrama-visual.png)
 
 ### Camadas da Arquitetura
 
