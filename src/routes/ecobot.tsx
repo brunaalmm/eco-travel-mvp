@@ -90,7 +90,7 @@ function EcoBotPage() {
                 </div>
               )}
               <p
-                className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-[#557A5E] text-white" : "rounded-bl-md bg-card shadow-soft"}`}
+                className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-leaf text-white" : "rounded-bl-md bg-card shadow-soft"}`}
               >
                 {m.text}
               </p>
