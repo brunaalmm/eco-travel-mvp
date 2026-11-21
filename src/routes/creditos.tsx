@@ -81,7 +81,10 @@ function Creditos() {
       </section>
 
       <Dialog open={!!open} onOpenChange={(value) => { if (!value) setOpen(null); }}>
-        {open && <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-lg">
+        {open && <DialogContent
+          overlayClassName="bg-black/50 backdrop-blur-sm"
+          closeClassName="flex h-9 w-9 items-center justify-center rounded-full bg-stone-200/80 text-foreground opacity-100 hover:bg-stone-200 sm:h-auto sm:w-auto sm:rounded-sm sm:bg-transparent sm:opacity-70 sm:hover:bg-transparent"
+          className="fixed inset-x-0 bottom-0 top-auto m-0 max-h-[85dvh] w-full max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-t-3xl rounded-b-none p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:inset-x-auto sm:bottom-auto sm:left-[50%] sm:right-auto sm:top-[50%] sm:m-0 sm:max-h-[90dvh] sm:w-[calc(100%-2rem)] sm:max-w-xl sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-lg sm:p-6">
           {open === "cobras" && <AccessibleContent key={open} title="Ilha da Queimada Grande" text={islandDescription} />}
           <DialogTitle className="sr-only">{rewards.find((r) => r.id === open)?.title}</DialogTitle>
           <DialogDescription className="sr-only">Conteúdo exclusivo do EcoTravel</DialogDescription>

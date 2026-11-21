@@ -5,8 +5,6 @@ import { AppShell } from "@/components/AppShell";
 import { useCredits } from "@/lib/credits";
 import { answer, suggestions } from "@/lib/ecobot";
 import botHappy from "@/assets/bot-happy.png";
-import botJoy from "@/assets/bot-joy.png";
-import botLoading from "@/assets/bot-loading.png";
 
 export const Route = createFileRoute("/ecobot")({
   head: () => ({
@@ -78,31 +76,27 @@ function EcoBotPage() {
           {msgs.map((m) => (
             <div key={m.id} className={`flex items-end gap-2 ${m.me ? "justify-end" : ""}`}>
               {!m.me && (
-                <img
-                  src={botHappy}
-                  alt=""
-                  width={32}
-                  height={32}
-                  loading="eager"
-                  decoding="sync"
-                  fetchPriority="high"
-                  className="h-8 w-8 shrink-0 object-contain"
-                />
+                <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#06402B]">
+                  <img
+                    src={botHappy}
+                    alt=""
+                    width={44}
+                    height={44}
+                    loading="eager"
+                    decoding="sync"
+                    fetchPriority="high"
+                    className="h-full w-full origin-top scale-[1.15] object-contain"
+                  />
+                </div>
               )}
               <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-forest text-forest-foreground" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
             </div>
           ))}
           {typing && (
             <div className="flex items-end gap-2">
-              <img
-                src={botLoading}
-                alt=""
-                width={32}
-                height={32}
-                loading="eager"
-                decoding="async"
-                className="h-8 w-8 shrink-0 object-contain"
-              />
+              <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#06402B]">
+                <img src={botHappy} alt="" width={44} height={44} className="h-full w-full origin-top scale-[1.15] object-contain" />
+              </div>
               <p className="flex gap-1 rounded-3xl rounded-bl-md bg-card px-4 py-3.5 shadow-soft" aria-label="EcoBot digitando">
                 {[0, 1, 2].map((dot) => (
                   <span key={dot} className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
@@ -110,23 +104,26 @@ function EcoBotPage() {
               </p>
             </div>
           )}
+        </div>
+
+        <div className="relative z-30 mx-auto w-full max-w-[440px] shrink-0 bg-background/95 px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:fixed lg:bottom-0 lg:left-1/2 lg:mx-0 lg:-translate-x-1/2 lg:max-w-2xl lg:px-0 lg:pb-4">
           {msgs.length === 1 && !typing && (
-            <div className="ml-10 flex max-w-2xl flex-wrap gap-2 pt-1" aria-label="Sugestões para começar">
+            <div
+              className="flex scroll-smooth gap-2 overflow-x-auto whitespace-nowrap pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              aria-label="Sugestões para começar"
+            >
               {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"
                   onClick={() => send(suggestion)}
-                  className="rounded-full bg-accent px-3.5 py-2 text-left text-xs font-medium text-primary transition-colors duration-150 hover:bg-leaf/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                  className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-left text-xs font-medium text-primary transition-colors duration-150 hover:bg-leaf/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
                 >
                   {suggestion}
                 </button>
               ))}
             </div>
           )}
-        </div>
-
-        <div className="relative z-30 mx-auto w-full max-w-[440px] shrink-0 bg-background/95 px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:fixed lg:bottom-0 lg:left-1/2 lg:mx-0 lg:-translate-x-1/2 lg:max-w-2xl lg:px-0 lg:pb-4">
           <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-center gap-2 rounded-full border border-border bg-card p-1.5 pl-5 shadow-soft">
             <input
               value={text}
@@ -135,7 +132,7 @@ function EcoBotPage() {
               aria-label="Sua pergunta para o EcoBot"
               autoComplete="off"
               enterKeyHint="send"
-              className="h-11 w-full min-w-0 bg-transparent text-sm outline-none"
+              className="h-11 w-full min-w-0 border-0 bg-transparent text-sm shadow-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
             />
             <button type="submit" disabled={typing || !text.trim()} aria-label="Enviar mensagem" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground transition-opacity duration-150 disabled:opacity-40">
               <Send className="h-4 w-4" />
