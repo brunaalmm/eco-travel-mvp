@@ -1,22 +1,26 @@
 # 🌱 EcoTravel
 
-### Turismo sustentável, acessível e inclusivo na palma da mão.
+### Um jeito mais consciente de viajar. Conecte-se com a natureza. Viaje com um propósito.
 
-**Aplicação publicada:** [eco-travel-projeto.lovable.app](https://eco-travel-projeto.lovable.app)
+**Experimente agora:** [eco-travel-projeto.lovable.app](https://eco-travel-projeto.lovable.app)
 
-O **EcoTravel** é uma aplicação web responsiva voltada ao turismo sustentável e consciente, com fluxos para turistas e gestores. Como projeto de engenharia e inovação, reúne roteiros, informações educativas sobre impacto ambiental e recursos demonstrativos de acessibilidade e gestão.
+O **EcoTravel** é uma solução inteligente voltada ao turismo sustentável, uma aplicação web responsiva com fluxos para turistas e gestores. A ideia principal é evoluir o projeto para um **aplicativo**, a experiência do usuário foi construída priorizando o **design e a navegação de aplicativo móvel** (*mobile-first*).
 
-A proposta é apoiar escolhas de viagem mais conscientes e inclusivas por meio de ferramentas de descoberta, estimativas ambientais e indicadores demonstrativos.
+Parte de um projeto de engenharia de software, a proposta transforma o planejamento de viagens em um ecossistema educativo e inclusivo, gerando impacto positivo nos três pilares **ESG**:
+
+- **Ambiental (Environmental):** Foco na redução da pegada de carbono e proteção do meio ambiente por meio do comparativo entre meios de transporte e escolha de roteiros de baixo impacto.
+- **Social (Social):** Foco no aumento da conscientização e do engajamento da população e das empresas, promovendo o ecoturismo.
+- **Governança (Governance):** Foco na superação da dificuldade de mensurar o impacto real e no estímulo a serviços turísticos verdes.
 
 ## O problema
 
-Vivemos em um cenário onde a sustentabilidade no turismo ainda não é uma regra geral, e o modelo tradicional de turismo de massa pode sobrecarregar recursos naturais, concentrar visitantes e pressionar comunidades locais. Viajar de forma consciente e inclusiva ainda esbarra em barreiras práticas:
+A sustentabilidade no turismo ainda não é um padrão, e o modelo tradicional de turismo de massa acaba sobrecarregando a natureza, gerando superlotação e prejudicando os moradores locais. Hoje, quem quer viajar ou gerir destinos de forma consciente enfrenta cinco barreiras principais:
 
-- **Falta de transparência ambiental:** é difícil identificar práticas ecológicas verificáveis ou comparar estimativas de emissões entre meios de transporte.
-- **Sobrecarga ambiental e impacto nas comunidades:** a superlotação e a falta de planejamento podem contribuir para o acúmulo de resíduos, a pressão sobre recursos naturais e o aumento do custo de vida local.
-- **Barreiras de acessibilidade digital:** recursos como contraste, ampliação de texto e conteúdo acessível nem sempre estão disponíveis nas plataformas de turismo.
-- **Falta de ferramentas educativas práticas:** informações ambientais podem ser difíceis de interpretar e transformar em ações cotidianas.
-- **Dificuldade de gestão sustentável:** gestores precisam de formas claras de consultar indicadores demonstrativos sobre roteiros, emissões e capacidade.
+- **Falta de transparência:** é difícil saber quais roteiros realmente preservam o meio ambiente e comparar o quanto cada transporte polui.
+- **Impacto na natureza e na comunidade:** o excesso de turistas sem planejamento gera muito lixo, falta de água e encarece o custo de vida de quem mora na região.
+- **Falta de acessibilidade digital:** a maioria dos sites e apps de viagem não oferece leitura adaptada, alto contraste, Libras ou audiodescrição.
+- **Falta de ferramentas educativas:** faltam ferramentas simples que mostrem ao turista comum como reduzir seu impacto no dia a dia.
+- **Dificuldade de gestão:** gestores locais não têm painéis visuais simples para acompanhar a lotação dos roteiros, emissões de carbono e selos ecológicos.
 
 ## A solução
 
@@ -25,38 +29,38 @@ O **EcoTravel** reúne, em uma única interface, ferramentas para o turista e pa
 1. **Descubra roteiros sustentáveis** com busca, filtros regionais e compatibilidade demonstrativa com suas preferências.
 2. **Explore um mapa esquemático** com destinos, paradas de circuitos e estimativas de distância, tempo e emissões — sem navegação em tempo real.
 3. **Estime sua pegada de carbono** comparando transportes disponíveis e receba sugestões de ações ambientais, sem cálculo de compensação certificada.
-4. **Converse com o EcoBot**, um assistente demonstrativo que oferece respostas e dicas por regras predefinidas; não possui quiz nem IA conectada.
-5. **Use recursos de acessibilidade**, como alto contraste, ajuste de fonte, audiodescrição com voz sintetizada em conteúdos compatíveis e uma demonstração de saudação em Libras.
-6. **Consulte o Painel do Gestor**, com indicadores, dados demonstrativos de ocupação dos roteiros, aprovações simuladas e exportação de relatórios em PDF.
+4. **Converse com o EcoBot**, um assistente demonstrativo que oferece respostas e dicas por regras predefinidas.
+5. **Use recursos de acessibilidade**, como alto contraste, ajuste de fonte, audiodescrição com voz sintetizada em conteúdos compatíveis e uma demonstração em Libras.
+6. **Consulte o Painel do Gestor**, com indicadores reais, dados demonstrativos de ocupação dos roteiros, aprovações simuladas e exportação de relatórios em PDF.
 
-O catálogo demonstrativo inclui sete destinos: **Peruíbe, Guarujá, Bertioga, Paranapiacaba, São Paulo, Jundiaí e Brotas**. Em cada página de destino, o visitante encontra resumo, região, atrativos, hospedagem, gastronomia e passeios, além do acesso ao circuito no mapa esquemático.
+O catálogo demonstrativo inclui sete destinos. Em cada página de destino, o visitante encontra resumo, região, atrativos, hospedagem, gastronomia e passeios, além do acesso ao circuito no mapa esquemático.
 
-## Funcionalidades — requisitos funcionais
+## Funcionalidades — Requisitos Funcionais
 
 | ID | Nome | Descrição | Prioridade | Envolve IA? |
 | --- | --- | --- | --- | --- |
-| RF01 | Acesso e cadastro demonstrativos | Permite escolher o perfil Turista ou Gestor. Na entrada, o botão Entrar abre o fluxo demonstrativo correspondente; o formulário de cadastro apenas informa que nenhuma conta será criada. Não há validação de credenciais nem autenticação real. As opções Google e Microsoft avisam que a integração não está ativa. | Must Have | Não |
-| RF02 | Onboarding de preferências | Apresenta quatro passos: localização simulada com origem em São Paulo, estilo de ecoturismo, transporte preferido e foco de impacto ambiental. As preferências anônimas ficam no navegador e influenciam a ordenação dos roteiros. Não solicita localização real nem configura nível de acessibilidade. | Must Have | Não — afinidade por regras determinísticas |
-| RF03 | Recomendação de roteiros | Exibe roteiros do catálogo e uma compatibilidade demonstrativa calculada com base nas preferências. O selo verde exibido nos cartões é ilustrativo, não uma certificação ambiental verificada. | Must Have | Não — cálculo determinístico |
-| RF04 | Busca e filtros de destinos | Permite buscar por destino, região, resumo ou nome do circuito e filtrar por Litoral, Região Metropolitana / Grande SP e Interior. Não há filtro por categoria. | Must Have | Não |
-| RF05 | Mapa esquemático | Permite selecionar um destino e um transporte e consultar as paradas do circuito, distância, tempo estimado e emissão calculada. O desenho é esquemático e não oferece navegação ou localização em tempo real. | Must Have | Não |
-| RF06 | Calculadora de pegada de carbono | Estima e compara emissões de CO₂ por distância e transporte. As opções incluem carro, ônibus, bicicleta e trilha a pé, conforme a distância. Apresenta sugestões de apoio a projetos e práticas ambientais, sem certificar ou efetuar compensações. | Must Have | Não |
-| RF07 | Assistente EcoBot | Oferece sugestões de perguntas e respostas demonstrativas sobre transporte, roteiros e práticas sustentáveis, usando regras locais e conteúdo do catálogo. Não usa IA conectada nem inclui quiz de impacto. | Must Have | Não |
-| RF08 | Créditos verdes | Concede créditos demonstrativos por interações com o EcoBot e pela calculadora de carbono. O saldo fica no navegador e pode liberar um artigo educativo e um certificado demonstrativo para impressão; não registra doações ou certificações reais. | Should Have | Não |
-| RF09 | Cenários de clima | Exibe no Descobrir um widget com quatro cenários selecionáveis — ensolarado, chuva, vento e frio — e recomendações predefinidas. Não consulta previsão meteorológica real. | Should Have | Não |
-| RF10 | Recursos de acessibilidade | Oferece alto contraste, modo claro/escuro e ampliação de fonte. Em conteúdos compatíveis, disponibiliza audiodescrição por voz sintetizada e transcrição; inclui um vídeo demonstrativo de saudação em Libras, não uma tradução integral. | Must Have | Não |
-| RF11 | Painel e indicadores do Gestor | Apresenta indicadores demonstrativos de emissões, metas, transporte mais utilizado e ocupação dos roteiros em relação à capacidade. Os dados de ocupação são fixos; a interface não oferece filtros regionais nem controle interativo de simulação de fluxo. | Must Have | Não |
-| RF12 | Aprovação de roteiros e validação de selo | Permite marcar roteiros e parceiros como aprovados ou rejeitados na tela do Gestor. As alterações existem apenas na sessão de demonstração: não publicam roteiros nem certificam selos. | Should Have | Não |
-| RF13 | Relatório executivo em PDF | Apresenta uma prévia e permite baixar um PDF com indicadores demonstrativos, distribuição por transporte e dados dos roteiros monitorados. | Should Have | Não |
-| RF14 | Detalhes dos destinos e roteiros | Exibe informações de atrativos, hospedagem, gastronomia e passeios, além do resumo do destino e acesso ao circuito no mapa. A avaliação enviada é demonstrativa e não é salva nem publicada. | Must Have | Não |
-| RF15 | Perfil, preferências e guia textual | Reúne dados temporários de perfil, controles de acessibilidade e opções demonstrativas de notificações e localização. Permite baixar um guia textual de roteiros; não oferece mapas ou navegação offline. | Should Have | Não |
-| RF16 | Conteúdo institucional e informativo | Apresenta a página Sobre, os Termos de Uso e a Política de Privacidade. Esses conteúdos descrevem a proposta e os limites da demonstração; não documentam práticas de engenharia de software sustentável. | Should Have | Não |
+| RF01 | Cadastro e Login de Usuários | Tela de acesso com seleção de perfil (**Turista** ou **Gestor**), formulário de entrada/cadastro por e-mail e opções de login social para liberar os fluxos do sistema. | Must Have | Não |
+| RF02 | Personalização de Preferências | Fluxo de onboarding em quatro passos (origem, estilo de ecoturismo, transporte preferido e foco ambiental) para adaptar a exibição e ordenação dos roteiros. | Must Have | Sim |
+| RF03 | Recomendação de Destinos Sustentáveis | Sugestão de roteiros ecológicos com base no perfil do viajante e indicadores de afinidade ambiental para incentivar escolhas de baixo impacto. | Must Have | Sim |
+| RF04 | Mecanismo de Busca e Filtros | Barra de pesquisa e filtros por região (**Litoral**, **Região Metropolitana / Grande SP** e **Interior**) para localizar destinos, cidades e circuitos. | Must Have | Não |
+| RF05 | Visualização em Mapa | Mapa esquemático integrado aos roteiros, exibindo pontos turísticos ecológicos, paradas do circuito, distância, tempo estimado e emissão calculada. | Must Have | Não |
+| RF06 | Calculadora de Pegada de Carbono | Ferramenta interativa para estimar e comparar emissões de $\text{CO}_2$ por distância e meio de transporte (carro, ônibus, bicicleta e trilha a pé), com sugestões de compensação ambiental. | Must Have | Não |
+| RF07 | Assistente Virtual (EcoBot) | Chatbot interativo para tirar dúvidas sobre sustentabilidade, boas práticas locais e escolha de transportes e roteiros conscientes. | Must Have | Sim |
+| RF08 | Sistema de Créditos Verdes | Sistema de progresso e engajamento em que o usuário acumula créditos verdes ao utilizar as ferramentas ambientais e pode trocá-los por conteúdos educativos e certificado digital. | Should Have | Não |
+| RF09 | Simulação de Clima | Widget na tela Descobrir com cenários climáticos (ensolarado, chuva, vento e frio) que exibe recomendações práticas para o planejamento do passeio. | Should Have | Não |
+| RF10 | Recursos de Acessibilidade Digital | Controles de alto contraste, modo claro/escuro, ajuste de tamanho de fonte, audiodescrição por voz com transcrição e vídeo de saudação em Libras. | Must Have | Não |
+| RF11 | Painel de Gestão e Indicadores | Dashboard para gestores com métricas de emissões de $\text{CO}_2$ por transporte, metas ambientais e acompanhamento da ocupação e capacidade de suporte dos roteiros. | Must Have | Não |
+| RF12 | Aprovação de Roteiros e Selos | Fluxo de gestão que permite avaliar, aprovar ou rejeitar roteiros e parceiros ecológicos na plataforma. | Should Have | Não |
+| RF13 | Relatório Executivo em PDF | Visualização prévia e exportação em PDF dos indicadores consolidados de emissões, metas ambientais e status dos roteiros monitorados. | Should Have | Não |
+| RF14 | Detalhes do Destino e Guia Offline | Página completa de cada roteiro (atrativos, hospedagem, gastronomia e avaliações) e opção de baixar um guia textual para consulta sem internet. | Must Have | Não |
 
 ## Por que o EcoTravel é diferente
 
-- **Acessibilidade como princípio:** oferece alto contraste, ajuste de fonte e, nos conteúdos compatíveis, audiodescrição em voz sintetizada e transcrição. A saudação em Libras é uma demonstração, não uma tradução integral.
-- **Educação ambiental prática:** transforma estimativas de emissões de CO₂ em comparações simples entre transportes e sugestões de ações.
-- **Visão dupla — Turista e Gestor:** reúne ferramentas de descoberta e planejamento para turistas e indicadores demonstrativos para gestores.
+- **Acessibilidade como princípio:** oferece alto contraste, modo claro/escuro, ajuste de fonte, audiodescrição com transcrição e suporte visual em Libras.
+- **Educação ambiental prática:** transforma estimativas de emissões de CO₂ em comparações simples entre meios de transporte e sugestões de ações no dia a dia.
+- **Gamificação com propósito:** incentiva hábitos conscientes por meio de créditos verdes que desbloqueiam conteúdos educativos e certificado digital de impacto.
+- **Visão dupla — Turista e Gestor:** une descoberta e planejamento de roteiros para viajantes com painel de indicadores, metas ambientais e relatórios em PDF para gestores.
+- **Indicadores baseados em dados reais:** utiliza referências do Inventário Nacional de Emissões Atmosféricas por Veículos Automotores Rodoviários (INEAVAR 2024) para contextualizar o impacto dos transportes.
 - **Experiência responsiva:** a interface se adapta a dispositivos móveis e desktops e usa React, TypeScript, TanStack Start/Router, Vite e Tailwind CSS.
 
 ## Como o EcoTravel funciona por dentro
@@ -80,7 +84,7 @@ O catálogo demonstrativo inclui sete destinos: **Peruíbe, Guarujá, Bertioga, 
              └──────────────────────┘                      └─────────────────┘
 ```
 
-O catálogo e as regras da demonstração ficam no código da aplicação. Preferências anônimas e créditos demonstrativos podem ser armazenados no navegador. Embora o projeto use TanStack Start, não há autenticação real, banco de dados ou integração ativa com serviços de IA, geolocalização ou previsão do tempo.
+O catálogo e as regras da demonstração ficam no código da aplicação. Preferências anônimas e créditos demonstrativos podem ser armazenados no navegador. Embora o projeto use TanStack Start, não há autenticação real, banco de dados ou integração ativa com serviços de IA, geolocalização ou previsão do tempo sincronizada.
 
 O repositório está conectado ao Lovable: commits enviados para a branch conectada sincronizam com o editor. Para preservar a sincronização, não reescreva o histórico já publicado com *force push*, *rebase*, *amend* ou *squash*.
 
