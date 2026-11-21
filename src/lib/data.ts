@@ -322,6 +322,5 @@ export const ecoTips = [
 
 export const rewards = [
   { id: "cobras", goal: 50, title: "Ilha da Queimada Grande", subtitle: "Artigo exclusivo: a Ilha das Cobras" },
-  { id: "paranapiacaba", goal: 50, title: "Vila de Paranapiacaba: O Berço dos Ingleses", subtitle: "Artigo exclusivo: história e Mata Atlântica" },
   { id: "certificado", goal: 120, title: "Certificado Verde", subtitle: "Apoio a projetos sustentáveis locais" },
 ];

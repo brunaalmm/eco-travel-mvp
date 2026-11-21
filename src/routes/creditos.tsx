@@ -10,10 +10,7 @@ import icon from "@/assets/app-icon.png";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { AccessibleContent } from "@/components/AccessibleContent";
-import village from "@/assets/paranapiacaba.jpg";
 
-const villageHistory = "Construída no século XIX pela empresa britânica São Paulo Railway, a vila operária de Paranapiacaba, em Santo André, serviu de centro de controle para as locomotivas que subiam a serra com o café rumo ao Porto de Santos. Famosa por sua neblina característica, preserva a arquitetura vitoriana original e uma rica biodiversidade de Mata Atlântica.";
-const villageCuriosity = "Curiosidade: O famoso relógio da estação de Paranapiacaba foi inspirado no estilo do Big Ben em Londres!";
 const islandDescription = "A Ilha da Queimada Grande, perto do litoral de Itanhaém e Peruíbe, abriga a jararaca-ilhoa, serpente exclusiva deste lugar. A ilha tem encostas rochosas e vegetação de Mata Atlântica. A espécie está criticamente ameaçada. O desembarque é restrito a pesquisadores autorizados. Preserve a fauna e apoie a pesquisa científica.";
 
 export const Route = createFileRoute("/creditos")({
@@ -85,10 +82,10 @@ function Creditos() {
 
       <Dialog open={!!open} onOpenChange={(value) => { if (!value) setOpen(null); }}>
         {open && <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-lg">
-          {open !== "certificado" && <AccessibleContent key={open} title={open === "cobras" ? "Ilha da Queimada Grande" : "Paranapiacaba"} text={open === "cobras" ? islandDescription : `${villageHistory} ${villageCuriosity}`} />}
+          {open === "cobras" && <AccessibleContent key={open} title="Ilha da Queimada Grande" text={islandDescription} />}
           <DialogTitle className="sr-only">{rewards.find((r) => r.id === open)?.title}</DialogTitle>
           <DialogDescription className="sr-only">Conteúdo exclusivo do EcoTravel</DialogDescription>
-          {open === "cobras" ? <Article /> : open === "paranapiacaba" ? <VillageArticle /> : <Certificate />}
+          {open === "cobras" ? <Article /> : <Certificate />}
         </DialogContent>}
       </Dialog>
     </AppShell>
@@ -120,10 +117,6 @@ function Article() {
       </div>
     </article>
   );
-}
-
-function VillageArticle() {
-  return <article><span className="text-xs font-semibold uppercase tracking-wider text-primary">Conteúdo exclusivo</span><h2 className="mt-1 text-2xl font-semibold">Vila de Paranapiacaba: O Berço dos Ingleses</h2><img src={village} alt="Imagem ilustrativa da vila ferroviária de Paranapiacaba" width={1024} height={768} loading="lazy" className="mt-4 aspect-[4/3] w-full rounded-lg object-cover" /><p className="mt-4 text-sm leading-relaxed text-muted-foreground">{villageHistory}</p><div className="mt-5 flex items-start gap-3 rounded-lg bg-accent p-3"><img src={botWink} alt="EcoBot" className="h-14 w-14 shrink-0 object-contain" /><p className="text-sm">{villageCuriosity}</p></div></article>;
 }
 
 function Certificate() {
