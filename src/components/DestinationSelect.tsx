@@ -49,7 +49,7 @@ export function DestinationSelect({ selectedId, onSelect, ariaLabel }: Destinati
         onClick={() => setOpen((isOpen) => !isOpen)}
         className={`flex w-full items-center justify-between rounded-full px-6 py-4 text-left shadow-sm transition-all ${
           selectedDestination
-            ? "bg-forest font-semibold text-white hover:bg-forest/90"
+            ? "bg-[#003f38] font-semibold text-white hover:bg-[#003f38]/90"
             : "bg-white text-stone-700 hover:bg-stone-50"
         }`}
       >
@@ -81,7 +81,7 @@ export function DestinationSelect({ selectedId, onSelect, ariaLabel }: Destinati
                 }`}
               >
                 {destination.name}
-                {isSelected && <Check className="h-4 w-4 shrink-0" />}
+                {isSelected && <Check className="h-4 w-4 shrink-0 text-leaf" />}
               </button>
             );
           })}

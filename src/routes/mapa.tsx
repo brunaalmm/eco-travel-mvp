@@ -29,7 +29,7 @@ const modes: { id: TransportId; label: string; icon: typeof Bus; speed: number }
 
 function Mapa() {
   const { d } = Route.useSearch();
-  const [sel, setSel] = useState<string | null>(d ?? null);
+  const [sel, setSel] = useState<string | null>(d ?? "peruibe");
   const [mode, setMode] = useState<TransportId | null>(null);
   const dest = sel ? getDestination(sel) : undefined;
   const m = modes.find((x) => x.id === mode);
