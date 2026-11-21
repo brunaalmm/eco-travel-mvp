@@ -36,7 +36,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
   return (
     <div
-      className={`mx-auto flex w-full flex-col bg-background shadow-float md:shadow-none ${isEcoBot ? "h-[100dvh] overflow-hidden" : "min-h-screen"}`}
+      className={`app-shell flex w-full flex-col bg-[#fff9f3] shadow-float dark:bg-background md:shadow-none ${isEcoBot ? "h-[100dvh] overflow-hidden md:min-h-screen" : "min-h-screen"}`}
     >
       <header className="sticky top-0 z-30 bg-forest text-forest-foreground">
         <div className="mx-auto flex h-16 w-full items-center justify-between px-5 md:h-20 md:max-w-5xl md:px-6 lg:max-w-7xl lg:px-10">

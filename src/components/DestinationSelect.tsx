@@ -61,7 +61,7 @@ export function DestinationSelect({ selectedId, onSelect, ariaLabel }: Destinati
       {open && (
         <div
           id={listId}
-          className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-stone-200/70 bg-white shadow-lg"
+          className="absolute left-0 right-0 top-full z-50 mt-2 max-h-60 overflow-y-auto rounded-2xl border border-stone-200/70 bg-white shadow-lg"
         >
           {destinations.map((destination) => {
             const isSelected = selectedDestination?.id === destination.id;
