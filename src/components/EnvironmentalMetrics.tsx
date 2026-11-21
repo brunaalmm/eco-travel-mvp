@@ -86,7 +86,7 @@ export function EnvironmentalMetrics({ showSources = false }: { showSources?: bo
                 );
               })}
             </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="absolute inset-0 mx-auto flex w-full max-w-[135px] flex-col items-center justify-center px-2 text-center sm:max-w-[145px]">
               <span className="mb-2 text-xs text-forest-foreground/65">Total (transportes)</span>
               <span className="font-display text-4xl font-semibold tracking-normal">
                 {emissions.total}{" "}
@@ -94,7 +94,7 @@ export function EnvironmentalMetrics({ showSources = false }: { showSources?: bo
                   {emissions.totalUnit}
                 </span>
               </span>
-              <span className="mt-2 flex items-center gap-1 text-xs text-dashboard-chart-1">
+              <span className="mt-2 flex items-center gap-1 whitespace-normal text-[11px] leading-tight text-dashboard-chart-1">
                 <ArrowUpRight className="h-3.5 w-3.5" />
                 {emissions.yearLabel}
               </span>
