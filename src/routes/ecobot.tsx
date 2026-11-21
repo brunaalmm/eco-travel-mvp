@@ -89,7 +89,7 @@ function EcoBotPage() {
                   />
                 </div>
               )}
-              <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-forest text-forest-foreground" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
+              <p className={`max-w-[88%] whitespace-pre-line break-words rounded-3xl px-4 py-3 text-sm leading-relaxed ${m.me ? "rounded-br-md bg-[#06402B] text-white" : "rounded-bl-md bg-card shadow-soft"}`}>{m.text}</p>
             </div>
           ))}
           {typing && (
@@ -124,7 +124,7 @@ function EcoBotPage() {
               ))}
             </div>
           )}
-          <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-center gap-2 rounded-full border border-border bg-card p-1.5 pl-5 shadow-soft">
+          <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-center gap-2 rounded-full border-0 bg-white p-1.5 pl-5 shadow-sm">
             <input
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -132,7 +132,7 @@ function EcoBotPage() {
               aria-label="Sua pergunta para o EcoBot"
               autoComplete="off"
               enterKeyHint="send"
-              className="h-11 w-full min-w-0 border-0 bg-transparent text-sm shadow-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+              className="h-11 w-full min-w-0 !outline-none !ring-0 !border-0 focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0 focus-visible:!ring-offset-0 shadow-none bg-transparent text-sm"
             />
             <button type="submit" disabled={typing || !text.trim()} aria-label="Enviar mensagem" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest text-forest-foreground transition-opacity duration-150 disabled:opacity-40">
               <Send className="h-4 w-4" />
