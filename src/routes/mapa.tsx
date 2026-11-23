@@ -43,7 +43,7 @@ function Mapa() {
           <path d="M0 0 H100 V3 C86 8 80 18 72 24 C62 32 50 36 44 44 C38 50 26 56 16 64 C10 70 4 76 0 80 Z" className="fill-accent" />
           <path d="M22 70 C36 58 46 50 52 45 C64 36 70 32 78 28" className="fill-none stroke-forest" strokeWidth="0.6" strokeDasharray="1.5 1.5" vectorEffect="non-scaling-stroke" />
         </svg>
-        {destinations.map((x) => (
+        {destinations.map((x, i) => (
           <Button key={x.id} variant="ghost" aria-label={`Selecionar ${x.name}`} onClick={() => { setSel(x.id); setMode(null); }}
             style={{ left: `${x.map.x}%`, top: `${x.map.y}%` }}
             className="absolute block h-auto -translate-x-1/2 -translate-y-1/2 p-0 text-center">
@@ -58,7 +58,7 @@ function Mapa() {
                 className="h-full w-full object-cover"
               />
             </span>
-            <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-forest text-[11px] font-bold text-forest-foreground">{x.circuit.stops.length}</span>
+            <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-forest text-[11px] font-bold text-forest-foreground">{i + 1}</span>
             <span className="mt-1 block max-w-[5.5rem] truncate rounded-full bg-card px-1.5 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
           </Button>
         ))}
