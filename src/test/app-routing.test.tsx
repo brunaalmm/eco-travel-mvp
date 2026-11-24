@@ -25,7 +25,7 @@ describe("App routing", () => {
   it("uses simulated origins to distinguish local and cross-destination routes", async () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     await router.load();
-    render(<RouterProvider router={router} />);
+    const { container } = render(<RouterProvider router={router} />);
 
     await act(async () => {
       await router.navigate({ to: "/mapa" });
@@ -36,6 +36,9 @@ describe("App routing", () => {
     fireEvent.click(screen.getByRole("button", { name: "Selecionar ponto de partida: São Paulo" }));
     fireEvent.click(screen.getByRole("button", { name: "Guarujá" }));
     expect(screen.getByText("Circuito entre destinos")).toBeInTheDocument();
+    expect(container.querySelector("[data-route-line]")).toBeInTheDocument();
+    expect(container.querySelector('[data-route-number="1"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-route-number="2"]')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Ônibus" }));
     expect(screen.getByText("Guarujá → Peruíbe")).toBeInTheDocument();
@@ -46,6 +49,8 @@ describe("App routing", () => {
     fireEvent.click(screen.getByRole("button", { name: "Selecionar destino: Peruíbe" }));
     fireEvent.click(screen.getByRole("button", { name: "Guarujá", exact: true }));
     expect(screen.getByText("Roteiro Local")).toBeInTheDocument();
+    expect(container.querySelector("[data-route-line]")).toBeNull();
+    expect(container.querySelectorAll("[data-route-number]")).toHaveLength(0);
   });
 
   it("submits the tourist login to onboarding without rendering the error page", async () => {

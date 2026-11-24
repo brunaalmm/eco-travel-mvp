@@ -119,9 +119,13 @@ describe("PWA install prompt", () => {
 
     act(() => {
       window.dispatchEvent(new Event("appinstalled"));
+      window.dispatchEvent(new Event("appinstalled"));
     });
 
-    expect(toast.success).toHaveBeenCalledWith("EcoTravel instalado com sucesso!");
+    expect(toast.success).toHaveBeenCalledOnce();
+    expect(toast.success).toHaveBeenCalledWith("EcoTravel instalado com sucesso!", {
+      id: "ecotravel-install-success",
+    });
     expect(screen.queryByRole("button", { name: "Instalar aplicativo" })).toBeNull();
   });
 });

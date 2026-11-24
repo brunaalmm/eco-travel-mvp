@@ -8,6 +8,8 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
 
+let installationToastShown = false;
+
 export function PwaInstallPrompt() {
   const [isMobile, setIsMobile] = useState(false);
   const [isIos, setIsIos] = useState(false);
@@ -35,6 +37,9 @@ export function PwaInstallPrompt() {
         (navigator as Navigator & { standalone?: boolean }).standalone === true;
       setIsInstalled(standaloneDisplay.matches || isIosStandalone);
     };
+    let installedBeforeThisPage = standaloneDisplay.matches ||
+      ("standalone" in navigator &&
+        (navigator as Navigator & { standalone?: boolean }).standalone === true);
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
       setDeferredPrompt(event as BeforeInstallPromptEvent);
@@ -42,7 +47,10 @@ export function PwaInstallPrompt() {
     const handleInstalled = () => {
       setIsInstalled(true);
       setDeferredPrompt(null);
-      toast.success("EcoTravel instalado com sucesso!");
+      if (installedBeforeThisPage || installationToastShown) return;
+      installedBeforeThisPage = true;
+      installationToastShown = true;
+      toast.success("EcoTravel instalado com sucesso!", { id: "ecotravel-install-success" });
     };
 
     updateMobile();
