@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProviderIcon } from "@/components/ProviderIcon";
+import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
 import { usePreferenceStore } from "@/components/PreferencesProvider";
 import { demoDestination, type DemoProfile } from "@/lib/demo-entry";
 import logo from "@/assets/logo-transparent.png";
@@ -84,6 +85,7 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
       </aside>
       <main className="relative z-10 mx-4 mb-4 flex flex-1 flex-col rounded-3xl bg-login-paper p-5 shadow-float md:m-0 md:min-h-screen md:w-1/2 md:flex md:flex-none md:flex-col md:items-center md:justify-center md:overflow-y-auto md:rounded-none md:px-10 md:py-8 md:shadow-none">
         <div className="mx-auto my-auto flex w-full max-w-[440px] flex-col md:w-full md:max-w-[460px] md:justify-center md:space-y-4">
+        <PwaInstallPrompt />
         {registration && <h1 className="mb-2 text-center text-xl font-semibold leading-tight tracking-normal md:hidden">Crie sua conta EcoTravel</h1>}
         <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground md:mt-0 lg:text-xs"><LockKeyhole className="h-3 w-3" /> Demonstração · sem autenticação real</p>
         <Tabs value={profile} onValueChange={(value) => { if (value === "turista" || value === "gestor") setProfile(value); }} className="mt-3 md:mt-0">

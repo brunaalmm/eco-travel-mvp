@@ -96,12 +96,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "EcoTravel" },
       { name: "description", content: "Ecoturismo sustentável no litoral paulista." },
       { name: "theme-color", content: "#003f38" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "mobile-web-app-capable", content: "yes" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/app-icon-180.png" },
       ...[
         logo,
         entryLogo,

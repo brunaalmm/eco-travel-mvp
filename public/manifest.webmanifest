@@ -1,0 +1,24 @@
+{
+  "name": "EcoTravel",
+  "short_name": "EcoTravel",
+  "description": "Ecoturismo sustentável no litoral paulista.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fff9f3",
+  "theme_color": "#003f38",
+  "icons": [
+    {
+      "src": "/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
