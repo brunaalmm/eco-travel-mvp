@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Download, Share, X } from "lucide-react";
+import { Download, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -13,7 +13,9 @@ export function PwaInstallPrompt() {
   const [isInstalled, setIsInstalled] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(false);
-  const [error, setError] = useState("");
+  const [installationState, setInstallationState] = useState<
+    "idle" | "installing" | "installed"
+  >("idle");
 
   useEffect(() => {
     const mobileViewport = window.matchMedia("(max-width: 767px)");
@@ -41,6 +43,7 @@ export function PwaInstallPrompt() {
     };
     const handleInstalled = () => {
       setIsInstalled(true);
+      setInstallationState("installed");
       setDeferredPrompt(null);
     };
 
@@ -62,52 +65,82 @@ export function PwaInstallPrompt() {
   async function installApp() {
     if (!deferredPrompt) return;
 
+    setInstallationState("installing");
     try {
       await deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") {
+        setIsInstalled(true);
+        setInstallationState("installed");
+      } else {
+        setInstallationState("idle");
+      }
       setDeferredPrompt(null);
     } catch {
-      setError("Não foi possível iniciar a instalação. Tente novamente pelo menu do navegador.");
+      setInstallationState("idle");
+      setDeferredPrompt(null);
     }
   }
 
-  if (!isMobile || isInstalled || dismissed || (!isIos && !deferredPrompt)) return null;
+  if (!isMobile || dismissed || (isInstalled && installationState !== "installed")) return null;
 
   return (
-    <aside className="relative mb-3 rounded-2xl border border-forest/15 bg-[#fff9f3] p-3 text-forest shadow-sm">
+    <aside className="relative mt-3 rounded-2xl border border-[#003f38]/15 bg-[#fff9f3] p-3 text-[#003f38] shadow-sm md:hidden">
       <Button
         type="button"
         variant="ghost"
         size="icon"
         aria-label="Fechar aviso de instalação"
         onClick={() => setDismissed(true)}
-        className="absolute right-1 top-1 h-8 w-8 rounded-full text-forest/70 hover:bg-forest/10 hover:text-forest"
+        className="absolute right-1 top-1 h-8 w-8 rounded-full text-[#003f38]/70 hover:bg-[#003f38]/10 hover:text-[#003f38]"
       >
         <X className="h-4 w-4" />
       </Button>
-      {isIos ? (
-        <p className="flex items-start gap-2 pr-7 text-sm leading-relaxed">
-          <Share className="mt-0.5 h-4 w-4 shrink-0" />
-          <span>
-            Instale o EcoTravel: toque em <strong>Compartilhar</strong> e depois em{" "}
-            <strong>Adicionar à Tela de Início</strong>.
-          </span>
-        </p>
-      ) : (
+      <div className="flex items-center gap-3 pr-7">
+        <div className="flex shrink-0 flex-col items-center">
+          <img
+            src="/icons/icon-192.png"
+            alt=""
+            width={48}
+            height={48}
+            className="h-12 w-12 rounded-xl"
+          />
+          <span className="mt-1 text-xs font-semibold">EcoTravel</span>
+        </div>
+        <div className="min-w-0 text-sm leading-relaxed">
+          {installationState === "installed" ? (
+            <>
+              <p className="font-semibold text-[#003f38]">Atalho adicionado!</p>
+              <p className="mt-0.5 text-xs text-[#003f38]/75">
+                Acesse o ícone do EcoTravel na tela de aplicativos para abrir o app
+              </p>
+            </>
+          ) : (
+            <p>
+              {installationState === "installing"
+                ? "Instalando o EcoTravel..."
+                : "Mais praticidade no seu dia a dia."}
+            </p>
+          )}
+        </div>
+      </div>
+      {installationState !== "installed" && (
         <>
-          <p className="mb-2 pr-7 text-sm font-medium">Tenha o EcoTravel sempre à mão</p>
           <Button
             type="button"
             variant="leaf"
             onClick={installApp}
-            className="h-10 w-full rounded-full text-sm"
+            disabled={installationState === "installing"}
+            className="mt-3 h-10 w-full rounded-full bg-[#5f9b5f] text-sm text-white hover:bg-[#518851]"
           >
             <Download className="h-4 w-4" />
-            Instalar app EcoTravel
+            {installationState === "installing"
+              ? "Instalando o EcoTravel..."
+              : "Instalar aplicativo"}
           </Button>
-          {error && (
-            <p role="status" className="mt-2 text-xs leading-relaxed">
-              {error}
+          {isIos && (
+            <p className="mt-2 text-xs leading-relaxed text-[#003f38]/75">
+              No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.
             </p>
           )}
         </>
