@@ -17,9 +17,35 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
-  it.each(["/descobrir", "/cadastro", "/onboarding", "/perfil", "/dashboard/roteiros", "/dashboard/relatorios", "/dashboard/aprovacoes", "/dashboard/configuracoes"])("matches the separate page %s", (path) => {
+  it.each(["/descobrir", "/cadastro", "/onboarding", "/perfil", "/mapa", "/dashboard/roteiros", "/dashboard/relatorios", "/dashboard/aprovacoes", "/dashboard/configuracoes"])("matches the separate page %s", (path) => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     expect(router.matchRoutes(path).at(-1)?.routeId).toBe(path);
+  });
+
+  it("uses simulated origins to distinguish local and cross-destination routes", async () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+    await router.load();
+    render(<RouterProvider router={router} />);
+
+    await act(async () => {
+      await router.navigate({ to: "/mapa" });
+    });
+
+    expect(screen.getByText("São Paulo · sem acesso ao GPS")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Escolher ponto de partida" }));
+    fireEvent.click(screen.getByRole("button", { name: "Selecionar ponto de partida: São Paulo" }));
+    fireEvent.click(screen.getByRole("button", { name: "Guarujá" }));
+    expect(screen.getByText("Circuito entre destinos")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Ônibus" }));
+    expect(screen.getByText("Guarujá → Peruíbe")).toBeInTheDocument();
+    expect(screen.getByText("Distância simulada")).toBeInTheDocument();
+    expect(screen.getByText("Transporte")).toBeInTheDocument();
+    expect(screen.getByText("Emissão")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Selecionar destino: Peruíbe" }));
+    fireEvent.click(screen.getByRole("button", { name: "Guarujá", exact: true }));
+    expect(screen.getByText("Roteiro Local")).toBeInTheDocument();
   });
 
   it("submits the tourist login to onboarding without rendering the error page", async () => {

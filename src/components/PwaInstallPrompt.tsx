@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Download, X } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -13,9 +14,6 @@ export function PwaInstallPrompt() {
   const [isInstalled, setIsInstalled] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(false);
-  const [installationState, setInstallationState] = useState<
-    "idle" | "installing" | "installed"
-  >("idle");
 
   useEffect(() => {
     const mobileViewport = window.matchMedia("(max-width: 767px)");
@@ -43,8 +41,8 @@ export function PwaInstallPrompt() {
     };
     const handleInstalled = () => {
       setIsInstalled(true);
-      setInstallationState("installed");
       setDeferredPrompt(null);
+      toast.success("EcoTravel instalado com sucesso!");
     };
 
     updateMobile();
@@ -65,24 +63,17 @@ export function PwaInstallPrompt() {
   async function installApp() {
     if (!deferredPrompt) return;
 
-    setInstallationState("installing");
     try {
       await deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") {
-        setIsInstalled(true);
-        setInstallationState("installed");
-      } else {
-        setInstallationState("idle");
-      }
+      await deferredPrompt.userChoice;
       setDeferredPrompt(null);
-    } catch {
-      setInstallationState("idle");
+    } catch (error) {
+      console.error("Falha ao iniciar a instalação do EcoTravel.", error);
       setDeferredPrompt(null);
     }
   }
 
-  if (!isMobile || dismissed || (isInstalled && installationState !== "installed")) return null;
+  if (!isMobile || isInstalled || dismissed) return null;
 
   return (
     <aside className="relative mt-3 rounded-2xl border border-[#003f38]/15 bg-[#fff9f3] p-3 text-[#003f38] shadow-sm md:hidden">
@@ -107,43 +98,21 @@ export function PwaInstallPrompt() {
           />
           <span className="mt-1 text-xs font-semibold">EcoTravel</span>
         </div>
-        <div className="min-w-0 text-sm leading-relaxed">
-          {installationState === "installed" ? (
-            <>
-              <p className="font-semibold text-[#003f38]">Atalho adicionado!</p>
-              <p className="mt-0.5 text-xs text-[#003f38]/75">
-                Acesse o ícone do EcoTravel na tela de aplicativos para abrir o app
-              </p>
-            </>
-          ) : (
-            <p>
-              {installationState === "installing"
-                ? "Instalando o EcoTravel..."
-                : "Mais praticidade no seu dia a dia."}
-            </p>
-          )}
-        </div>
+        <p className="min-w-0 text-sm leading-relaxed">Mais praticidade no seu dia a dia.</p>
       </div>
-      {installationState !== "installed" && (
-        <>
-          <Button
-            type="button"
-            variant="leaf"
-            onClick={installApp}
-            disabled={installationState === "installing"}
-            className="mt-3 h-10 w-full rounded-full bg-[#5f9b5f] text-sm text-white hover:bg-[#518851]"
-          >
-            <Download className="h-4 w-4" />
-            {installationState === "installing"
-              ? "Instalando o EcoTravel..."
-              : "Instalar aplicativo"}
-          </Button>
-          {isIos && (
-            <p className="mt-2 text-xs leading-relaxed text-[#003f38]/75">
-              No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.
-            </p>
-          )}
-        </>
+      <Button
+        type="button"
+        variant="leaf"
+        onClick={installApp}
+        className="mt-3 h-10 w-full rounded-full bg-[#5f9b5f] text-sm text-white hover:bg-[#518851]"
+      >
+        <Download className="h-4 w-4" />
+        Instalar aplicativo
+      </Button>
+      {isIos && (
+        <p className="mt-2 text-xs leading-relaxed text-[#003f38]/75">
+          No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.
+        </p>
       )}
     </aside>
   );

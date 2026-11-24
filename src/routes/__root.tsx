@@ -10,6 +10,7 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -163,6 +164,7 @@ function RootComponent() {
       <AccessibilityProvider pathname={pathname}>
         <PreferencesProvider>
           <Outlet />
+          <Toaster position="top-center" />
         </PreferencesProvider>
       </AccessibilityProvider>
     </QueryClientProvider>

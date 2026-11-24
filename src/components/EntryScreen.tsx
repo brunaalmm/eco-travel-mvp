@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowRight, Compass, Eye, EyeOff, LayoutDashboard, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,26 +9,14 @@ import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
 import { usePreferenceStore } from "@/components/PreferencesProvider";
 import { demoDestination, type DemoProfile } from "@/lib/demo-entry";
 import logo from "@/assets/logo-transparent.png";
-import icon from "@/assets/app-icon.png";
 
 export function EntryScreen({ registration = false }: { registration?: boolean }) {
   const navigate = useNavigate();
   const { preferences, ready } = usePreferenceStore();
-  const [splash, setSplash] = useState(true);
-  const [splashFading, setSplashFading] = useState(false);
   const [profile, setProfile] = useState<DemoProfile>("turista");
   const [visible, setVisible] = useState(false);
   const [notice, setNotice] = useState("");
   const [opening, setOpening] = useState(false);
-  useEffect(() => {
-    const fadeTimer = window.setTimeout(() => setSplashFading(true), 1700);
-    const hideTimer = window.setTimeout(() => setSplash(false), 2000);
-    return () => {
-      window.clearTimeout(fadeTimer);
-      window.clearTimeout(hideTimer);
-    };
-  }, []);
-
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (opening) return;
@@ -48,21 +36,6 @@ export function EntryScreen({ registration = false }: { registration?: boolean }
   }
   return (
     <div className="relative flex min-h-dvh w-full flex-col justify-between overflow-y-auto bg-forest [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:h-auto md:min-h-screen md:flex-row md:justify-start md:overflow-visible md:bg-login-paper">
-      {splash && (
-        <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-forest transition-opacity duration-300 md:hidden ${splashFading ? "opacity-0" : "opacity-100"}`}>
-          <img
-            src={icon}
-            alt="EcoTravel"
-            width={256}
-            height={256}
-            loading="eager"
-            decoding="sync"
-            fetchPriority="high"
-            className="h-32 w-32 animate-float rounded-[2rem] shadow-float"
-          />
-          <p className="font-display text-sm tracking-[0.3em] text-primary-foreground/70">ECOTRAVEL</p>
-        </div>
-      )}
       <aside className="relative flex shrink-0 flex-col items-center justify-center bg-forest px-5 pb-8 pt-10 text-center text-forest-foreground md:h-auto md:min-h-screen md:w-1/2 md:justify-center md:px-12 md:pb-12 md:pt-14">
         <div className="relative z-10 flex w-full max-w-xl flex-col items-center">
           <Link to="/" aria-label="EcoTravel início" className="md:order-none">

@@ -1,6 +1,11 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { toast } from "sonner";
 import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
+
+vi.mock("sonner", () => ({
+  toast: { success: vi.fn() },
+}));
 
 let standalone = false;
 let mobileViewport = true;
@@ -9,6 +14,7 @@ describe("PWA install prompt", () => {
   beforeEach(() => {
     standalone = false;
     mobileViewport = true;
+    vi.mocked(toast.success).mockClear();
     window.matchMedia = (query: string) =>
       ({
         matches:
@@ -30,15 +36,12 @@ describe("PWA install prompt", () => {
     Object.defineProperty(navigator, "maxTouchPoints", { configurable: true, value: 0 });
   });
 
-  it("shows a progress status while waiting and confirms an accepted Android installation", async () => {
+  it("opens the native Android prompt without showing installation status text", async () => {
     render(<PwaInstallPrompt />);
     const prompt = vi.fn().mockResolvedValue(undefined);
-    let finishChoice!: (choice: { outcome: "accepted" | "dismissed"; platform: string }) => void;
     const installEvent = Object.assign(new Event("beforeinstallprompt", { cancelable: true }), {
       prompt,
-      userChoice: new Promise<{ outcome: "accepted" | "dismissed"; platform: string }>((resolve) => {
-        finishChoice = resolve;
-      }),
+      userChoice: Promise.resolve({ outcome: "accepted" as const, platform: "web" }),
     });
 
     act(() => {
@@ -49,13 +52,8 @@ describe("PWA install prompt", () => {
     expect(installEvent.defaultPrevented).toBe(true);
     fireEvent.click(installButton);
     await waitFor(() => expect(prompt).toHaveBeenCalledOnce());
-    expect(screen.getByRole("button", { name: "Instalando o EcoTravel..." })).toBeDisabled();
-    await act(async () => {
-      finishChoice({ outcome: "accepted", platform: "web" });
-      await Promise.resolve();
-    });
-    expect(await screen.findByText("Atalho adicionado!")).toBeInTheDocument();
-    expect(screen.getByText(/Acesse o ícone do EcoTravel na tela de aplicativos/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Instalar aplicativo" })).toBeInTheDocument();
+    expect(screen.queryByText(/Instalando|Atalho adicionado/)).toBeNull();
   });
 
   it("shows closable iOS instructions and remains idle without an automatic prompt", async () => {
@@ -116,14 +114,14 @@ describe("PWA install prompt", () => {
     expect(screen.queryByRole("status")).toBeNull();
   });
 
-  it("shows the success status after the appinstalled event", async () => {
+  it("shows only a system toast after the appinstalled event", async () => {
     render(<PwaInstallPrompt />);
 
     act(() => {
       window.dispatchEvent(new Event("appinstalled"));
     });
 
-    expect(await screen.findByText("Atalho adicionado!")).toBeInTheDocument();
+    expect(toast.success).toHaveBeenCalledWith("EcoTravel instalado com sucesso!");
     expect(screen.queryByRole("button", { name: "Instalar aplicativo" })).toBeNull();
   });
 });
