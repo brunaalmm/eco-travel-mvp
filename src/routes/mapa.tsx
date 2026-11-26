@@ -119,7 +119,7 @@ function Mapa() {
                 setMode(null);
               }}
               style={{ left: `${x.map.x}%`, top: `${x.map.y}%` }}
-              className={`absolute ${isHighlighted ? "z-20 opacity-100" : "z-10 opacity-55"} block h-auto -translate-x-1/2 -translate-y-1/2 p-0 text-center transition-opacity`}
+              className={`absolute ${isHighlighted ? "z-20 opacity-100" : "z-10 opacity-55"} block h-auto -translate-x-1/2 -translate-y-1/2 rounded-full p-0 text-center transition-opacity`}
             >
               <span className={`relative mx-auto block h-10 w-10 overflow-hidden rounded-full border-2 shadow-float transition-transform duration-150 lg:h-16 lg:w-16 ${isHighlighted ? "scale-110 border-leaf" : "border-card"}`}>
                 <img
@@ -140,7 +140,7 @@ function Mapa() {
                   {number}
                 </span>
               )}
-              <span className="mt-1 block max-w-[5.5rem] truncate rounded-full bg-card px-1.5 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
+              <span className="pointer-events-none absolute left-1/2 top-full mt-1 block max-w-[5.5rem] -translate-x-1/2 truncate rounded-full bg-card px-1.5 py-0.5 text-[9px] font-semibold shadow-soft lg:text-xs">{x.name}</span>
             </Button>
           );
         })}
@@ -230,42 +230,29 @@ function Mapa() {
               </h2>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <Summary icon={<RouteIcon className="h-4 w-4" />} label={isLocal ? "Distância" : "Distância simulada"} value={`${distanceKm} km`} />
+              <Summary icon={<RouteIcon className="h-4 w-4" />} label="Distância" value={`${distanceKm} km`} />
               <Summary icon={<Bus className="h-4 w-4" />} label="Transporte" value={m.label} />
               <Summary icon={<Clock className="h-4 w-4" />} label="Tempo" value={travelMinutes === null ? "—" : formatMin(travelMinutes)} />
               <Summary icon={<span className="text-[10px] font-bold">CO₂</span>} label="Emissão" value={`${carbonKg(distanceKm, m.id)} kg`} />
             </div>
             {isLocal ? (
-              <ol className="mt-5 grid gap-3 lg:grid-cols-2">
-                {dest.circuit.stops.map((s, i) => (
-                  <li key={s.name} className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-forest text-xs font-bold text-forest-foreground">{i + 1}</span>
-                    <img
-                      src={dest.image}
-                      alt=""
-                      width={1024}
-                      height={768}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-12 w-12 shrink-0 rounded-xl object-cover"
-                      style={{ objectPosition: `${(i * 30) % 100}% 50%` }}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <p className="break-words font-semibold">{s.name}</p>
-                      <p className="break-words text-xs text-muted-foreground">{s.kind}</p>
-                    </div>
-                    <div className="shrink-0 text-right text-xs">
-                      <p className="font-semibold">{s.km ? `${s.km} km` : "Início"}</p>
-                      <p className="text-muted-foreground">{s.min ? formatMin(Math.round(s.min * m.speed)) : "—"}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="mt-5">
+                <StopList destination={dest} speed={m.speed} />
+              </div>
             ) : (
-              <div className="mt-5 rounded-2xl border border-forest/10 bg-card p-4 text-sm shadow-soft">
-                <p className="font-semibold">{origin.name} <span className="font-normal text-muted-foreground">· ponto de partida simulado</span></p>
-                <p className="my-2 text-xs text-muted-foreground">↓ {distanceKm} km estimados · sem navegação em tempo real</p>
-                <p className="font-semibold">{dest.name} <span className="font-normal text-muted-foreground">· destino escolhido</span></p>
+              <div className="mt-5 space-y-5">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Ponto de partida · {origin.name}
+                  </p>
+                  <StopList destination={origin} speed={m.speed} />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Destino · {dest.name}
+                  </p>
+                  <StopList destination={dest} speed={m.speed} />
+                </div>
               </div>
             )}
           </section>
@@ -283,129 +270,112 @@ function simulatedDistanceKm(origin: Destination, destination: Destination) {
 type MapPoint = { x: number; y: number };
 
 function createMapRouteLine(origin: Destination, destination: Destination) {
-  const step = 2;
-  const gridSize = 51;
-  const cellCount = gridSize * gridSize;
-  const clearance = 8.5;
+  const start = origin.map;
+  const end = destination.map;
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const length = Math.hypot(dx, dy);
+  if (length < 0.01) return null;
+
   const obstacles = destinations
     .filter((place) => place.id !== origin.id && place.id !== destination.id)
     .map((place) => place.map);
-  const pointFor = (index: number): MapPoint => ({
-    x: (index % gridSize) * step,
-    y: Math.floor(index / gridSize) * step,
-  });
-  const indexFor = (point: MapPoint) =>
-    Math.round(point.x / step) + Math.round(point.y / step) * gridSize;
-  const start = indexFor(origin.map);
-  const finish = indexFor(destination.map);
-  const gScore = new Float64Array(cellCount).fill(Number.POSITIVE_INFINITY);
-  const fScore = new Float64Array(cellCount).fill(Number.POSITIVE_INFINITY);
-  const previous = new Int32Array(cellCount).fill(-1);
-  const open = [start];
-  const inOpen = new Uint8Array(cellCount);
-  const closed = new Uint8Array(cellCount);
-  gScore[start] = 0;
-  fScore[start] = Math.hypot(origin.map.x - destination.map.x, origin.map.y - destination.map.y);
-  inOpen[start] = 1;
 
-  while (open.length > 0) {
-    let bestIndex = 0;
-    for (let i = 1; i < open.length; i += 1) {
-      if (fScore[open[i]!] < fScore[open[bestIndex]!]!) bestIndex = i;
-    }
-    const current = open.splice(bestIndex, 1)[0]!;
-    inOpen[current] = 0;
-    if (current === finish) break;
-    closed[current] = 1;
+  const evaluateCurve = (control: MapPoint | null) => {
+    const steps = 28;
+    let minClearance = Number.POSITIVE_INFINITY;
+    for (let i = 1; i < steps; i += 1) {
+      const t = i / steps;
+      const point: MapPoint = control
+        ? {
+            x: (1 - t) * (1 - t) * start.x + 2 * (1 - t) * t * control.x + t * t * end.x,
+            y: (1 - t) * (1 - t) * start.y + 2 * (1 - t) * t * control.y + t * t * end.y,
+          }
+        : {
+            x: start.x + dx * t,
+            y: start.y + dy * t,
+          };
 
-    const currentPoint = pointFor(current);
-    for (const [dx, dy] of [
-      [-1, -1], [0, -1], [1, -1],
-      [-1, 0], [1, 0],
-      [-1, 1], [0, 1], [1, 1],
-    ]) {
-      const nextX = currentPoint.x / step + dx;
-      const nextY = currentPoint.y / step + dy;
-      if (nextX < 0 || nextX >= gridSize || nextY < 0 || nextY >= gridSize) continue;
-      const next = nextX + nextY * gridSize;
-      if (closed[next]) continue;
-
-      const nextPoint = pointFor(next);
-      if (
-        obstacles.some((obstacle) =>
-          distanceToSegment(obstacle, currentPoint, nextPoint) < clearance,
-        )
-      ) {
-        continue;
+      if (point.x < 4 || point.x > 96 || point.y < 4 || point.y > 92) {
+        return -1;
       }
 
-      const tentativeScore = gScore[current]! + Math.hypot(dx * step, dy * step);
-      if (tentativeScore >= gScore[next]!) continue;
-
-      previous[next] = current;
-      gScore[next] = tentativeScore;
-      fScore[next] =
-        tentativeScore + Math.hypot(nextPoint.x - destination.map.x, nextPoint.y - destination.map.y);
-      if (!inOpen[next]) {
-        open.push(next);
-        inOpen[next] = 1;
+      for (const obstacle of obstacles) {
+        const normalized = Math.hypot(
+          (point.x - obstacle.x) / 11,
+          (point.y - (obstacle.y + 3)) / 11,
+        );
+        if (normalized < minClearance) minClearance = normalized;
       }
     }
-  }
-
-  if (start !== finish && previous[finish] === -1) return null;
-
-  const path: MapPoint[] = [];
-  for (let current = finish; current !== -1; current = previous[current]!) {
-    path.push(pointFor(current));
-    if (current === start) break;
-  }
-  if (path.length === 0 || indexFor(path[path.length - 1]!) !== start) return null;
-  path.reverse();
-  path[0] = origin.map;
-  path.push(destination.map);
-
-  const trimmedPath = trimPolylineEnds(path, 9);
-  return trimmedPath.length > 1
-    ? trimmedPath.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(" ")
-    : null;
-}
-
-function distanceToSegment(point: MapPoint, start: MapPoint, end: MapPoint) {
-  const dx = end.x - start.x;
-  const dy = end.y - start.y;
-  const lengthSquared = dx * dx + dy * dy;
-  const projection = lengthSquared === 0
-    ? 0
-    : Math.max(0, Math.min(1, ((point.x - start.x) * dx + (point.y - start.y) * dy) / lengthSquared));
-  return Math.hypot(point.x - (start.x + projection * dx), point.y - (start.y + projection * dy));
-}
-
-function trimPolylineEnds(points: MapPoint[], distance: number) {
-  const trimStart = (line: MapPoint[]) => {
-    let remaining = distance;
-    while (line.length > 1 && remaining > 0) {
-      const start = line[0]!;
-      const next = line[1]!;
-      const segmentLength = Math.hypot(next.x - start.x, next.y - start.y);
-      if (segmentLength <= remaining) {
-        remaining -= segmentLength;
-        line.shift();
-      } else {
-        const ratio = remaining / segmentLength;
-        line[0] = {
-          x: start.x + (next.x - start.x) * ratio,
-          y: start.y + (next.y - start.y) * ratio,
-        };
-        remaining = 0;
-      }
-    }
+    return minClearance;
   };
-  const trimmed = points.map((point) => ({ ...point }));
-  trimStart(trimmed);
-  trimmed.reverse();
-  trimStart(trimmed);
-  return trimmed.reverse();
+
+  const straightClearance = evaluateCurve(null);
+  if (straightClearance >= 1.1) {
+    return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} L ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+  }
+
+  const nx = -dy / length;
+  const ny = dx / length;
+  const offsets = [10, -10, 16, -16, 22, -22, 28, -28, 36, -36, 44, -44, 52, -52];
+  const anchors = [0.5, 0.35, 0.65];
+
+  let bestControl: MapPoint | null = null;
+  let bestClearance = straightClearance;
+
+  for (const offset of offsets) {
+    for (const anchor of anchors) {
+      const control: MapPoint = {
+        x: start.x + dx * anchor + nx * offset,
+        y: start.y + dy * anchor + ny * offset,
+      };
+      const clearance = evaluateCurve(control);
+      if (clearance >= 1.1) {
+        return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} Q ${control.x.toFixed(2)} ${control.y.toFixed(2)} ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+      }
+      if (clearance > bestClearance) {
+        bestClearance = clearance;
+        bestControl = control;
+      }
+    }
+  }
+
+  if (bestControl) {
+    return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} Q ${bestControl.x.toFixed(2)} ${bestControl.y.toFixed(2)} ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+  }
+
+  return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} L ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+}
+
+function StopList({ destination, speed }: { destination: Destination; speed: number }) {
+  return (
+    <ol className="mt-3 grid gap-3 lg:grid-cols-2">
+      {destination.circuit.stops.map((s, i) => (
+        <li key={s.name} className="flex items-center gap-3 rounded-2xl bg-card p-3 shadow-soft">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-forest text-xs font-bold text-forest-foreground">{i + 1}</span>
+          <img
+            src={destination.image}
+            alt=""
+            width={1024}
+            height={768}
+            loading="lazy"
+            decoding="async"
+            className="h-12 w-12 shrink-0 rounded-xl object-cover"
+            style={{ objectPosition: `${(i * 30) % 100}% 50%` }}
+          />
+          <div className="min-w-0 flex-1">
+            <p className="break-words font-semibold">{s.name}</p>
+            <p className="break-words text-xs text-muted-foreground">{s.kind}</p>
+          </div>
+          <div className="shrink-0 text-right text-xs">
+            <p className="font-semibold">{s.km ? `${s.km} km` : "Início"}</p>
+            <p className="text-muted-foreground">{s.min ? formatMin(Math.round(s.min * speed)) : "—"}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
 }
 
 function crossTripMinutesPerKm(transport: TransportId) {
