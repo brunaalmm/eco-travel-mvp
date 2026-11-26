@@ -28,7 +28,7 @@ describe("App routing", () => {
     const { container } = render(<RouterProvider router={router} />);
 
     await act(async () => {
-      await router.navigate({ to: "/mapa" });
+      await router.navigate({ to: "/mapa", search: { d: undefined } });
     });
 
     expect(screen.getByText("São Paulo · sem acesso ao GPS")).toBeInTheDocument();
@@ -42,12 +42,12 @@ describe("App routing", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Ônibus" }));
     expect(screen.getByText("Guarujá → Peruíbe")).toBeInTheDocument();
-    expect(screen.getByText("Distância simulada")).toBeInTheDocument();
+    expect(screen.getByText("Distância")).toBeInTheDocument();
     expect(screen.getByText("Transporte")).toBeInTheDocument();
     expect(screen.getByText("Emissão")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Selecionar destino: Peruíbe" }));
-    fireEvent.click(screen.getByRole("button", { name: "Guarujá", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: /^Guarujá$/ }));
     expect(screen.getByText("Roteiro Local")).toBeInTheDocument();
     expect(container.querySelector("[data-route-line]")).toBeNull();
     expect(container.querySelectorAll("[data-route-number]")).toHaveLength(0);
