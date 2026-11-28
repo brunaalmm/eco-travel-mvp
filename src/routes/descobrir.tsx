@@ -57,32 +57,36 @@ function Descobrir() {
         <h1 className="mt-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
           Viaje com propósito.
         </h1>
-        <label className="mt-5 flex h-13 max-w-xl items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-soft">
-          <Search className="h-5 w-5 text-muted-foreground" />
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Aonde vamos?"
-            aria-label="Buscar roteiros"
-            className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-          />
-        </label>
+        <div className="mt-5 flex flex-col gap-6 md:mt-6 md:flex-row md:items-end md:justify-between md:gap-4">
+          <label className="flex h-13 w-full max-w-xl items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-soft md:flex-1">
+            <Search className="h-5 w-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Aonde vamos?"
+              aria-label="Buscar roteiros"
+              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </label>
 
-        <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Onde ir</p>
-        <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Onde ir">
-          {macroRegions.map((region) => (
-            <Button
-              key={region}
-              onClick={() => setWhere(region)}
-              aria-pressed={where === region}
-              variant="ghost"
-              className={`h-auto min-h-10 max-w-full whitespace-normal rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150 ${
-                where === region ? "bg-forest text-forest-foreground hover:bg-forest/90 hover:text-forest-foreground" : "bg-card text-foreground shadow-soft"
-              }`}
-            >
-              {region}
-            </Button>
-          ))}
+          <div className="md:shrink-0">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Onde ir</p>
+            <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Onde ir">
+              {macroRegions.map((region) => (
+                <Button
+                  key={region}
+                  onClick={() => setWhere(region)}
+                  aria-pressed={where === region}
+                  variant="ghost"
+                  className={`h-auto min-h-10 max-w-full whitespace-normal rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150 ${
+                    where === region ? "bg-forest text-forest-foreground hover:bg-forest/90 hover:text-forest-foreground" : "bg-card text-foreground shadow-soft"
+                  }`}
+                >
+                  {region}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -119,12 +123,12 @@ function Descobrir() {
                 </span>
               </div>
               <div className="p-5">
-                 <div className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{d.region}</div>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{d.region}</div>
                 <h3 className="mt-1 text-lg font-semibold">{d.circuit.title}</h3>
                 {preferences && <div className="mt-3 space-y-2 text-xs"><p className="font-semibold text-primary">{recommendation(d, preferences).score}% de compatibilidade · simulação de IA</p><p className="text-muted-foreground">{recommendation(d, preferences).kg.toLocaleString('pt-BR')} kg CO₂ · {recommendation(d, preferences).km} km · {recommendation(d, preferences).transport === 'pe' ? 'A pé' : recommendation(d, preferences).transport === 'bike' ? 'Bicicleta' : recommendation(d, preferences).transport === 'carro' ? 'Carro' : 'Ônibus'}</p>{recommendation(d, preferences).adjusted && <p className="text-muted-foreground">Ônibus no deslocamento; caminhada ou trilha apenas no destino.</p>}</div>}
                 <div className="mt-2 flex items-center gap-1 text-sm">
                   <Star className="h-4 w-4 fill-warning text-warning" />
-                   {d.rating > 0 ? <><b>{d.rating.toFixed(1)}</b><span className="text-muted-foreground">{d.reviews > 0 ? `(${d.reviews} avaliações simuladas)` : "Nota demonstrativa"}</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
+                  {d.rating > 0 ? <><b>{d.rating.toFixed(1)}</b><span className="text-muted-foreground">{d.reviews > 0 ? `(${d.reviews} avaliações simuladas)` : "Nota demonstrativa"}</span></> : <span className="text-muted-foreground">Roteiro demonstrativo</span>}
                 </div>
               </div>
             </Link>
