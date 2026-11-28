@@ -107,7 +107,8 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               <UserRound className="h-4 w-4" />
             </Link>
             <Link
-              to="/perfil#accessibility"
+              to="/perfil"
+              hash="accessibility"
               aria-label="Acessibilidade"
               title="Acessibilidade"
               className="grid h-9 w-9 place-items-center rounded-full hover:bg-forest-foreground/10"

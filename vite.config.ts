@@ -11,7 +11,7 @@ export default defineConfig({
     server: {
       proxy: {
         "/__l5e/assets-v1": {
-          target: `https://${process.env.LOVABLE_PREVIEW_HOST || "id-preview--a86dfa30-00ea-46a4-ad78-16b585228093.lovable.app"}`,
+          target: `https://${process.env["LOVABLE_PREVIEW_HOST"] || "id-preview--a86dfa30-00ea-46a4-ad78-16b585228093.lovable.app"}`,
           changeOrigin: true,
           secure: true,
         },
