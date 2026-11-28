@@ -54,8 +54,8 @@ function Descobrir() {
           <WeatherWidget />
           <HighlightCarousel />
         </div>
-        <h1 className="mt-6 max-w-3xl text-lg font-medium leading-snug text-foreground lg:text-2xl">
-          Descubra destinos incríveis com responsabilidade ambiental. Viaje por roteiros que valorizam a cultura local, protegem a biodiversidade e geram impacto positivo nas comunidades.
+        <h1 className="mt-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+          Viaje com propósito.
         </h1>
         <label className="mt-5 flex h-13 max-w-xl items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-soft">
           <Search className="h-5 w-5 text-muted-foreground" />
